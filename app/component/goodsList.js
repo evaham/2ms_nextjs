@@ -28,8 +28,8 @@ export default function GoodsList({listType}) {
                 background: #fff;
                 border: 1px solid #e8eaed;
             }
-            .goods__list--type2 .icon__cartbox {width: 42px; height: 42px;}
-            .goods__list--type3 .icon__cartbox {width: 32px; height: 32px;}
+            .goods__list--type2 .icon__cartbox {width: 44px; height: 44px;}
+            .goods__list--type3 .icon__cartbox {width: 34px; height: 34px;}
             .goods__list--type4 .icon__cartbox {width: 28px; height: 28px;}
         `}</style>
 
