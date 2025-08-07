@@ -1,12 +1,16 @@
 "use client";
 import Image from "next/image";
 import FooterMenu from "./component/footerMenu";
+import GoodsList from "./component/goodsList";
+import HeaderMenu from "./component/headerMenu";
 
 export default function Home() {
   return (
     <>
       <style>
-        {`.goods__pre h1{font - size:35px; line-height:40px;}
+        {`
+        html, body {touch-action: manipulation;} 
+        .goods__pre h1{font - size:35px; line-height:40px;}
         .goods__pre h2{font - size:30px; line-height:40px;}
         .goods__pre h3{font - size:25px; line-height:40px;}
         .goods__pre h4{font - size:20px; line-height:30px;}
@@ -101,188 +105,30 @@ export default function Home() {
         transform: translateX(0);
 	}
       `}</style>
-      <div className="sample" data-code="33121">
-        <div style={{ position: "sticky", zIndex: 999, top: 0 }}>
-          <div className="sample__name clearfix" style={{ color: "", background: "" }}>
-            <span className="js_fontsize" style={{ fontSize: "1.9em" }}>투게더마트</span>
-            <a onClick={() => window.location.href='tel:1577-4550'} className="sample__tel">
-              <img src="/static/img/ico_call.png" />
-            </a>
-          </div>
-          <div className="sample__tit">
-            <span>11</span>
-            <span className="sample__date popStartDate"></span>
-            <span className="popExDate"></span>
-          </div>
-        </div>
-
-        <div className="swiper mySwiper swiper-initialized swiper-horizontal swiper-free-mode swiper-backface-hidden" style={{ position: "sticky", zIndex: 999, top: 110 }}>
-          <div className="scroll_btn swiper-wrapper" style={{ height: "80%" }} id="swiper-wrapper-d43ae10c1abe2cef9" aria-live="polite">
-            <div className="btn_comm btn_0 swiper-slide swiper-slide-active" onClick={() => scrollBubble(0)} role="group" aria-label="1 / 2" style={{ marginRight: "5px" }}>행사코너1</div>
-            <div className="btn_comm btn_1 swiper-slide swiper-slide-next" onClick={() => scrollBubble(1)} role="group" aria-label="2 / 2" style={{ marginRight: "5px" }}>행사코너2</div>
-          </div>
-          <span className="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
-        </div>
-
-        {/* <!-- 행사코너 --> */}
-
-        <div style={{ background: "" }}>
-
-          {/* <!-- <span>행사코너1 배너</span> --> */}
-          <div className="goods">
-            {/* <!--템플릿 유형 가로형 --> */}
-            <ul id="js_changeList" className="goods__list goods__list--type4">
-
-              <li>
-                <div className="goods__card" onClick={() => jsLargerView("a6ac2a5a-b919-40f5-979c-e7376e0c0eff.jpg", "자연그린 김밥단무지", "공유이미지", "", "2558", "")}>
-                  <div className="goods__imgbox" style={{ background: "white" }}>
-                    <img data-src="http://file.2ms.kr/WebLink/33121/a6ac2a5a-b919-40f5-979c-e7376e0c0eff.jpg" onError={(e) => { e.target.onerror=null; e.target.src='/static/img/no_image_color.png'; }} className="" src="/static/img/no_image_color.png" />
-                  </div>
-                  <div className="goods__info">
-                    <div className="goods__delprice previewEtc1">공유이미지</div>
-                    <div className="goods__price">2,558</div>
-                    <div className="goods__name">자연그린 김밥단무지</div>
-                  </div>
-                </div>
-              </li>
-
-              <li>
-                <div className="goods__card" onClick={() => jsLargerView("264fee74-a287-425f-966c-c7501c14f4b9.jpg", "트리퐁", "공유이미지", "", "102680", "")}>
-                  <div className="goods__imgbox" style={{ background: "white" }}>
-                    <img data-src="http://file.2ms.kr/WebLink/33121/264fee74-a287-425f-966c-c7501c14f4b9.jpg" onError={(e) => { e.target.onerror=null; e.target.src='/static/img/no_image_color.png'; }} className="" src="/static/img/no_image_color.png" />
-                  </div>
-                  <div className="goods__info">
-                    <div className="goods__delprice previewEtc1">공유이미지</div>
-                    <div className="goods__price">102,680</div>
-                    <div className="goods__name">트리퐁</div>
-                  </div>
-                </div>
-              </li>
-
-              <li>
-                <div className="goods__card" onClick={() => jsLargerView("5a24d00c-b4d2-4c45-a770-c14e98f21e8f.jpg", "새콤쌈무", "공유이미지", "", "2558", "")}>
-                  <div className="goods__imgbox" style={{ background: "white" }}>
-                    <img data-src="http://file.2ms.kr/WebLink/33121/5a24d00c-b4d2-4c45-a770-c14e98f21e8f.jpg" onError={(e) => { e.target.onerror=null; e.target.src='/static/img/no_image_color.png'; }} className="" src="/static/img/no_image_color.png" />
-                  </div>
-                  <div className="goods__info">
-                    <div className="goods__delprice previewEtc1">공유이미지</div>
-                    <div className="goods__price">2,558</div>
-                    <div className="goods__name">새콤쌈무</div>
-                  </div>
-                </div>
-              </li>
-
-              <li>
-                <div className="goods__card" onClick={() => jsLargerView("26455637-bf96-43ab-9eae-56d0336062d7.jpg", "덴마크 그릭", "공유이미지", "", "104160", "")}>
-                  <div className="goods__imgbox" style={{ background: "white" }}>
-                    <img data-src="http://file.2ms.kr/WebLink/33121/26455637-bf96-43ab-9eae-56d0336062d7.jpg" onError={(e) => { e.target.onerror=null; e.target.src='/static/img/no_image_color.png'; }} className="" src="/static/img/no_image_color.png" />
-                  </div>
-                  <div className="goods__info">
-                    <div className="goods__delprice previewEtc1">공유이미지</div>
-                    <div className="goods__price">104,160</div>
-                    <div className="goods__name">덴마크 그릭</div>
-                  </div>
-                </div>
-              </li>
-
-              <li>
-                <div className="goods__card" onClick={() => jsLargerView("6ac65e94-20d7-40ff-a1c6-af56419a2a86.jpg", "도브 바디워시", "센터이미지", "", "11", "")}>
-                  <div className="goods__imgbox" style={{ background: "white" }}>
-                    <img data-src="http://file.2ms.kr/WebLink/33121/6ac65e94-20d7-40ff-a1c6-af56419a2a86.jpg" onError={(e) => { e.target.onerror=null; e.target.src='/static/img/no_image_color.png'; }} className="" src="/static/img/no_image_color.png" />
-                  </div>
-                  <div className="goods__info">
-                    <div className="goods__delprice previewEtc1">센터이미지</div>
-                    <div className="goods__price">11</div>
-                    <div className="goods__name">도브 바디워시</div>
-                  </div>
-                </div>
-              </li>
-
-              <li>
-                <div className="goods__card" onClick={() => jsLargerView("e3988119-1480-4179-affd-b6c47ef420c0.jpg", "버터링 골드", "센터이미지", "", "1", "")}>
-                  <div className="goods__imgbox" style={{ background: "white" }}>
-                    <img data-src="http://file.2ms.kr/WebLink/33121/e3988119-1480-4179-affd-b6c47ef420c0.jpg" onError={(e) => { e.target.onerror=null; e.target.src='/static/img/no_image_color.png'; }} className="" src="/static/img/no_image_color.png" />
-                  </div>
-                  <div className="goods__info">
-                    <div className="goods__delprice previewEtc1">센터이미지</div>
-                    <div className="goods__price">1</div>
-                    <div className="goods__name">버터링 골드</div>
-                  </div>
-                </div>
-              </li>
-
-            </ul>
-          </div>
-        </div>
-
-        <div style={{ background: "" }}>
-          {/* <!-- <span>행사코너1 배너</span> --> */}
-          <div className="goods">
-            {/* <!--템플릿 유형 가로형 --> */}
-            <ul id="js_changeList" className="goods__list goods__list--type2">
-
-              <li>
-                <div className="goods__card" onClick={() => jsLargerView("81e54e41-64b3-4a63-828d-492019ab7ba0.jpg", "사과주스", "센터", "", "1", "")}>
-                  <div className="goods__imgbox" style={{ background: "white" }}>
-                    <img data-src="http://file.2ms.kr/WebLink/33121/81e54e41-64b3-4a63-828d-492019ab7ba0.jpg" onError={(e) => { e.target.onerror=null; e.target.src='/static/img/no_image_color.png'; }} className="" src="/static/img/no_image_color.png" />
-                  </div>
-                  <div className="goods__info">
-                    <div className="goods__delprice previewEtc1">센터</div>
-                    <div className="goods__price">1</div>
-                    <div className="goods__name">사과주스</div>
-                  </div>
-                </div>
-              </li>
-
-              <li>
-                <div className="goods__card" onClick={() => jsLargerView("", "오렌지주스", "슈켓", "", "1", "https://s3.ap-northeast-2.amazonaws.com/products.key/main/돈시몬_착즙오렌지주스-1L_8410261608112_1.png")}>
-                  <div className="goods__imgbox" style={{ background: "white" }}>
-                    <img data-src="https://s3.ap-northeast-2.amazonaws.com/products.key/main/돈시몬_착즙오렌지주스-1L_8410261608112_1.png" onError={(e) => { e.target.onerror=null; e.target.src='/static/img/no_image_color.png'; }} className="" src="https://s3.ap-northeast-2.amazonaws.com/products.key/main/돈시몬_착즙오렌지주스-1L_8410261608112_1.png" />
-                  </div>
-                  <div className="goods__info">
-                    <div className="goods__delprice previewEtc1">슈켓</div>
-                    <div className="goods__price">1</div>
-                    <div className="goods__name">오렌지주스</div>
-                  </div>
-                </div>
-              </li>
-
-            </ul>
-          </div>
-        </div>
-
-        <div className="wrap_stickyfooter">
-          <a className="scroll_top btn_movetop">
-            <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#fff"><path d="M160-760v-80h640v80H160Zm280 640v-408L336-424l-56-56 200-200 200 200-56 56-104-104v408h-80Z"></path></svg>
-            <span>맨위로</span>
-          </a>
-          <FooterMenu />
+      <HeaderMenu />
+      <div style={{ position: "sticky", zIndex: 999, top: 67 }}>
+        <div className="sample__tit">
+          <span>11</span>
+          <span className="sample__date popStartDate"></span>
+          <span className="popExDate"></span>
         </div>
       </div>
-
-
-      <div className="layer layer__wrap" style={{ display: "none" }}>
-        <div className="layer__bg"></div>
-        <div className="goods layer__box" style={{ position: "fixed" }} onClick={() => document.querySelector('.layer').style.display = 'none'}>
-          <ul id="js_changeList" className="goods__list">
-            <li style={{ padding: "25px" }}>
-              <div className="goods__card" style={{ padding: "6% 2%" }}>
-                <div className="goods__imgbox" style={{ background: "white" }}>
-                  <img className="layer__image" style={{ maxWidth: "75%" }} src="http://file.2ms.kr/WebLink/33121/e3988119-1480-4179-affd-b6c47ef420c0.jpg" />
-                </div>
-                <div className="goods__info" style={{ marginTop: "8%" }}>
-                  <div className="goods__delPrice previewEtc1" style={{ fontSize: "18px" }}>센터이미지</div>
-                  <div className="goods__price" style={{ fontSize: "45px", marginTop: "10px" }}>1</div>
-                  <div className="layer__goods__name" style={{ width: "auto", height: "auto", marginBottom: "5%" }}>버터링 골드</div>
-                </div>
-                <div align="right" style={{ margin: "30 10 0 0" }}>
-                  <p>한번 더 터치 시 닫습니다.</p>
-                </div>
-              </div>
-            </li>
-          </ul>
+      <div className="swiper mySwiper swiper-initialized swiper-horizontal swiper-free-mode swiper-backface-hidden" style={{ position: "sticky", zIndex: 999, top: 110 }}>
+        <div className="scroll_btn swiper-wrapper" style={{ height: "80%" }} id="swiper-wrapper-d43ae10c1abe2cef9" aria-live="polite">
+          <div className="btn_comm btn_0 swiper-slide swiper-slide-active" onClick={() => scrollBubble(0)} role="group" aria-label="1 / 2" style={{ marginRight: "5px" }}>행사코너1</div>
+          <div className="btn_comm btn_1 swiper-slide swiper-slide-next" onClick={() => scrollBubble(1)} role="group" aria-label="2 / 2" style={{ marginRight: "5px" }}>행사코너2</div>
         </div>
+        <span className="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
       </div>
+
+      {/* <!-- 행사코너 --> */}
+      <GoodsList listType={"type4"} />
+
+      {/* <!-- 행사코너2 --> */}
+
+      <GoodsList listType={"type3"} />
+      <GoodsList listType={"type2"} />
+      <GoodsList listType={"type1"} />
     </>
   );
 }
