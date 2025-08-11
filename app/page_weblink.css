@@ -553,18 +553,24 @@ body {
 }
 
 .sample {
-    background: #f7f7f7;
+    background: #f1f5f9;
+    min-height: 100vh; /*추가*/
+    padding-bottom: 64px; /*추가*/
+    display: flex; /*추가*/
+    flex-direction: column; /*추가*/
 }
 
 .sample__name {
     position: relative;
-    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
     font-size: 20px;
     font-weight: 600;
     background: #21409a;
     color: #fff;
-    text-align: center;
-    line-height: 30px;
+    line-height: 20px;
 }
 
 .sample__tel {

@@ -1,6 +1,6 @@
 'use client';
 
-export default function LayerPopup({ item, onChange }) {
+const LayerPopup = ({ item, onChange }) => {
 
     return (
         <div className="layer layer__wrap" style={{ display: "none" }}>
@@ -27,3 +27,4 @@ export default function LayerPopup({ item, onChange }) {
         </div>
     );
 }
+export default LayerPopup;

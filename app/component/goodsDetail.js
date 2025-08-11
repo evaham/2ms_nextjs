@@ -1,5 +1,6 @@
 'use client';
-export default function GoodsList() {
+
+const GoodsDetail = () => {
   return (
     <div>
         <img src="/static/img/no_image_color.png" alt="No Image Available" />
@@ -18,3 +19,4 @@ export default function GoodsList() {
     </div>
   );
 }
+export default GoodsDetail;
