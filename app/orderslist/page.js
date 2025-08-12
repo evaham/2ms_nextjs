@@ -15,7 +15,7 @@ export default function OrdersList() {
     return (
         <>
             <style jsx>{`
-                .list__info {display: flex; justify-content: center; align-items: center; height: 30px; font-size: 14px; color: #666;}
+                .list__info {display: flex; justify-content: center; align-items: center; height: 30px; font-size: 14px; color: #e11d48;}
                 .orderslist {display:flex; flex-direction:column; padding:3px; gap:2px;}
                 .ordersitem {display: flex; flex-direction:column; gap:4px; padding: 10px; border-radius:4px; background:#fff; border:1px solid #d1d1d6  }
                 .ordersitem__img {width: 80px; height: 80px; object-fit: cover; aspect-ratio:1/1; border-radius: 4px; border:1px solid #d1d1d6}

@@ -43,7 +43,7 @@ const FooterMenu = () => {
         width: 64px;
         height: 64px;
         font-size: 12px;
-        text-decoration:none;
+        text-decoration: none;
         color: #666;
       }
     `}</style>
