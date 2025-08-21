@@ -6,7 +6,7 @@ export default function ordersdetail() {
         <>
             <style jsx>{`
                
-                .detail-list {display:flex; flex-direction:column; padding:3px; gap:2px;}
+                .ordersdetail {display:flex; flex-direction:column; padding:3px; gap:2px;}
 
                 .detail {display:flex; flex-direction:column; border-radius:4px; background:#fff; border:1px solid #d1d1d6  }
                 .detail__header {display: flex; align-items:center; height:36px; padding:0 10px; border-bottom:1px solid #e2e8f0;}
@@ -58,7 +58,7 @@ export default function ordersdetail() {
                     <span className="js_fontsize" style={{ fontSize: "20px" }}>주문내역 상세보기</span>
                 </div>
             </div>
-            <div className="detail-list">
+            <div className="ordersdetail">
                 <div className="detail">
                     <div className="detail__header">
                         <div className="detail__tit">주문정보</div>
@@ -109,7 +109,7 @@ export default function ordersdetail() {
                                 </div>
                                 <div className="detail__coupon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 33 32" fill="none">
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M16.75 0V16H32.75" stroke="#666" stroke-width="1" />
+                                        <path xmlns="http://www.w3.org/2000/svg" d="M16.75 0V16H32.75" stroke="#666" strokeWidth="1" />
                                     </svg>
                                     <span className="detail__cname">[쿠폰] 1000할인</span>
                                     <span className="detail__cprice">-1,000</span>
@@ -124,7 +124,7 @@ export default function ordersdetail() {
                                 </div>
                                 <div className="detail__coupon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 33 32" fill="none">
-                                        <path xmlns="http://www.w3.org/2000/svg" d="M16.75 0V16H32.75" stroke="#666" stroke-width="1" />
+                                        <path xmlns="http://www.w3.org/2000/svg" d="M16.75 0V16H32.75" stroke="#666" strokeWidth="1" />
                                     </svg>
                                     <span className="detail__cname">[쿠폰] 1000할인</span>
                                     <span className="detail__cprice">-1,000</span>

@@ -1,5 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+// import "./globals.css";
 import "./page_weblink.css";
 import FooterMenu from "./component/footerMenu";
 import LayerPopup from "./component/layerPopup";
