@@ -1,4 +1,5 @@
 'use client'
+
 export default function OrdersWrite() {
     return (
         <>
@@ -189,7 +190,7 @@ export default function OrdersWrite() {
                 </div>
                 <div className="orderswrite__btngroup">
                     <label><input type="checkbox" /> 필수 주문정보를 확인했으며, 주문 진행에 동의합니다.</label>
-                    <a href="/orderslist" className="orderswrite__btn">주문완료</a>
+                    <Link href="/orderslist" className="orderswrite__btn">주문완료</Link>
                 </div>
             </div>
         </>
