@@ -554,10 +554,14 @@ body {
 
 .sample {
     background: #f1f5f9;
-    min-height: 100vh; /*추가*/
-    padding-bottom: 64px; /*추가*/
-    display: flex; /*추가*/
-    flex-direction: column; /*추가*/
+    min-height: 100vh;
+    /*추가*/
+    padding-bottom: 64px;
+    /*추가*/
+    display: flex;
+    /*추가*/
+    flex-direction: column;
+    /*추가*/
 }
 
 .sample__name {

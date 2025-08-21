@@ -17,16 +17,16 @@ export default function OrdersList() {
             <style jsx>{`
                 .list__info {display: flex; justify-content: center; align-items: center; height: 30px; font-size: 14px; color: #e11d48;}
                 .orderslist {display:flex; flex-direction:column; padding:3px; gap:2px;}
-                .ordersitem {display: flex; flex-direction:column; gap:4px; padding: 10px; border-radius:4px; background:#fff; border:1px solid #d1d1d6  }
-                .ordersitem__img {width: 80px; height: 80px; object-fit: cover; aspect-ratio:1/1; border-radius: 4px; border:1px solid #d1d1d6}
-                .ordersitem__info {position:relative; flex: 1; display: flex; flex-direction: column; justify-content: center;}
-                .ordersitem__name {overflow: hidden; padding-right:30px; font-size: 16px; font-weight:600}
-                .ordersitem__pricegroup {display:flex; align-items:center; margin-top:auto}
-                .ordersitem__price {margin-left:auto}
-                .ordersitem__price span{font-size: 18px; font-weight:bold; color: #333; margin-right: 4px;}
-                .ordersitem__time {color:#999}
-                .ordersitem__hr {width:100%; margin:0; padding:0; border:0; border-bottom:1px solid #e2e8f0}
-                .ordersitem__btn {display:flex; align-items:center; height:30px; margin:5px auto 0; padding: 0 20px; border:1px solid #cbd5e1; border-radius:3px; font-weight:bold; text-decoration:none}
+                .ordersitem {display: flex; flex-direction:column; border-radius:4px; background:#fff; border:1px solid #d1d1d6  }
+                .ordersitem__header {display: flex; align-items:center; height:36px; padding:0 10px; border-bottom:1px solid #e2e8f0; }
+                .ordersitem__header__tit {display:flex; align-items:center; font-size:16px; line-height:1.5; font-weight:bold; color:#475569 }
+                .ordersitem__body {display:flex; flex-direction:column; gap:2px; padding:10px}
+                .ordersitem__body__time {font-size:14px; line-height:1.2; color:#64748b}
+                .ordersitem__body__group {display: flex; gap:40px}
+                .ordersitem__body__group__name {font-size:16px;}
+                .ordersitem__body__group__price {margin-left:auto; font-size: 16px; font-weight:bold;}
+                .ordersitem__footer {display:flex; height:38px; padding:0 10px;  border-top:1px solid #e2e8f0;}
+                .ordersitem__footer__btn {display:flex; align-items:center; margin:auto; padding:2px 14px; border:1px solid #dfdfdf; border-radius:4px;}
                 .sample__back { position: absolute; left: 0; top: 0; width: 50px; height: 64px; display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none;}
                 .nodata {display:flex; margin: 20px auto; font-size:20px}
                 `}
@@ -44,19 +44,19 @@ export default function OrdersList() {
             <div className="orderslist">
                 {list.map((item, index) => (
                     <div key={index} className="ordersitem">
-                        <div>주문접수</div>
-                        <hr className="ordersitem__hr" />
-                        <div className="ordersitem__time">25.4.19 11:30 주문</div>
-                        <div className="ordersitem__info">
-                            <div className="ordersitem__pricegroup">
-                                <div className="ordersitem__name">{item.name}</div>
-                                <div className="ordersitem__price">
-                                    <span>{item.price.toLocaleString()}</span>
-                                </div>
+                        <div className="ordersitem__header">
+                            <p className="ordersitem__header__tit">주문접수</p>
+                        </div>
+                        <div className="ordersitem__body">
+                            <div className="ordersitem__body__time">25.4.19 11:30 주문</div>
+                            <div className="ordersitem__body__group">
+                                <div className="ordersitem__body__group__name">{item.name}</div>
+                                <div className="ordersitem__body__group__price">{item.price.toLocaleString()}</div>
                             </div>
                         </div>
-                        <hr className="ordersitem__hr" />
-                        <a href="/ordersdetail" className="ordersitem__btn">상세보기</a>
+                        <div className="ordersitem__footer">
+                            <a href="/ordersdetail" className="ordersitem__footer__btn">상세보기</a>
+                        </div>
                     </div>
                 ))}
                 <div className="nodata">주문내역이 없습니다.</div>

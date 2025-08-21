@@ -21,12 +21,14 @@ export default function CartList(){
                 .cartitem__info {position:relative; flex: 1; display: flex; flex-direction: column; justify-content: center;}
                 .cartitem__name {overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-height:1.25; padding-right:30px; font-size: 16px; margin-bottom: 5px;}
                 .cartitem__remove {position: absolute; right: 0; top: 0; width: 24px; height: 24px; cursor: pointer;}
-                .cartitem__pricegroup {display:flex; margin-top:auto}
-                .cartitem__price {margin-right:auto}
+                .cartitem__pricegroup {display:flex; margin-top:auto; align-items:center}
+                .cartitem__price {margin-right:auto; font-size:16px;}
                 .cartitem__price span{font-size: 18px; font-weight:bold; color: #333; margin-right: 4px;}
-                .cartitem__quantity {position:relative; display: flex; width:80px; height:24px;}
-                .cartitem__quantity__btn {display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius:50px; background: #f1f5f9; cursor: pointer;}
-                .cartitem__quantity__num{flex:1; display:flex; align-items:center; justify-content:center; margin:0 2px; font-size:14px;}
+                .cartitem__quantity {position:relative; display: flex; align-items:center; width:96px; height:32px; border:1px solid #90a1b9; border-radius:50px}
+                .cartitem__quantity__btn {display: flex; align-items: center; justify-content: center; cursor: pointer;}
+                .cartitem__quantity__btn--left {margin-right:auto; padding-left:13px}
+                .cartitem__quantity__btn--right {margin-left:auto; padding-right:13px}
+                .cartitem__quantity__num{flex:1; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;}
                 .cartfoot {display:flex; position:sticky; bottom:64px; width:100%; padding: 10px; background:#f1f5f9; border-top:1px solid #e2e8f0;}
                 .cartfoot__btn {flex:1; display: flex; justify-content: center; align-items: center; height: 56px; background: #f43f5e; border-radius: 8px; color: #fff; font-size: 18px; font-weight:600; cursor: pointer;}
                 .sample__back { position: absolute; left: 0; top: 0; width: 50px; height: 64px; display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none;}
@@ -51,11 +53,11 @@ export default function CartList(){
                                     <span>{item.price.toLocaleString()}</span>원
                                 </div>
                                 <div className="cartitem__quantity">
-                                    <button className="cartitem__quantity__btn">
+                                    <button className="cartitem__quantity__btn cartitem__quantity__btn--left">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" className="fill-black"><path d="M200-440v-80h560v80H200Z" /></svg>
                                     </button>
                                     <span className="cartitem__quantity__num">1</span>
-                                    <button className="cartitem__quantity__btn">
+                                    <button className="cartitem__quantity__btn cartitem__quantity__btn--right">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" className="fill-black"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" /></svg>
                                     </button>
                                 </div>
@@ -68,7 +70,7 @@ export default function CartList(){
                 ))}
             </div>
             <div className="cartfoot">
-                <button className="cartfoot__btn">총 3건 37,000원 주문하기</button>
+                <a className="cartfoot__btn" href="/orderswrite">총 3건 37,000원 주문하기</a>
             </div>
         </>
     )
