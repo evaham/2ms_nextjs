@@ -1,9 +1,19 @@
 "use client";
 import {useState} from "react";
-import GoodsList from "./component/goodsList";
+import Image from "next/image";
 
 export default function Home() {
   const [showPopup, setShowPopup] = useState(false);
+  const [showPopup2, setShowPopup2] = useState(false);
+
+  const list = [
+    { id: 1, name: "자연그린 김밥단무지1", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
+    { id: 2, name: "자연그린 김밥단무지2", cart: false, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
+    { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
+    { id: 4, name: "자연그린 김밥단무지4", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
+    { id: 5, name: "자연그린 김밥단무지4", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
+  ];
+
 
   return (
     <>
@@ -29,10 +39,102 @@ export default function Home() {
       </div>
 
       {/* <!-- 행사코너 --> */}
-      <GoodsList listType={"type4"} />
-      <GoodsList listType={"type3"} />
-      <GoodsList listType={"type2"} />
-      <GoodsList listType={"type1"} />
+      <div style={{ background: "" }}>
+        {/* <!-- <span>행사코너1 배너</span> --> */}
+        <div className="goods">
+          {/* <!--템플릿 유형 가로형 --> */}
+          <ul id="js_changeList" className={`goods__list goods__list--type4`}>
+            {list.map((item, index) => (
+              <li key={index} onClick={() => setShowPopup2(true)}>
+                <div className="goods__card">
+                  <div className="goods__imgbox" style={{ background: "white" }}>
+                    <img data-src="" className="" src={item.image} />
+                    <div className="icon__cartbox">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="70%" viewBox="0 -960 960 960" width="70%" fill="#666">
+                        <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="goods__info">
+                    <div className="goods__delprice previewEtc1">공유이미지</div>
+                    <div className="goods__price">{item.price.toLocaleString()}</div>
+                    <div className="goods__name">{item.name}</div>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          {/* <!--템플릿 유형 가로형 --> */}
+          <ul id="js_changeList" className={`goods__list goods__list--type3`}>
+            {list.map((item, index) => (
+              <li key={index}>
+                <div className="goods__card">
+                  <div className="goods__imgbox" style={{ background: "white" }}>
+                    <img data-src="" className="" src={item.image} />
+                    <div className="icon__cartbox">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="70%" viewBox="0 -960 960 960" width="70%" fill="#666">
+                        <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="goods__info">
+                    <div className="goods__delprice previewEtc1">공유이미지</div>
+                    <div className="goods__price">{item.price.toLocaleString()}</div>
+                    <div className="goods__name">{item.name}</div>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          {/* <!--템플릿 유형 가로형 --> */}
+          <ul id="js_changeList" className={`goods__list goods__list--type2`}>
+            {list.map((item, index) => (
+              <li key={index}>
+                <div className="goods__card">
+                  <div className="goods__imgbox" style={{ background: "white" }}>
+                    <img data-src="" className="" src={item.image} />
+                    <div className="icon__cartbox">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="70%" viewBox="0 -960 960 960" width="70%" fill="#666">
+                        <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="goods__info">
+                    <div className="goods__delprice previewEtc1">공유이미지</div>
+                    <div className="goods__price">{item.price.toLocaleString()}</div>
+                    <div className="goods__name">{item.name}</div>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          {/* <!--템플릿 유형 가로형 --> */}
+          <ul id="js_changeList" className={`goods__list goods__list--type`}>
+            {list.map((item, index) => (
+              <li key={index}>
+                <div className="goods__card">
+                  <div className="goods__imgbox" style={{ background: "white" }}>
+                    <img data-src="" className="" src={item.image} />
+                    <div className="icon__cartbox">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="70%" viewBox="0 -960 960 960" width="70%" fill="#666">
+                        <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="goods__info">
+                    <div className="goods__delprice previewEtc1">공유이미지</div>
+                    <div className="goods__price">{item.price.toLocaleString()}</div>
+                    <div className="goods__name">{item.name}</div>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
 
       <div className="wrap_stickyfooter">
         <a className="scroll_top btn_movetop">
@@ -42,7 +144,7 @@ export default function Home() {
       </div>
       {/* 레이어 팝업 안내창 */}
       {showPopup && (
-        <div className="layer__popup">
+        <div className="layer__wrap">
           <div className="layer__bg"></div>
           <div className="layer__panel">
             <p className="layer__tit">공지사항</p>
@@ -53,18 +155,30 @@ export default function Home() {
           </div>
         </div>
       )}
-      <style jsx>{`
-         .layer__popup {display:flex; position:fixed; inset:0; padding:12px; align-items: center; justify-conent:center; z-index:999;}
-         .layer__bg {position:absolute; inset:0; background:rgba(0,0,0,.5);}
-         .layer__panel {position:relative; display:flex; flex-direction:column; width:100%; height:288px; padding:12px; border-radius:16px; background:#f8fafc; overflow:hidden; z-index:1000}
-         .layer__tit { margin-block:8px; text-align:center; font-size:18px; font-weight:bold}
-         .layer__body { display:flex; flex-direction:column; gap:16px; height:240px; padding:16px; overflow-y:scroll; border:1px solid f1f5f9; border-radius:8px; font-size:16px; background: #fff;}
-         .layer__close {position:absolute; top:12px; right:12px; fill:#62748e}
-              
-      `}
-      </style>
-
-
+      {showPopup2 &&(
+        <div className="layer layer__wrap" style={{ display: "block" }}>
+          <div className="layer__bg"></div>
+          <div className="goods layer__box" onClick={() => document.querySelector('.layer').style.display = 'none'}>
+            <ul id="js_changeList" className="goods__list">
+              <li style={{ padding: "25px" }}>
+                <div className="goods__card" style={{ padding: "6% 2%" }}>
+                  <div className="goods__imgbox" style={{ background: "white" }}>
+                    <img className="layer__image" style={{ maxWidth: "75%" }} src="http://file.2ms.kr/WebLink/33121/e3988119-1480-4179-affd-b6c47ef420c0.jpg" />
+                  </div>
+                  <div className="goods__info" style={{ marginTop: "8%" }}>
+                    <div className="goods__delPrice previewEtc1" style={{ fontSize: "18px" }}>센터이미지</div>
+                    <div className="goods__price" style={{ fontSize: "45px", marginTop: "10px" }}>1</div>
+                    <div className="layer__goods__name" style={{ width: "auto", height: "auto", marginBottom: "5%" }}>버터링 골드</div>
+                  </div>
+                  <button onClick={() => setShowPopup(false)} className="layer__close">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      )}
     </>
   );
 }

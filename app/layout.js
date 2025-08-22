@@ -47,44 +47,7 @@ export default function RootLayout({ children }) {
         .cnList .btn_comm:hover {border: 1px solid #21409a; border-radius: 20px; background: #21409a; font-weight: bold; color: #fff; box-shadow: 0 1px 3px 0 rgba(0,0,0,.06); }
         .radio_comm input[type=radio] {margin - left: 4px; margin-right: 4px;}
         .thumb {cursor: pointer; }
-        .layer__wrap {display: none; }
 
-        .layer__bg {
-          position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background: url(/static/img/bg_block_50.png);
-        z-index: 1000;
-	}
-
-        .layer__box {
-          position: absolute;
-        top: 10%;
-        left: 0;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: auto;
-        z-index: 1001;
-	}
-        @media (min-width:512px), (max-width:717px) screen and (orientation:portrait){
-		.layer.goods__list {padding:0px 190px}
-        .layer__image{max - height: 283px !important;}
-	}
-
-        .layer__goods__name{
-          position: relative;
-        overflow: hidden;
-        width: 250px;
-        margin: 5px auto 0;
-        font-size: 19px;
-        font-weight: 600;
-        line-height: 1.2;
-        word-break: break-all;
-	}
-        .layer__image{max - height:300px !important;}
 
         /* 하단 sticky 버튼그룹 */
         .wrap_stickyfooter {display: block; position: fixed; right:0; bottom: 64px; z-index:11; overflow-x: hidden;} /* sticky를 fixed로 변경 */
