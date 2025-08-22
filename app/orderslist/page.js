@@ -1,4 +1,6 @@
 'use client';
+import Link from 'next/link';
+
 export default function OrdersList() {
     const list = [
         { id: 1, name: "자연그린 김밥단무김밥", orders: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
@@ -33,9 +35,9 @@ export default function OrdersList() {
             
             <div style={{ position: "sticky", zIndex: 999, top: 0 }}>
                 <div className="sample__name clearfix" style={{ color: "", background: "", }}>
-                    <a href="/" className="sample__back" >
+                    <Link href={"/"} className="sample__back" >
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z" /></svg>
-                    </a>
+                    </Link>
                     <span className="js_fontsize" style={{ fontSize: "20px" }}>주문내역</span>
                 </div>
             </div>
@@ -55,7 +57,7 @@ export default function OrdersList() {
                                 </div>
                             </div>
                             <div className="ordersitem__footer">
-                                <a href="/ordersdetail" className="ordersitem__footer__btn">상세보기</a>
+                                <Link href={"/ordersdetail"} className="ordersitem__footer__btn">상세보기</Link>
                             </div>
                         </div>
                     </li>

@@ -1,6 +1,6 @@
 "use client";
 import {useState} from "react";
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   const [showPopup, setShowPopup] = useState(false);
@@ -20,9 +20,9 @@ export default function Home() {
       <div style={{ position: "sticky", zIndex: 999, top: 0 }}>
         <div className="sample__name clearfix" style={{ color: "", background: "" }}>
           <span className="js_fontsize" style={{ fontSize: "1.9em" }} onClick={()=> setShowPopup(true)}>투게더마트</span>
-          <a onClick={() => window.location.href = 'tel:1577-4550'} className="sample__tel">
+          <Link onClick={() => window.location.href = 'tel:1577-4550'} className="sample__tel">
             <img src="/static/img/ico_call.png" />
-          </a>
+          </Link>
         </div>
         <div className="sample__tit">
           <span>11</span>
@@ -137,10 +137,10 @@ export default function Home() {
       </div>
 
       <div className="wrap_stickyfooter">
-        <a className="scroll_top btn_movetop">
+        <Link className="scroll_top btn_movetop">
           <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#fff"><path d="M160-760v-80h640v80H160Zm280 640v-408L336-424l-56-56 200-200 200 200-56 56-104-104v408h-80Z"></path></svg>
           <span>맨위로</span>
-        </a>
+        </Link>
       </div>
       {/* 레이어 팝업 안내창 */}
       {showPopup && (
