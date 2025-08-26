@@ -16,23 +16,6 @@ export default function OrdersList() {
 
     return (
         <>
-            <style jsx>{`
-                .list__info {display: flex; justify-content: center; align-items: center; height: 30px; font-size: 14px; color: #e11d48;}
-                .orderslist {display:flex; flex-direction:column; padding:3px; gap:2px;}
-                .ordersitem {display: flex; flex-direction:column; border-radius:4px; background:#fff; border:1px solid #d1d1d6  }
-                .ordersitem__header {display: flex; align-items:center; height:36px; padding:0 10px; border-bottom:1px solid #e2e8f0; }
-                .ordersitem__header__tit {display:flex; align-items:center; font-size:16px; line-height:1.5; font-weight:bold; color:#475569 }
-                .ordersitem__body {display:flex; flex-direction:column; gap:2px; padding:10px}
-                .ordersitem__body__time {font-size:14px; line-height:1.2; color:#64748b}
-                .ordersitem__body__group {display: flex; gap:40px}
-                .ordersitem__body__group__name {font-size:16px;}
-                .ordersitem__body__group__price {margin-left:auto; font-size: 16px; font-weight:bold;}
-                .ordersitem__footer {display:flex; height:38px; padding:0 10px;  border-top:1px solid #e2e8f0;}
-                .ordersitem__footer__btn {display:flex; align-items:center; margin:auto; padding:2px 14px; border:1px solid #dfdfdf; border-radius:4px;}
-                .text__nodata {display:flex; margin: 20px auto; font-size:20px}
-                `}
-            </style>
-            
             <div style={{ position: "sticky", zIndex: 999, top: 0 }}>
                 <div className="sample__name clearfix" style={{ color: "", background: "", }}>
                     <Link href={"/"} className="sample__back" >
@@ -41,23 +24,23 @@ export default function OrdersList() {
                     <span className="js_fontsize" style={{ fontSize: "20px" }}>주문내역</span>
                 </div>
             </div>
-            <div className="list__info">※주문내역은 6개월 간 보관합니다.</div>
+            <div className="orderslist__info">※주문내역은 6개월 간 보관합니다.</div>
             <ul className="orderslist">
                 {list.map((item, index) => (
                     <li key={index}>
                         <div className="ordersitem">
                             <div className="ordersitem__header">
-                                <p className="ordersitem__header__tit">주문접수</p>
+                                <p className="ordersitem__tit">주문접수</p>
                             </div>
                             <div className="ordersitem__body">
-                                <div className="ordersitem__body__time">25.4.19 11:30 주문</div>
-                                <div className="ordersitem__body__group">
-                                    <div className="ordersitem__body__group__name">{item.name}</div>
-                                    <div className="ordersitem__body__group__price">{item.price.toLocaleString()}</div>
+                                <div className="ordersitem__time">25.4.19 11:30 주문</div>
+                                <div className="ordersitem__group">
+                                    <div className="ordersitem__name">{item.name}</div>
+                                    <div className="ordersitem__price">{item.price.toLocaleString()}</div>
                                 </div>
                             </div>
                             <div className="ordersitem__footer">
-                                <Link href={"/ordersdetail"} className="ordersitem__footer__btn">상세보기</Link>
+                                <Link href={"/ordersdetail"} className="ordersitem__btn">상세보기</Link>
                             </div>
                         </div>
                     </li>

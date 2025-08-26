@@ -1503,3 +1503,18 @@ color: #777;
 .goods__list--type2 .icon__cartbox {width: 44px; height: 44px;}
 .goods__list--type3 .icon__cartbox {width: 34px; height: 34px;}
 .goods__list--type4 .icon__cartbox {width: 28px; height: 28px;}
+
+/*  */
+.orderslist__info {display: flex; justify-content: center; align-items: center; height: 30px; font-size: 14px; color: #e11d48;}
+.orderslist {display:flex; flex-direction:column; padding:3px; gap:2px;}
+.ordersitem {display: flex; flex-direction:column; border-radius:4px; background:#fff; border:1px solid #d1d1d6  }
+.ordersitem__header {display: flex; align-items:center; height:36px; padding:0 10px; border-bottom:1px solid #e2e8f0; }
+.ordersitem__tit {display:flex; align-items:center; font-size:16px; line-height:1.5; font-weight:bold; color:#475569 }
+.ordersitem__body {display:flex; flex-direction:column; gap:2px; padding:10px}
+.ordersitem__time {font-size:14px; line-height:1.2; color:#64748b}
+.ordersitem__group {display: flex; gap:40px}
+.ordersitem__name {font-size:16px;}
+.ordersitem__price {margin-left:auto; font-size: 16px; font-weight:bold;}
+.ordersitem__footer {display:flex; height:38px; padding:0 10px;  border-top:1px solid #e2e8f0;}
+.ordersitem__btn {display:flex; align-items:center; margin:auto; padding:2px 14px; border:1px solid #dfdfdf; border-radius:4px;}
+.text__nodata {display:flex; margin: 20px auto; font-size:20px}

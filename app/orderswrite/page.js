@@ -7,14 +7,9 @@ import Image from "next/image";
 export default function OrdersWrite() {
     return (
         <>
-            <style jsx>{`
-                
-
-                `}
-            </style>
             <div style={{ position: "sticky", zIndex: 999, top: 0 }}>
                 <div className="sample__name clearfix" style={{ color: "", background: "", }}>
-                    <Link href="/" className="sample__back" >
+                    <Link href={"/"} className="sample__back" >
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z" /></svg>
                     </Link>
                     <span className="js_fontsize" style={{ fontSize: "20px" }}>주문서 작성</span>
