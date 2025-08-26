@@ -67,6 +67,9 @@ export default function OrdersWrite() {
                                     <div className="write__price">900,000</div>
                                 </div>
                                 <div className="write__coupon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 33 32" fill="none">
+                                        <path xmlns="http://www.w3.org/2000/svg" d="M16.75 0V16H32.75" stroke="#666" strokeWidth="1" />
+                                    </svg>
                                     <input type="checkbox" />
                                     <span className="write__cname">[쿠폰] 1000할인</span>
                                     <span className="write__cprice">-1,000</span>
@@ -80,6 +83,9 @@ export default function OrdersWrite() {
                                     <div className="write__price">900,000</div>
                                 </div>
                                 <div className="write__coupon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 33 32" fill="none">
+                                        <path xmlns="http://www.w3.org/2000/svg" d="M16.75 0V16H32.75" stroke="#666" strokeWidth="1" />
+                                    </svg>
                                     <input type="checkbox" />
                                     <span className="write__cname">[쿠폰] 1000할인</span>
                                     <span className="write__cprice">-1,000</span>
