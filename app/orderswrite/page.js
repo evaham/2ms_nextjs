@@ -138,12 +138,11 @@ export default function OrdersWrite() {
                         </table>
                     </div>
                 </div>
-                <div className="orderswrite__btngroup">
+                <div className="write__btngroup">
                     <label><input type="checkbox" /> 필수 주문정보를 확인했으며, 주문 진행에 동의합니다.</label>
-                    <Link href={'/orderslist'} className="orderswrite__btn">주문완료</Link>
+                    <Link href={'/orderslist'} className="write__bigbtn">주문완료</Link>
                 </div>
             </div>
         </>
-
     )
 }
