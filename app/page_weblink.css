@@ -1412,7 +1412,7 @@ color: #777;
 
 
 /* 레이어팝업 */
-.layer__wrap { display:flex; position:fixed; inset:0; padding:12px; align-items: center; justify-content:center; z-index:999; }
+/* .layer__wrap { display:flex; position:fixed; inset:0; padding:12px; align-items: center; justify-content:center; z-index:999; }
 .layer__bg {position:absolute; inset:0; background:rgba(0,0,0,.5);}
 
 .layer__box {}
@@ -1421,16 +1421,20 @@ color: #777;
 @media screen and (min-width:512px) and (max-width:717px) and (orientation:portrait) {
     .layer.goods__list {padding: 0px 190px;}
     .layer__image {max-height: 283px !important;}
-}
+} */
 
 
 /* 레이어팝업 공지사항  */
-.layer__popup {display:flex; position:fixed; inset:0; padding:12px; align-items: center; justify-content:center; z-index:999;}
-.layer__panel {position:relative; display:flex; flex-direction:column; width:100%; min-height:288px; padding:12px; border-radius:16px; background:#f8fafc; overflow:hidden; z-index:1000}
-.layer__tit { margin-block:8px; text-align:center; font-size:18px; font-weight:bold}
-.layer__body { display:flex; flex-direction:column; gap:16px; height:240px; padding:16px; overflow-y:scroll; border:1px solid f1f5f9; border-radius:8px; font-size:16px; background: #fff;}
-.layer__close {position:absolute; top:12px; right:12px; fill:#62748e}
+.layer__wrap {display:flex; position:fixed; inset:0; padding:30px; align-items: center; justify-content:center; z-index:999;}
+.layer__bg {position:absolute; inset:0; background:rgba(0,0,0,.4);}
+.layer__panel {position:relative; display:flex; flex-direction:column; width:100%; min-height: 300px; max-height:80dvh; border-radius:16px; background:#f8fafc; overflow:hidden; z-index:1000}
+.layer__tit {display: flex; align-items: center; justify-content: center; height: 44px; text-align:center; font-size:18px; font-weight:bold}
+.layer__body {flex: 1; display:flex; flex-direction:column; margin:0 12px 12px; padding:16px; overflow-y:scroll; border:1px solid f1f5f9; border-radius:8px; font-size:16px; background: #fff;}
+.layer__close {position:absolute; top:4px; right:4px; fill:#62748e}
 
+/* 팝업상품상세 */
+.layer__goodsbox {flex: 1; display: flex; flex-direction: column; padding: 0;}
+.layer__goodsbtnbox {}
 
 /* 주문내역상세 */
 .ordersdetail {display:flex; flex-direction:column; padding:3px; gap:2px;}
@@ -1456,8 +1460,9 @@ color: #777;
 .detail__name {}
 .detail__amount {text-align:right; color:#666;}
 .detail__price {grid-column:span 2 / span 2; text-align:right; font-size:16px; font-weight:bold}
-.detail__coupon {display:flex; gap:8px; align-items:center; margin-top:6px; margin-left:60px; padding:2px; background:#f1f5f9; border-radius:4px; font-size:14px; color:#666}
-.detail__cname {font-size:14px;}
+.detail__coupon {position: relative; display:flex; gap:4px; align-items:center; margin-top:6px; margin-left:60px; padding:2px; background:#f1f5f9; border-radius:4px; color:#333}
+.detail__coupon svg {position: absolute; left:-20px; width:16px; height:16px;}
+.detail__cname {font-size:16px;}
 .detail__cprice {color:#dc2626; font-size:16px; font-weight:bold; margin-left:auto}
 
 
@@ -1473,29 +1478,32 @@ color: #777;
 .write__tbl2 {width:100%; border-collapse: collapse;}
 .write__tbl2 th {width:90px; padding: 6px; text-align:left; color:#64748b;}
 .write__tbl2 td {padding: 6px; line-height:1.2}
-.write__pay {font-weight:bold; text-align:right;}
+.write__pay {font-size: 16px; font-weight:bold; text-align:right;}
 .write__bg--gray {background:#f1f5f9}
 .write__tbl2 .text_bold{ font-weight: bold }
-.write__input {width:100%; border:1px solid #cbd5e1; padding:4px 6px; border-radius:4px; font-size:14px; color:#333; background:#f8fafc; box-sizing:border-box}
-.write__btn {width:100px; height:30px; background:#f1f5f9; border:1px solid #d1d1d6; color:#333; font-weight:bold; cursor:pointer}
-.write__radiogroup {display:flex; flex-direction:column; gap:6px}
-.write__radiogroup label {display:flex;}
+.write__input {width:100%; height: 36px; border:1px solid #cbd5e1; padding:4px 6px; border-radius:4px; font-size:16px; color:#333; background:#f8fafc; box-sizing:border-box}
+.write__btn {width:100px; height:36px; background:#f1f5f9; border:1px solid #d1d1d6; color:#333; font-weight:bold; cursor:pointer}
+.write__select { width:100%; height: 36px; border:1px solid #cbd5e1; margin-top:10px; padding:4px 6px; border-radius:4px; font-size:16px; color:#333; background:#f8fafc; box-sizing:border-box}
+.write__banknum {margin: 10px 0; font-size: 16px;}
+.write__radiogroup {display:flex; flex-direction:column; gap:10px;}
+.write__radiogroup label {font-size: 15px;}
 .write__radiogroup input[type=radio] { margin-right:6px}
 .write__radiogroup p {margin-left:19px}
 .write__list {display:flex;  flex-direction:column}
 .write__list li {padding:10px 0; border-bottom:1px solid #e2e8f0;}
 .write__list li:last-child {border: none}
-.write__btngroup {display:flex; flex-direction:column; margin-top:30px}
-.write__btngroup label {display:flex; margin:0 auto}
-.write__btngroup input[type=checkbox] {margin-right:6px}
-.write__bigbtn {display: flex; justify-content: center; align-items: center; height: 56px; margin:20px 0 50px; background: #f43f5e; border-radius: 8px; color: #fff; font-size: 18px; font-weight: 600; cursor: pointer;}
+.write__btngroup {display:flex; flex-direction:column; margin-top:30px;}
+.write__btngroup label {position: relative; display: block; margin:0 10px 0 34px; font-size: 16px;}
+.write__btngroup input[type=checkbox] {position: absolute; top:2px; left: -16px;}
+.write__bigbtn {display: flex; justify-content: center; align-items: center; height: 48px; margin:20px 0 50px; background: #f43f5e; border-radius: 8px; color: #fff; font-size: 18px; font-weight: 600; cursor: pointer;}
 .write__infogroup {display:grid; grid-template-columns: 60px 1fr 40px; gap: 0 8px; align-items:center;}
 .write__img {grid-row: span 2; width: 60px; height: 60px; object-fit: cover; aspect-ratio:1/1; border-radius: 4px; border:1px solid #d1d1d6}
 .write__name {}
 .write__amount {text-align:right; color:#666;}
 .write__price {grid-column:span 2 / span 2; text-align:right; font-size:16px; font-weight:bold}
-.write__coupon {display:flex; gap:8px; align-items:center; margin-top:6px; margin-left:60px; padding:2px; background:#f1f5f9; border-radius:4px; font-size:14px; color:#666}
-.write__cname {font-size:14px;}
+.write__coupon {position: relative; display:flex; gap:4px; align-items:center; margin-top:6px; margin-left:60px; padding:2px; background:#f1f5f9; border-radius:4px; color:#333}
+.write__coupon svg {position: absolute; left:-20px; width:16px; height:16px;}
+.write__cname {font-size:16px;}
 .write__cprice {color:#dc2626; font-size:16px; font-weight:bold; margin-left:auto}
 
 

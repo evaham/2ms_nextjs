@@ -66,14 +66,14 @@ export default function OrdersWrite() {
                                     <div className="write__amount">999개</div>
                                     <div className="write__price">900,000</div>
                                 </div>
-                                <div className="write__coupon">
+                                <label className="write__coupon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 33 32" fill="none">
                                         <path xmlns="http://www.w3.org/2000/svg" d="M16.75 0V16H32.75" stroke="#666" strokeWidth="1" />
                                     </svg>
-                                    <input type="checkbox" />
+                                    <input type="checkbox" style={{ zoom: 1.3 }} />
                                     <span className="write__cname">[쿠폰] 1000할인</span>
                                     <span className="write__cprice">-1,000</span>
-                                </div>
+                                </label>
                             </li>
                             <li>
                                 <div className="write__infogroup">
@@ -82,14 +82,14 @@ export default function OrdersWrite() {
                                     <div className="write__amount">999개</div>
                                     <div className="write__price">900,000</div>
                                 </div>
-                                <div className="write__coupon">
+                                <label className="write__coupon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 33 32" fill="none">
                                         <path xmlns="http://www.w3.org/2000/svg" d="M16.75 0V16H32.75" stroke="#666" strokeWidth="1" />
                                     </svg>
-                                    <input type="checkbox" />
+                                    <input type="checkbox" style={{ zoom: 1.3 }} />
                                     <span className="write__cname">[쿠폰] 1000할인</span>
                                     <span className="write__cprice">-1,000</span>
-                                </div>
+                                </label>
                             </li>
                         </ul>
                     </div>
@@ -120,12 +120,12 @@ export default function OrdersWrite() {
                                 <tr>
                                     <th>결제방식</th>
                                     <td>
-                                        <div className="write__radiogroup">
-                                            <label><input type="radio" name="type1" />계좌이체</label>
-                                            <p>기업은행 투게더마트 1234-45-67890</p>
-                                            <label><input type="radio" name="type1" />만나서 카드</label>
-                                            <label><input type="radio" name="type1" />만나서 현금</label>
-                                        </div>
+                                        <select className="write__select" name="">
+                                            <option value="계좌이체">계좌이체</option>
+                                            <option value="만나서 카드결제">만나서 카드결제</option>
+                                            <option value="만나서 현금결제">만나서 현금결제</option>
+                                        </select>
+                                        <p className="write__banknum">기업은행 1234-05-67890 투게더스</p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -139,7 +139,9 @@ export default function OrdersWrite() {
                     </div>
                 </div>
                 <div className="write__btngroup">
-                    <label><input type="checkbox" /> 필수 주문정보를 확인했으며, 주문 진행에 동의합니다.</label>
+                    <label>
+                        <input type="checkbox" style={{zoom:1.3}} /> 필수 주문정보를 확인했으며, 주문 진행에 동의합니다.
+                    </label>
                     <Link href={'/orderslist'} className="write__bigbtn">주문완료</Link>
                 </div>
             </div>

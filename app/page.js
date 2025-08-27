@@ -5,6 +5,8 @@ import Link from "next/link";
 export default function Home() {
   const [showPopup, setShowPopup] = useState(false);
   const [showPopup2, setShowPopup2] = useState(false);
+  const [showPopup3, setShowPopup3] = useState(false);
+  const sampleImg = "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg";
 
   const list = [
     { id: 1, name: "자연그린 김밥단무지1", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
@@ -68,7 +70,7 @@ export default function Home() {
           {/* <!--템플릿 유형 가로형 --> */}
           <ul id="js_changeList" className={`goods__list goods__list--type3`}>
             {list.map((item, index) => (
-              <li key={index}>
+              <li key={index} onClick={() => setShowPopup2(true)}>
                 <div className="goods__card">
                   <div className="goods__imgbox" style={{ background: "white" }}>
                     <img data-src="" className="" src={item.image} />
@@ -91,7 +93,7 @@ export default function Home() {
           {/* <!--템플릿 유형 가로형 --> */}
           <ul id="js_changeList" className={`goods__list goods__list--type2`}>
             {list.map((item, index) => (
-              <li key={index}>
+              <li key={index} onClick={() => setShowPopup2(true)}>
                 <div className="goods__card">
                   <div className="goods__imgbox" style={{ background: "white" }}>
                     <img data-src="" className="" src={item.image} />
@@ -114,7 +116,7 @@ export default function Home() {
           {/* <!--템플릿 유형 가로형 --> */}
           <ul id="js_changeList" className={`goods__list goods__list--type`}>
             {list.map((item, index) => (
-              <li key={index}>
+              <li key={index} onClick={() => setShowPopup2(true)}>
                 <div className="goods__card">
                   <div className="goods__imgbox" style={{ background: "white" }}>
                     <img data-src="" className="" src={item.image} />
@@ -156,6 +158,37 @@ export default function Home() {
         </div>
       )}
       {showPopup2 &&(
+        <div className="layer__wrap">
+          <div className="layer__bg"></div>
+          <div className="layer__panel">
+            <div className="layer__tit">상품상세</div>
+            <div className="layer__body">
+              <img className="" src={sampleImg} style={{ border: "1px solid #333" }} />
+              <div className="layer__goodsinfo">
+                <p className="">수량을 선택해서 장바구니에 담아주세요</p>
+                <div className="quantity">
+                  <button className="quantity__btn quantity__btn--left">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" className="fill-black"><path d="M200-440v-80h560v80H200Z"></path></svg>
+                  </button>
+                  <span className="quantity__num">1</span>
+                  <button className="quantity__btn quantity__btn--right">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" className="fill-black"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"></path></svg>
+                  </button>
+                </div>
+                <div className="goods__price">1</div>
+                <div className="">버터링 골드</div>
+              </div>
+              
+              <button className="btn_comm" style={{marginRight:"10px"}}>장바구니 담기</button>
+            </div>
+
+            <button onClick={() => setShowPopup2(false)} className="layer__close">
+              <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
+            </button>
+          </div>
+        </div>
+      )}
+      {showPopup3 && (
         <div className="layer layer__wrap" style={{ display: "block" }}>
           <div className="layer__bg"></div>
           <div className="goods layer__box" onClick={() => document.querySelector('.layer').style.display = 'none'}>
@@ -179,6 +212,11 @@ export default function Home() {
           </div>
         </div>
       )}
+
+
+
+
+
     </>
   );
 }
