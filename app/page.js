@@ -149,37 +149,41 @@ export default function Home() {
         <div className="layer__wrap">
           <div className="layer__bg"></div>
           <div className="layer__panel">
-            <p className="layer__tit">공지사항</p>
-            <div className="layer__body">오후2시 까지 배달 주문 시 당일 저녁에 배송 드립니다..</div>
+            <div className="layer__header">
+              <p className="layer__tit">공지사항</p>
+            </div>
+            <div className="layer__body">
+              <div className="layer__notice">오후2시 까지 배달 주문 시 당일 저녁에 배송 드립니다..</div>
+            </div>
+            <div className="layer__footer"></div>
             <button onClick={() => setShowPopup(false)} className="layer__close">
               <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
             </button>
           </div>
         </div>
       )}
+      {/* 주문 작성 팝업 */}
       {showPopup2 &&(
         <div className="layer__wrap">
           <div className="layer__bg"></div>
           <div className="layer__panel">
-            <div className="layer__tit">상품상세</div>
             <div className="layer__body">
-              <img className="" src={sampleImg} style={{ border: "1px solid #333" }} />
+              <img src={sampleImg} className="layer__goodsimg" />
               <div className="layer__goodsinfo">
-                <p className="">수량을 선택해서 장바구니에 담아주세요</p>
-                <div className="quantity">
-                  <button className="quantity__btn quantity__btn--left">
+                <p className="layer__goodstxt">※수량을 선택해서 장바구니에 담아주세요</p>
+                <div className="layer__quantity">
+                  <button className="layer__quantitybtn layer__quantitybtn--left">
                     <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" className="fill-black"><path d="M200-440v-80h560v80H200Z"></path></svg>
                   </button>
-                  <span className="quantity__num">1</span>
-                  <button className="quantity__btn quantity__btn--right">
+                  <span className="layer__quantitynum">1</span>
+                  <button className="layer__quantitybtn quantity__btn--right">
                     <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" className="fill-black"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"></path></svg>
                   </button>
                 </div>
-                <div className="goods__price">1</div>
-                <div className="">버터링 골드</div>
+                <div className="layer__goodsprice">999,999,999,999</div>
+                <div className="layer__goodsname">크라운 쿠크다스 144g 1입</div>
+                <button className="layer__goodsbtn">장바구니 담기</button>
               </div>
-              
-              <button className="btn_comm" style={{marginRight:"10px"}}>장바구니 담기</button>
             </div>
 
             <button onClick={() => setShowPopup2(false)} className="layer__close">
