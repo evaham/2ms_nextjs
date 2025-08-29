@@ -6,6 +6,7 @@ export default function Home() {
   const [showPopup, setShowPopup] = useState(false);
   const [showPopup2, setShowPopup2] = useState(false);
   const [showPopup3, setShowPopup3] = useState(false);
+  const [showPopup4, setShowPopup4] = useState(false);
   const sampleImg = "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg";
 
   const list = [
@@ -23,7 +24,9 @@ export default function Home() {
         <div className="sample__name clearfix" style={{ color: "", background: "" }}>
           <span className="js_fontsize" style={{ fontSize: "1.9em" }} onClick={()=> setShowPopup(true)}>투게더마트</span>
           <Link href={"/"} onClick={() => window.location.href = 'tel:1577-4550'} className="sample__tel">
-            <img src="/static/img/ico_call.png" />
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#333">
+              <path d="m720-560-58-56 64-64H520v-80h206l-62-62 56-58 160 162-160 158Zm78 440q-125 0-247-54.5T329-329Q229-429 174.5-551T120-798q0-18 12-30t30-12h162q14 0 25 9.5t13 22.5l26 140q2 16-1 27t-11 19l-97 98q20 37 47.5 71.5T387-386q31 31 65 57.5t72 48.5l94-94q9-9 23.5-13.5T670-390l138 28q14 4 23 14.5t9 23.5v162q0 18-12 30t-30 12ZM241-600l66-66-17-94h-89q5 41 14 81t26 79Zm358 358q39 17 79.5 27t81.5 13v-88l-94-19-67 67ZM241-600Zm358 358Z" />
+            </svg>
           </Link>
         </div>
         <div className="sample__tit">
@@ -52,7 +55,7 @@ export default function Home() {
                   <div className="goods__imgbox" style={{ background: "white" }}>
                     <img data-src="" className="" src={item.image} />
                     <div className="icon__cartbox">
-                      <svg xmlns="http://www.w3.org/2000/svg" height="70%" viewBox="0 -960 960 960" width="70%" fill="#666">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#666">
                         <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
                       </svg>
                     </div>
@@ -75,7 +78,7 @@ export default function Home() {
                   <div className="goods__imgbox" style={{ background: "white" }}>
                     <img data-src="" className="" src={item.image} />
                     <div className="icon__cartbox">
-                      <svg xmlns="http://www.w3.org/2000/svg" height="70%" viewBox="0 -960 960 960" width="70%" fill="#666">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%">
                         <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
                       </svg>
                     </div>
@@ -98,7 +101,7 @@ export default function Home() {
                   <div className="goods__imgbox" style={{ background: "white" }}>
                     <img data-src="" className="" src={item.image} />
                     <div className="icon__cartbox">
-                      <svg xmlns="http://www.w3.org/2000/svg" height="70%" viewBox="0 -960 960 960" width="70%" fill="#666">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%">
                         <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
                       </svg>
                     </div>
@@ -120,8 +123,8 @@ export default function Home() {
                 <div className="goods__card">
                   <div className="goods__imgbox" style={{ background: "white" }}>
                     <img data-src="" className="" src={item.image} />
-                    <div className="icon__cartbox">
-                      <svg xmlns="http://www.w3.org/2000/svg" height="70%" viewBox="0 -960 960 960" width="70%" fill="#666">
+                    <div className="icon__cartbox active">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%">
                         <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
                       </svg>
                     </div>
@@ -135,6 +138,54 @@ export default function Home() {
               </li>
             ))}
           </ul>
+
+          {/* <!--템플릿 유형 세로형 --> */}
+          <ul id="js_changeList" className={`goods__list goods__list--style2`}>
+            {list.map((item, index) => (
+              <li key={index} onClick={() => setShowPopup2(true)}>
+                <div className="goods__card">
+                  <div className="goods__imgbox" style={{ background: "white" }}>
+                    <img data-src="" className="" src={item.image} />
+                    <div className="icon__cartbox">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%">
+                        <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="goods__info">
+                    <div className="goods__delprice previewEtc1">공유이미지</div>
+                    <div className="goods__price">{item.price.toLocaleString()}</div>
+                    <div className="goods__name">{item.name}</div>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          {/* <!--템플릿 유형 텍스트형 --> */}
+          <ul id="js_changeList" className={`goods__list goods__list--style3`}>
+            {list.map((item, index) => (
+              <li key={index} onClick={() => setShowPopup3(true)}>
+                <div className="goods__card">
+                  <div className="goods__imgbox" style={{ background: "white" }}>
+                    <img data-src="" className="" src={item.image} />
+                    <div className="icon__cartbox active">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%">
+                        <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="goods__info">
+                    <div className="goods__name">{item.name}</div>
+                    <div className="goods__delprice previewEtc1">공유이미지</div>
+                    <div className="goods__price">{item.price.toLocaleString()}</div>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+
         </div>
       </div>
 
@@ -149,13 +200,8 @@ export default function Home() {
         <div className="layer__wrap">
           <div className="layer__bg"></div>
           <div className="layer__panel">
-            <div className="layer__header">
-              <p className="layer__tit">공지사항</p>
-            </div>
-            <div className="layer__body">
-              <div className="layer__notice">오후2시 까지 배달 주문 시 당일 저녁에 배송 드립니다..</div>
-            </div>
-            <div className="layer__footer"></div>
+            <p className="layer__tit">공지사항</p>
+            <div className="layer__notice">오후2시 까지 배달 주문 시 당일 저녁에 배송 드립니다..<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />asdf<br /><br /><br /><br /><br /></div>
             <button onClick={() => setShowPopup(false)} className="layer__close">
               <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
             </button>
@@ -166,26 +212,26 @@ export default function Home() {
       {showPopup2 &&(
         <div className="layer__wrap">
           <div className="layer__bg"></div>
-          <div className="layer__panel">
-            <div className="layer__body">
-              <img src={sampleImg} className="layer__goodsimg" />
-              <div className="layer__goodsinfo">
-                <p className="layer__goodstxt">※수량을 선택해서 장바구니에 담아주세요</p>
-                <div className="layer__quantity">
-                  <button className="layer__quantitybtn layer__quantitybtn--left">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" className="fill-black"><path d="M200-440v-80h560v80H200Z"></path></svg>
-                  </button>
-                  <span className="layer__quantitynum">1</span>
-                  <button className="layer__quantitybtn quantity__btn--right">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" className="fill-black"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"></path></svg>
-                  </button>
-                </div>
-                <div className="layer__goodsprice">999,999,999,999</div>
-                <div className="layer__goodsname">크라운 쿠크다스 144g 1입</div>
-                <button className="layer__goodsbtn">장바구니 담기</button>
-              </div>
+          <div className="layer__panel layer__panel--white">
+            <p className="layer__tit">상품정보</p>
+            <div className="layer__goodsimgbox">
+              <img src={sampleImg} />
             </div>
-
+            <div className="layer__goodsinfo">
+              <p className="layer__goodstxt">※수량을 선택해서 장바구니에 담아주세요</p>
+              <div className="layer__quantity">
+                <button className="layer__quantitybtn layer__quantitybtn--left">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" className="fill-black"><path d="M200-440v-80h560v80H200Z"></path></svg>
+                </button>
+                <span className="layer__quantitynum">1</span>
+                <button className="layer__quantitybtn quantity__btn--right">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" className="fill-black"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"></path></svg>
+                </button>
+              </div>
+              <div className="layer__goodsprice">999,999,999,999</div>
+              <div className="layer__goodsname">크라운 쿠크다스 144g 1입</div>
+              <button className="layer__goodsbtn" onClick={() => setShowPopup2(false)}>장바구니 담기</button>
+            </div>
             <button onClick={() => setShowPopup2(false)} className="layer__close">
               <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
             </button>
@@ -193,31 +239,30 @@ export default function Home() {
         </div>
       )}
       {showPopup3 && (
-        <div className="layer layer__wrap" style={{ display: "block" }}>
+        <div className="layer__wrap">
           <div className="layer__bg"></div>
-          <div className="goods layer__box" onClick={() => document.querySelector('.layer').style.display = 'none'}>
-            <ul id="js_changeList" className="goods__list">
-              <li style={{ padding: "25px" }}>
-                <div className="goods__card" style={{ padding: "6% 2%" }}>
-                  <div className="goods__imgbox" style={{ background: "white" }}>
-                    <img className="layer__image" style={{ maxWidth: "75%" }} src="http://file.2ms.kr/WebLink/33121/e3988119-1480-4179-affd-b6c47ef420c0.jpg" />
-                  </div>
-                  <div className="goods__info" style={{ marginTop: "8%" }}>
-                    <div className="goods__delPrice previewEtc1" style={{ fontSize: "18px" }}>센터이미지</div>
-                    <div className="goods__price" style={{ fontSize: "45px", marginTop: "10px" }}>1</div>
-                    <div className="layer__goods__name" style={{ width: "auto", height: "auto", marginBottom: "5%" }}>버터링 골드</div>
-                  </div>
-                  <button onClick={() => setShowPopup(false)} className="layer__close">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
-                  </button>
-                </div>
-              </li>
-            </ul>
+          <div className="layer__panel">
+            <div className="layer__goodsinfo">
+              <p className="layer__goodstxt">※수량을 선택해서 장바구니에 담아주세요</p>
+              <div className="layer__quantity">
+                <button className="layer__quantitybtn layer__quantitybtn--left">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" className="fill-black"><path d="M200-440v-80h560v80H200Z"></path></svg>
+                </button>
+                <span className="layer__quantitynum">1</span>
+                <button className="layer__quantitybtn quantity__btn--right">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" className="fill-black"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"></path></svg>
+                </button>
+              </div>
+              <div className="layer__goodsprice">999,999,999,999</div>
+              <div className="layer__goodsname">크라운 쿠크다스 144g 1입</div>
+              <button className="layer__goodsbtn" onClick={() => setShowPopup3(false)}>장바구니 담기</button>
+            </div>
+            <button onClick={() => setShowPopup3(false)} className="layer__close">
+              <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
+            </button>
           </div>
         </div>
       )}
-
-
 
 
 

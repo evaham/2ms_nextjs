@@ -142,7 +142,7 @@ export default function OrdersWrite() {
                     <label>
                         <input type="checkbox" style={{zoom:1.3}} /> 필수 주문정보를 확인했으며, 주문 진행에 동의합니다.
                     </label>
-                    <Link href={'/orderslist'} className="write__bigbtn">주문완료</Link>
+                    <Link href={'/orderslist'} className="write__orederbtn">주문완료</Link>
                 </div>
             </div>
         </>
