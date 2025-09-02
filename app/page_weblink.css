@@ -1374,7 +1374,8 @@ color: #777;
 
 
 
-
+.sample__name span{ display: flex; align-items: center;}
+.sample__name span svg { fill: #fafafa;}
 /* 뒤로가기 */
 .sample__back {position: absolute; left: 0; top: 0; width: 50px; height: 64px; display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none;}
 
