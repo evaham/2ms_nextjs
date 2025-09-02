@@ -1408,7 +1408,7 @@ color: #777;
 .cartitem__info { flex: 1; display: flex; flex-direction: column; justify-content: center;}
 .cartitem__name {overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-height:1.25; padding-right:30px; font-size: 16px; margin-bottom: 5px;}
 .cartitem__removebtn {position: absolute; right: 6px; top: 6px; width: 32px; height: 32px; cursor: pointer;}
-.cartitem__removebtn svg {}
+.cartitem__removebtn svg {fill: #64748b;}
 .cartitem__pricegroup {display:flex; margin-top:auto; align-items:center}
 .cartitem__price {margin-right:auto; font-size:16px;}
 .cartitem__price span{font-size: 18px; font-weight:bold; color: #333; margin-right: 4px;}
@@ -1420,6 +1420,10 @@ color: #777;
 .quantity__num{flex:1; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;}
 .cartfoot {display:flex; position:sticky; bottom:64px; width:100%; padding: 10px; background:#f1f5f9; border-top:1px solid #e2e8f0;}
 .cartfoot__btn {flex:1; display: flex; justify-content: center; align-items: center; height: 46px; background: #f43f5e; border-radius: 8px; color: #fff; font-size: 18px; font-weight:600; cursor: pointer;}
+.cartfoot__btn:hover {text-decoration: none;}
+
+.cartfoot__btn.disabled {background: #e2e8f0; border-radius: 8px; color: #fff; font-size: 18px; font-weight:600; cursor: pointer;}
+
 
 
 /* 레이어팝업 */
@@ -1442,6 +1446,8 @@ color: #777;
 .layer__userunderline {text-decoration: underline;}
 .layer__userbtn {display: flex; justify-content: center; align-items: center; height: 48px; background: #f43f5e; border-radius: 8px; color: #fff; font-size: 18px; font-weight: 600; cursor: pointer;}
 
+/* 개인정보 안내 팝업 */
+.layer__privacyinfo {display: flex; flex-direction: column; overflow-y: auto; height: 400px; background: #fff; padding: 16px; border:1px solid #f9f3f4; border-radius: 8px; font-size: 16px;}
 
 
 /* 팝업상품상세 */
@@ -1541,4 +1547,3 @@ color: #777;
 .ordersitem__icon svg{width: 16px; height: 16px; fill:#cbd5e1;}
 .text__nodata {display:flex; margin: 20px auto; font-size:20px}
 
-/* 사용자 정보 입력 */

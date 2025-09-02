@@ -1,8 +1,12 @@
 'use client';
 
 import Link from "next/link";
+import { useState } from 'react';
 
 export default function CartList(){
+    const [showbtn, setShowbtn] = useState(false);
+
+
     const list = [
         { id: 1, name: "자연그린 김밥단무김밥단무김밥단무김aawefawefawef밥단무김밥단무김밥단무지1", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
         { id: 2, name: "자연그린 김밥단무지2", cart: false, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
@@ -52,7 +56,15 @@ export default function CartList(){
                 ))}
             </div>
             <div className="cartfoot">
-                <Link className="cartfoot__btn" href={"/orderswrite"}>총 3건 37,000원 주문하기</Link>
+                {!showbtn ? (
+                    <button className="cartfoot__btn disabled" onClick={() => setShowbtn(true)}>
+                        총 0건 0원 주문하기
+                    </button>
+                ) : (
+                    <Link className="cartfoot__btn" href={"/orderswrite"}>
+                        총 3건 37,000원 주문하기
+                    </Link>
+                )}
             </div>
         </>
     )
