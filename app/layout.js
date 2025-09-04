@@ -1,6 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-// import "./page_weblink.css";
+// import "./globals.css";
+import "./page_weblink.css";
 import FooterMenu from "./component/footerMenu";
 import LayerPopup from "./component/layerPopup";
 
@@ -50,7 +50,7 @@ export default function RootLayout({ children }) {
 
 
         /* 하단 sticky 버튼그룹 */
-        .wrap_stickyfooter {display: block; position: fixed; right:0; bottom: 64px; z-index:11; overflow-x: hidden;} /* sticky를 fixed로 변경 */
+        .wrap_stickyfooter {display: block; position: fixed; right:0; bottom: 80px; z-index:11; overflow-x: hidden;} /* sticky를 fixed로 변경 */
         .btn_movetop {display: flex; flex-direction: column; align-items: center; justify-content: center; width: 60px; height:60px; margin:0 10px 10px auto;  font-size: 11px; font-weight: normal; line-height: 1; letter-spacing: -1px; border-radius: 30px; background: rgba(0, 0, 0, .7); color: #fff; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .3)}
         .btn_movetop:hover {background: #333; text-decoration: none;}
         .btn_movecoupon {

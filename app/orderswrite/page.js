@@ -3,8 +3,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function OrdersWrite() {
+    const [activeTab, setActiveTab] = useState(1);
     return (
         <>
             <div style={{ position: "sticky", zIndex: 999, top: 0 }}>
@@ -25,28 +27,27 @@ export default function OrdersWrite() {
                             <tbody>
                                 <tr>
                                     <th>주문자명<br /><span>(6/10)</span></th>
-                                    <td colSpan={2}><input type="text" className="write__input" /></td>
+                                    <td colSpan={2}><input type="text" className="write__input" placeholder="고길동" /></td>
                                 </tr>
                                 <tr>
                                     <th>휴대폰<br /><span>(변경불가)</span></th>
-                                    <td colSpan={2}><input type="text" className="write__input" /></td>
+                                    <td colSpan={2}><input type="text" className="write__input" placeholder="" /></td>
                                 </tr>
                                 <tr>
                                     <th rowSpan="3">주소*</th>
-                                    <td><input type="text" className="write__input" /></td>
+                                    <td><input type="text" className="write__input" disabled /></td>
                                     <td><button className="write__btn">우편번호검색</button></td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={3}><input type="text" className="write__input" /></td>
+                                    <td colSpan={3}><input type="text" className="write__input" disabled /></td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={3}><input type="text" className="write__input" /></td>
+                                    <td colSpan={3}><input type="text" className="write__input" placeholder="상세주소를 입력하세요" /></td>
                                 </tr>
-
                                 <tr>
                                     <th>요청사항<br />(13/100)</th>
                                     <td colSpan={2}>
-                                        <textarea className="write__input"></textarea>
+                                        <textarea id="11" className="write__textarea"></textarea>
                                     </td>
                                 </tr>
                             </tbody>
@@ -99,43 +100,76 @@ export default function OrdersWrite() {
                         <div className="write__tit">결제정보</div>
                     </div>
                     <div className="write__body">
-                        <table className="write__tbl2">
-                            <tbody>
-                                <tr>
-                                    <th>상품합계</th>
-                                    <td className="write__pay">32,000 원</td>
-                                </tr>
-                                <tr>
-                                    <th>총 할인금액</th>
-                                    <td className="write__pay">-1,000 원</td>
-                                </tr>
-                                <tr>
-                                    <th>배달비</th>
-                                    <td className="write__pay">3,000 원</td>
-                                </tr>
-                                <tr>
-                                    <th className="write__bg--gray">총 주문금액</th>
-                                    <td className="write__pay write__bg--gray">3,4000 원</td>
-                                </tr>
-                                <tr>
-                                    <th>결제방식</th>
-                                    <td>
-                                        <select className="write__select" name="">
-                                            <option value="계좌이체">계좌이체</option>
-                                            <option value="만나서 카드결제">만나서 카드결제</option>
-                                            <option value="만나서 현금결제">만나서 현금결제</option>
-                                        </select>
-                                        <p className="write__banknum">기업은행 1234-05-67890 투게더스</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colSpan="2" className="write__bg--gray">
-                                        ※ 평일 오후 2시전에 주문시, 오후5시 부터 배송기사가 출발합니다.<br />
-                                        ※ 주문관련 문의는 032-123-4567로 문의주세요.
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <ul className="write__moneylist">
+                            <li>
+                                <div className="write__moneyitem">상품합계</div>
+                                <div className="write__moneyvalue">32,000 원</div>
+                            </li>
+                            <li>
+                                <div className="write__moneyitem">쿠폰할인</div>
+                                <div className="write__moneyvalue">-1,000 원</div>
+                            </li>
+                            <li>
+                                <div className="write__moneyitem">배달비</div>
+                                <div className="write__moneyvalue">3,000 원</div>
+                            </li>
+                            <li className="write__moneytotal">
+                                <div className="write__moneyitem">총 주문금액</div>
+                                <div className="write__moneyvalue">34,000 원</div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div className="write">
+                    <div className="write__header">
+                        <div className="write__tit">결제수단</div>
+                    </div>
+                    <div className="write__body">
+                        <div className="write__paygroup">
+                            <button
+                                type="button"
+                                className={`write__paybtn ${activeTab === 1 ? 'active' : ''}`}
+                                onClick={() => setActiveTab(1)}
+                                aria-pressed={activeTab === 1}
+                            >
+                                만나서<br />현금 결제
+                            </button>
+                            <button
+                                type="button"
+                                className={`write__paybtn ${activeTab === 2 ? 'active' : ''}`}
+                                onClick={() => setActiveTab(2)}
+                                aria-pressed={activeTab === 2}
+                            >
+                                만나서<br />카드 결제
+                            </button>
+                            <button
+                                type="button"
+                                className={`write__paybtn ${activeTab === 3 ? 'active' : ''}`}
+                                onClick={() => setActiveTab(3)}
+                                aria-pressed={activeTab === 3}
+                            >
+                                계좌이체
+                            </button>
+                        </div>
+                        <div className="write__payinfo">
+                            {activeTab === 1 && (
+                                <div className="write__paytxt">배송기사에게 현금으로 결제합니다.</div>
+                            )}
+                            {activeTab === 2 && (
+                                <div className="write__paytxt">배송기사에게 카드로 결제합니다.</div>
+                            )}
+                            {activeTab === 3 && (
+                                <div className="write__paytxt">기업은행 1234-05-67890 투게더스</div>
+                            )}
+                        </div>
+                        <div className="write__info">
+                            ※ 평일 오후 2시전에 주문시, 오후5시 부터 배송기사가 출발합니다.<br />
+                            ※ 주문관련 문의는 032-123-4567로 문의주세요.
+                        </div>
+
+
+
                     </div>
                 </div>
                 <div className="write__btngroup">

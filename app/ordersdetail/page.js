@@ -59,7 +59,7 @@ export default function ordersdetail() {
                                 <div className="detail__infogroup">
                                     <img className="detail__img" src="//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" width={80} height={80} alt="주문상품" />
                                     <div className="detail__name">샤인머스캣 18브릭스 이상 2입</div>
-                                    <div className="detail__amount">999개</div>
+                                    <div className="detail__amount">999 개</div>
                                     <div className="detail__price">900,000</div>
                                 </div>
                                 <div className="detail__coupon">
@@ -67,15 +67,15 @@ export default function ordersdetail() {
                                         <path xmlns="http://www.w3.org/2000/svg" d="M16.75 0V16H32.75" stroke="#666" strokeWidth="1" />
                                     </svg>
                                     <span className="detail__cname">[쿠폰] 1000할인</span>
-                                    <span className="detail__cprice">-1,000</span>
+                                    <span className="detail__cprice">-1,000 원</span>
                                 </div>
                             </li>
                             <li>
                                 <div className="detail__infogroup">
                                     <img className="detail__img" src="//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" width={80} height={80} alt="주문상품" />
                                     <div className="detail__name">샤인머스캣 18브릭스 이상 2입</div>
-                                    <div className="detail__amount">999개</div>
-                                    <div className="detail__price">900,000</div>
+                                    <div className="detail__amount">999 개</div>
+                                    <div className="detail__price">900,000 원</div>
                                 </div>
                                 <div className="detail__coupon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 33 32" fill="none">
@@ -128,6 +128,12 @@ export default function ordersdetail() {
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div className='detail'>
+                    <div className="detail__header">결제방식</div>
+                    <div className="detail__body">
+                        <button>만나서 현금결제</button>
+                        </div>
                 </div>
                 <div>
                     <Link href={"/orderslist"} className="detail__btn">목록으로 이동</Link>

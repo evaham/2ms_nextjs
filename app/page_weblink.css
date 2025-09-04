@@ -115,7 +115,7 @@ html {
 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-body {
+body,textarea {
 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -1125,11 +1125,16 @@ height: auto;
 }
 
 .goods__list--style3 li .goods__card {
-display: block;
+  position: relative;
+  display: block;
 }
 
 .goods__list--style3 li .goods__imgbox {
-display: none;
+  position: absolute; bottom: 4px; left: 40px;
+}
+
+.goods__list--style3 li .goods__imgbox img{
+  display: none;
 }
 
 .goods__list--style3 li .goods__info {
@@ -1380,20 +1385,24 @@ color: #777;
 .sample__back {position: absolute; left: 0; top: 0; width: 50px; height: 64px; display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none;}
 
 /* 푸터 메뉴 */
-.footmenu { position: fixed; bottom: 0; width: 100%; display: flex; height: 64px; background: #fff; border-top: 1px solid #cbd5e1; justify-content: space-around; align-items: center; }
-.footmenu__link { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 64px; height: 64px; font-size: 12px; text-decoration: none; color: #666; }
-.footmenu__link svg { width: 24px; height: 24px; margin-bottom: 4px; fill: #64748b; }
-.footmenu__link.disabled { color: #cbd5e1; cursor: not-allowed; }
-.footmenu__link.disabled svg { fill: #cbd5e1; }
-.footmenu__link:hover { text-decoration: none; }
+.footermenu { position: fixed; bottom: 0; width: 100%; display: flex; padding-inline: 12px; padding-bottom: 4px; background: #fff; justify-content: space-around; align-items: center; box-shadow: 0 0 12px rgba(22,29,36,.1);}
+.footermenu__link { flex:1; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 64px; height: 64px; font-size: 12px; text-decoration: none; color: #666; }
+.footermenu__link svg { width: 26px; height: 26px; fill: #94a3b8; }
+.footermenu__link.active { font-weight: 600; color: #3b82f6; }
+.footermenu__link.active svg { fill: #3b82f6; }
+/* .footermenu__link.disabled { color: #cbd5e1; cursor: not-allowed; }
+.footermenu__link.disabled svg { fill: #cbd5e1; } */
+.footermenu__link:hover { text-decoration: none; }
+.footermenu__num { position: absolute; top: 50%; left: 50%; display: flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; margin: -30px 0 0 6px; padding: 0 4px; border-radius: 9px; background: #f43f5e; color: #fff; font-size: 12px; font-weight: 600;}
 
 
 /* 상품목록 카트 아이콘 */
-.icon__cartbox { position: absolute; display: flex; width: 64px; height: 64px; right: 5%; bottom: 5%; align-items: center; justify-content: center; border: 1px solid #60a5fa; border-radius: 50%; background: #fff; box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);}
-.icon__cartbox svg {fill: #3b82f6;}
-.icon__cartbox.active { background: #3b82f6; box-shadow:inset 1px 1px 3px rgba(0, 0, 0, 0.2);;}
-.icon__cartbox.active svg {fill: #fff;}
+.icon__cartbox { position: absolute; display: flex; width: 64px; height: 64px; right: 5%; bottom: 5%; align-items: center; justify-content: center; border: 1px solid rgba(0, 0, 0, 0.15); border-radius: 50%; background: #fff; box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);}
+.icon__cartbox svg {fill: #94a3b8;}
+.icon__cartbox.active { border-color: #93c5fd;}
+.icon__cartbox.active svg {fill: #3b82f6;}
 
+.goods__list--type .icon__cartbox {width: 44px; height: 44px;}
 .goods__list--type2 .icon__cartbox {width: 44px; height: 44px;}
 .goods__list--type3 .icon__cartbox {width: 34px; height: 34px;}
 .goods__list--type4 .icon__cartbox {width: 28px; height: 28px;}
@@ -1452,7 +1461,7 @@ color: #777;
 
 
 /* 팝업상품상세 */
-.layer__goodsimgbox {overflow: hidden; display: flex; align-items: center; justify-content: center; height: 220px; margin-inline:-16px;background:#f8fafc; border-top:1px solid rgba(0, 0, 0, 0.1); border-bottom:1px solid rgba(0, 0, 0, 0.1);}
+.layer__goodsimgbox {overflow: hidden; display: flex; align-items: center; justify-content: center; height: 220px; margin-inline:-16px; border-top:1px solid rgba(0, 0, 0, 0.1); border-bottom:1px solid rgba(0, 0, 0, 0.1);}
 .layer__goodsimgbox img {width: auto; height: 120%;}
 .layer__goodsinfo {display:flex; flex-direction: column;}
 .layer__goodstxt {margin: 8px auto; font-size:14px;}
@@ -1461,6 +1470,7 @@ color: #777;
 .layer__quantitybtn--left {margin-right:auto; padding-left:13px}
 .layer__quantitybtn--right {margin-left:auto; padding-right:13px}
 .layer__quantitynum{flex:1; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;}
+.layer__goodsdelprice {margin:10px auto 0; color:#517dfb}
 .layer__goodsprice {margin: 0 auto; font-size: 30px; font-weight: 800; letter-spacing: -0.7px; color: #fa5252;}
 .layer__goodsname {margin:0 auto; font-size: 18px; font-weight: 600;}
 .layer__goodsbtn {display:flex; align-items: center; justify-content: center; width: 200px; height: 46px; margin:16px auto; border-radius: 8px; font-size: 18px; font-weight: bold; background: #f43f5e;color:#fff}
@@ -1468,7 +1478,7 @@ color: #777;
 /* 주문내역상세 */
 .ordersdetail {display:flex; flex-direction:column; padding:3px; gap:2px;}
 .detail {display:flex; flex-direction:column; border-radius:4px; background:#fff; border:1px solid rgba(0,0,0,.1)  }
-.detail__header {display: flex; align-items:center; height:36px; padding:0 10px; border-bottom:1px solid #e2e8f0;}
+.detail__header {display: flex; align-items:center; height:40px; padding:0 10px; border-bottom:1px solid #e2e8f0;}
 .detail__tit {display:flex; align-items:center; font-size:16px; line-height:1.5; font-weight:bold; color:#475569 }
 .detail__body {display:flex; flex-direction:column; gap:2px; padding:10px}
 .detail__tbl {width:100%; border-collapse: collapse;}
@@ -1484,7 +1494,7 @@ color: #777;
 .detail__list li {padding:10px 0; border-bottom:1px solid #e2e8f0;}
 .detail__list li:last-child {border: none}
 .detail__btn {display:flex; align-items:center; justify-content:center; width:140px; height:40px; margin:40px auto 80px; padding: 0 20px; border:1px solid #cbd5e1; border-radius:3px; font-weight:bold; background:#fff; text-decoration:none}
-.detail__infogroup {display:grid; grid-template-columns: 60px 1fr 40px; gap: 0 8px; align-items:center;}
+.detail__infogroup {display:grid; grid-template-columns: 60px 1fr 60px; gap: 0 8px; align-items:center;}
 .detail__img {grid-row: span 2; width: 60px; height: 60px; object-fit: cover; aspect-ratio:1/1; border-radius: 4px; border:1px solid rgba(0,0,0,.1)}
 .detail__name {}
 .detail__amount {text-align:right; color:#666;}
@@ -1497,19 +1507,18 @@ color: #777;
 /* 주문서작성 */
 .orderswrite {display:flex; flex-direction:column; padding:3px; gap:2px;}
 .write {display:flex; flex-direction:column; border-radius:4px; background:#fff; border:1px solid rgba(0,0,0,.1)  }
-.write__header {display: flex; align-items:center; height:36px; padding:0 10px; border-bottom:1px solid #e2e8f0;}
+.write__header {display: flex; align-items:center; height:40px; padding:0 10px; border-bottom:1px solid #e2e8f0;}
 .write__tit {display:flex; align-items:center; font-size:16px; line-height:1.5; font-weight:bold; color:#475569 }
 .write__body {display:flex; flex-direction:column; gap:2px; padding:10px}
-.write__tbl {width:100%; border-collapse: collapse;}
-.write__tbl th {width:90px; padding: 4px 6px; background:#f1f5f9; text-align:left; font-weight:normal; color:#64748b; line-height:1}
-.write__tbl td {padding: 4px 6px; line-height:1.2;}
-.write__tbl2 {width:100%; border-collapse: collapse;}
-.write__tbl2 th {width:90px; padding: 6px; text-align:left; color:#64748b;}
-.write__tbl2 td {padding: 6px; line-height:1.2}
+.write__tbl {width:100%; border-collapse: collapse; }
+.write__tbl th {width:90px; padding: 8px 6px; border:1px solid #dfdfdf; background:#f1f5f9; text-align:left; vertical-align: top; font-weight:normal; color:#64748b; line-height:1}
+.write__tbl td {padding: 4px 6px; border:1px solid #dfdfdf; line-height:1.2;}
 .write__pay {font-size: 16px; font-weight:bold; text-align:right;}
 .write__bg--gray {background:#f1f5f9}
 .write__tbl2 .text_bold{ font-weight: bold }
 .write__input {width:100%; height: 36px; border:1px solid #cbd5e1; padding:4px 6px; border-radius:4px; font-size:16px; color:#333; background:#f8fafc; box-sizing:border-box}
+.write__input::placeholder {color:#888}
+.write__textarea {width:100%; height: 108px; border:1px solid #cbd5e1; padding:4px 6px; border-radius:4px; font-size:16px; color:#333; background:#f8fafc; box-sizing:border-box}
 .write__btn {width:100px; height:36px; background:#f1f5f9; border:1px solid rgba(0,0,0,.1); color:#333; font-weight:bold; cursor:pointer}
 .write__select { width:100%; height: 36px; border:1px solid #cbd5e1; margin-top:10px; padding:4px 6px; border-radius:4px; font-size:16px; color:#333; background:#f8fafc; box-sizing:border-box}
 .write__banknum {margin: 10px 0; font-size: 16px;}
@@ -1533,6 +1542,25 @@ color: #777;
 .write__coupon svg {position: absolute; left:-20px; width:16px; height:16px;}
 .write__cname {font-size:16px;}
 .write__cprice {color:#dc2626; font-size:16px; font-weight:bold; margin-left:auto}
+
+/* 결제정보 */
+.write__moneylist {display:flex; flex-direction:column; gap:4px; padding-block:6px;}
+.write__moneylist li {display: flex; align-items: center; padding:6px;}
+.write__moneyitem {margin-right: auto; color: #64748b;}
+.write__moneyvalue{ font-size: 16px; font-weight: 600; color: #495057;}
+.write__moneytotal {display: flex; align-items: center; border-radius: 6px; background: #f1f5f9;}
+.write__moneytotal .write__moneyitem {font-weight:bold;}
+.write__moneytotal .write__moneyvalue {font-size:20px; font-weight:bold;}
+
+
+/* 결제수단 */
+.write__paygroup {display:flex; gap:8px; margin-bottom:8px;}
+.write__paybtn {display: flex; align-items: center; justify-content: center; flex:1; height: 60px; border:1px solid #cbd5e1; border-radius:4px; font-size:14px; font-weight: bold; line-height: 1.2; background:#fff; cursor:pointer;}
+.write__paybtn.active, .write__paybtn[aria-pressed="true"] {background:#f43f5e; color:#fff; border-color:#f43f5e;}
+.write__payinfo {padding:8px 6px; border:1px solid #e9ecef; border-radius:6px; background:#fff;}
+.write__paytxt {font-size:16px; font-weight:bold; text-align: center;}
+.write__info{font-size:14px; color:#333; line-height:1.4; margin-top:15px; border-radius: 6px; background: #f1f5f9; padding: 10px;}
+
 
 /* 주문내역 */
 .orderslist__info {display: flex; justify-content: center; align-items: center; height: 30px; font-size: 14px; background: #fee2e2; color: #e11d48;}

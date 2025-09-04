@@ -5,10 +5,10 @@
   --foreground: #495057;
 }
 
-/* Removed unknown @theme at-rule for compatibility */
 
 body {
   @apply bg-white text-[#495057] font-sans;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 /* 기본형 */
@@ -27,11 +27,9 @@ pre{@apply font-sans;}
 .swiper-slide {@apply w-auto;}
 
 .btn_comm{@apply inline-block px-2 py-0.5 border border-[#e6e6ea] rounded bg-white text-[13px] text-[#495057] cursor-pointer tracking-tight box-border align-baseline;}
-
 .scroll_btn .btn_comm {@apply px-4 py-1.5 border border-[#636363] bg-white rounded-full mb-1 mt-1 text-[#636363] font-bold;}
 .scroll_btn .btn_comm:active {@apply mb-1 mt-1 border border-[#21409a] rounded-full bg-[#21409a] font-bold text-white shadow-[0_1px_3px_0_rgba(0,0,0,.06)];}
 .scroll_btn .btn_comm:hover{@apply mb-1 mt-1 border border-[#21409a] rounded-full bg-[#21409a] font-bold text-white shadow-[0_1px_3px_0_rgba(0,0,0,.06)];}
-
 .cnList .btn_comm {@apply mr-2 mb-1 border border-[#636363] bg-white rounded-full text-[#636363] font-bold;}
 .cnList .btn_comm:hover {@apply border border-[#21409a] rounded-full bg-[#21409a] font-bold text-white shadow-[0_1px_3px_0_rgba(0,0,0,.06)];}
 .radio_comm input[type=radio] {@apply ml-1 mr-1;}
