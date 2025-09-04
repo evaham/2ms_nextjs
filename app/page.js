@@ -17,7 +17,6 @@ export default function Home() {
     { id: 5, name: "자연그린 김밥단무지4", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
   ];
 
-
   return (
     <>
       <div style={{ position: "sticky", zIndex: 999, top: 0 }}>
