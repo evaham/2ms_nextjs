@@ -7,6 +7,9 @@ import { useState } from "react";
 
 export default function OrdersWrite() {
     const [activeTab, setActiveTab] = useState(1);
+    const [showPopup, setShowPopup] = useState(false);
+    const [showbtn, setShowbtn] = useState(false);
+
     return (
         <>
             <div style={{ position: "sticky", zIndex: 999, top: 0 }}>
@@ -27,11 +30,11 @@ export default function OrdersWrite() {
                             <tbody>
                                 <tr>
                                     <th>주문자명<br /><span>(6/20)</span></th>
-                                    <td colSpan={2}><input type="text" className="write__input" placeholder="고길동" /></td>
+                                    <td colSpan={2}><input type="text" className="write__input" placeholder="주문자명을 입력하세요" /></td>
                                 </tr>
                                 <tr>
                                     <th>휴대폰<br /><span>(변경불가)</span></th>
-                                    <td colSpan={2}><input type="text" className="write__input" placeholder="" /></td>
+                                    <td colSpan={2}><input type="text" className="write__input" placeholder="000-0000-0000" /></td>
                                 </tr>
                                 <tr>
                                     <th rowSpan="3">주소*</th>
@@ -167,18 +170,74 @@ export default function OrdersWrite() {
                             ※ 평일 오후 2시전에 주문시, 오후5시 부터 배송기사가 출발합니다.<br />
                             ※ 주문관련 문의는 032-123-4567로 문의주세요.
                         </div>
-
-
-
                     </div>
                 </div>
-                <div className="write__btngroup">
+                <div className="writefoot">
                     <label>
                         <input type="checkbox" style={{zoom:1.3}} /> 필수 주문정보를 확인했으며, 주문 진행에 동의합니다.
                     </label>
-                    <Link href={'/orderslist'} className="write__orederbtn">주문완료</Link>
+                    {!showbtn ? (
+                        <button className="writefoot__btn disabled" onClick={() => setShowbtn(true)}>
+                            주문완료
+                        </button>
+                    ) : (
+                        <button className="writefoot__btn" onClick={() => setShowPopup(true)}>
+                            주문완료
+                        </button>
+                    )}
+
+                    {/* <Link href={'/orderslist'} className="write__orederbtn">주문완료</Link> */}
                 </div>
             </div>
+
+            {/* 레이어 팝업 안내창 */}
+            {showPopup && (
+                <div className="layer__wrap">
+                    <div className="layer__bg"></div>
+                    <div className="layer__panel">
+                        <p className="layer__tit">주문이 완료되었습니다.</p>
+                        <div className="layer__orders">
+                            <table className="detail__tbl">
+                                <tbody>
+                                    <tr>
+                                        <th>주문번호</th>
+                                        <td>250419-22</td>
+                                    </tr>
+                                    <tr>
+                                        <th>주문자명</th>
+                                        <td>고길동</td>
+                                    </tr>
+                                    <tr>
+                                        <th>배송지</th>
+                                        <td>인천시 부평구 부평대로 301 901호 투게더스</td>
+                                    </tr>
+                                    <tr>
+                                        <th>요청사항</th>
+                                        <td>벨을눌러주세요요</td>
+                                    </tr>
+                                    <tr>
+                                        <th>총 주문금액</th>
+                                        <td>43,000 원</td>
+                                    </tr>
+                                    <tr>
+                                        <th>결제방식</th>
+                                        <td>계좌이체<br />기업은행 123-12345-67890<br />(예금주 : 투게더마트)</td>
+                                    </tr>
+                                    <tr>
+                                        <th>요청사항</th>
+                                        <td>텍스트가 길어집니다길어집니다길어집니다길어집니다길어집니다길어집니다길어집니다길어집니다길어집니다</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div className="layer__btngroup">
+                            <Link href={'/orderslist'} className="layer__gobtn">주문내역</Link>
+                            <Link href={'/'} className="layer__gobtn">전단으로 이동</Link>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     )
 }

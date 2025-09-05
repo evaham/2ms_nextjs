@@ -243,7 +243,9 @@ export default function Home() {
       {showPopup3 && (
         <div className="layer__wrap">
           <div className="layer__bg"></div>
-          <div className="layer__panel">
+          <div className="layer__panel layer__panel--white">
+            <p className="layer__tit">상품정보</p>
+
             <div className="layer__goodsinfo">
               <p className="layer__goodstxt">※수량을 선택해서 장바구니에 담아주세요</p>
               <div className="layer__quantity">
