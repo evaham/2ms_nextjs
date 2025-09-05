@@ -56,11 +56,11 @@ export default function ordersdetail() {
                     <div className="detail__body">
                         <ul className="detail__list">
                             <li>
-                                <div className="detail__infogroup">
+                                <div className="detail__listinfo">
                                     <img className="detail__img" src="//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" width={80} height={80} alt="주문상품" />
                                     <div className="detail__name">샤인머스캣 18브릭스 이상 2입</div>
                                     <div className="detail__amount">999 개</div>
-                                    <div className="detail__price">900,000</div>
+                                    <div className="detail__price">900,000 원</div>
                                 </div>
                                 <div className="detail__coupon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 33 32" fill="none">
@@ -71,7 +71,7 @@ export default function ordersdetail() {
                                 </div>
                             </li>
                             <li>
-                                <div className="detail__infogroup">
+                                <div className="detail__listinfo">
                                     <img className="detail__img" src="//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" width={80} height={80} alt="주문상품" />
                                     <div className="detail__name">샤인머스캣 18브릭스 이상 2입</div>
                                     <div className="detail__amount">999 개</div>
@@ -93,47 +93,42 @@ export default function ordersdetail() {
                         <div className="detail__tit">결제정보</div>
                     </div>
                     <div className="detail__body">
-                        <table className="detail__tbl2">
-                            <tbody>
-                                <tr>
-                                    <th>상품합계</th>
-                                    <td className="detail__pay">32,000 원</td>
-                                </tr>
-                                <tr>
-                                    <th>총 할인금액</th>
-                                    <td className="detail__pay">-1,000 원</td>
-                                </tr>
-                                <tr>
-                                    <th>배달비</th>
-                                    <td className="detail__pay">3,000 원</td>
-                                </tr>
-                                <tr>
-                                    <th className="detail__bg--gray">총 주문금액</th>
-                                    <td className="detail__pay detail__bg--gray">3,4000 원</td>
-                                </tr>
-                                <tr>
-                                    <th>결제방식</th>
-                                    <td>
-                                        <span className="text_nomal">
-                                            계좌이체<br />기업은행 투게더마트 1234-45-67890
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colSpan="2" className="detail__bg--gray">
-                                        ※ 평일 오후 2시전에 주문시, 오후5시 부터 배송기사가 출발합니다.<br />
-                                        ※ 주문관련 문의는 032-123-4567로 문의주세요.
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <ul className="detail__moneylist">
+                            <li>
+                                <div className="detail__moneyitem">상품합계</div>
+                                <div className="detail__moneyvalue">32,000 원</div>
+                            </li>
+                            <li>
+                                <div className="detail__moneyitem">쿠폰할인</div>
+                                <div className="detail__moneyvalue">-2,000 원</div>
+                            </li>
+                            <li>
+                                <div className="detail__moneyitem">배달비</div>
+                                <div className="detail__moneyvalue">3,000 원</div>
+                            </li>
+                            <li className="detail__moneytotal">
+                                <div className="detail__moneyitem">총 주문금액</div>
+                                <div className="detail__moneyvalue">34,000 원</div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <div className='detail'>
-                    <div className="detail__header">결제방식</div>
+                    <div className="detail__header">
+                        <div className='detail__tit'>결제방식</div>
+                    </div>
                     <div className="detail__body">
-                        <button>만나서 현금결제</button>
+                        <div className="detail__payinfo">
+                            <div className='detail__paytit'>계좌이체</div>
+                            <div className="detail__paytxt">
+                                기업은행 1234-05-67890 투게더스
+                            </div>
                         </div>
+                        <div className="detail__info">
+                            ※ 평일 오후 2시전에 주문시, 오후5시 부터 배송기사가 출발합니다.<br />
+                            ※ 주문관련 문의는 032-123-4567로 문의주세요.
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <Link href={"/orderslist"} className="detail__btn">목록으로 이동</Link>

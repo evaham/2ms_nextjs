@@ -26,7 +26,7 @@ export default function OrdersWrite() {
                         <table className="write__tbl">
                             <tbody>
                                 <tr>
-                                    <th>주문자명<br /><span>(6/10)</span></th>
+                                    <th>주문자명<br /><span>(6/20)</span></th>
                                     <td colSpan={2}><input type="text" className="write__input" placeholder="고길동" /></td>
                                 </tr>
                                 <tr>
@@ -61,11 +61,11 @@ export default function OrdersWrite() {
                     <div className="write__body">
                         <ul className="write__list">
                             <li>
-                                <div className="write__infogroup">
+                                <div className="write__listinfo">
                                     <Image className="write__img" src="/img/123.jpg" width={60} height={60} alt="주문상품" />
                                     <div className="write__name">샤인머스캣 18브릭스 이상 2입</div>
-                                    <div className="write__amount">999개</div>
-                                    <div className="write__price">900,000</div>
+                                    <div className="write__amount">999 개</div>
+                                    <div className="write__price">900,000 원</div>
                                 </div>
                                 <label className="write__coupon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 33 32" fill="none">
@@ -77,11 +77,11 @@ export default function OrdersWrite() {
                                 </label>
                             </li>
                             <li>
-                                <div className="write__infogroup">
+                                <div className="write__listinfo">
                                     <Image className="write__img" src="/img/123.jpg" width={80} height={80} alt="주문상품" />
                                     <div className="write__name">샤인머스캣 18브릭스 이상 2입</div>
-                                    <div className="write__amount">999개</div>
-                                    <div className="write__price">900,000</div>
+                                    <div className="write__amount">999 개</div>
+                                    <div className="write__price">900,000 원</div>
                                 </div>
                                 <label className="write__coupon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 33 32" fill="none">
