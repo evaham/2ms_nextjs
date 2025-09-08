@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from 'react';
 
 export default function CouponList(){
-  const [showPopup4, setShowPopup4] = useState(false);
+  const [showPopup4, setShowPopup4] = useState(true);
   const [showPopup5, setShowPopup5] = useState(false);
 
     return (
