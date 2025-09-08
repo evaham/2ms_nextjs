@@ -82,7 +82,7 @@ export default function ordersdetail() {
                                         <path xmlns="http://www.w3.org/2000/svg" d="M16.75 0V16H32.75" stroke="#666" strokeWidth="1" />
                                     </svg>
                                     <span className="detail__cname">[쿠폰] 1000할인</span>
-                                    <span className="detail__cprice">-1,000</span>
+                                    <span className="detail__cprice">-1,000 원</span>
                                 </div>
                             </li>
                         </ul>

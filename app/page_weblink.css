@@ -556,7 +556,7 @@ font-weight: 600;
 background: #f1f5f9;
 min-height: 100vh;
 /*추가*/
-padding-bottom: 64px;
+padding-bottom: 100px;
 /*추가*/
 display: flex;
 /*추가*/
@@ -1463,9 +1463,9 @@ color: #777;
 .layer__goodsinfo {display:flex; flex-direction: column;}
 .layer__goodstxt {margin: 8px auto; font-size:14px;}
 .layer__quantity {position:relative; display: flex; align-items:center; width:130px; height:40px; margin: 8px auto; border:1px solid #90a1b9; border-radius:50px; background: #fff;}
-.layer__quantitybtn {display: flex; align-items: center; justify-content: center; height: 100%; cursor: pointer;}
-.layer__quantitybtn--left {margin-right:auto; padding-left:13px}
-.layer__quantitybtn--right {margin-left:auto; padding-right:13px}
+.layer__quantitybtn {display: flex; align-items: center; justify-content: center; width: 40px; height: 100%; cursor: pointer;}
+.layer__quantitybtn--left {margin-right:auto;}
+.layer__quantitybtn--right {margin-left:auto;}
 .layer__quantitynum{flex:1; display:flex; align-items:center; justify-content:center; margin:0 auto; font-size:18px;}
 .layer__goodsdelprice {margin:10px auto 0; color:#517dfb}
 .layer__goodsprice {margin: 0 auto; font-size: 30px; font-weight: 800; letter-spacing: -0.7px; color: #fa5252;}
@@ -1612,4 +1612,3 @@ color: #777;
 .text__nodata {display:flex; flex-direction: column; align-items: center; margin-block: 80px; font-size:20px; font-weight: 600; color: #868e96;}
 .text__nodata svg { margin-right: 8px; fill:#cbd5e1; width:100px; height:100px; margin-bottom: 20px;}
 
-/* 쿠폰함 */

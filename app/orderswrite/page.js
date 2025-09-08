@@ -76,7 +76,7 @@ export default function OrdersWrite() {
                                     </svg>
                                     <input type="checkbox" style={{ zoom: 1.3 }} />
                                     <span className="write__cname">[쿠폰] 1000할인</span>
-                                    <span className="write__cprice">-1,000</span>
+                                    <span className="write__cprice">-1,000 원</span>
                                 </label>
                             </li>
                             <li>
@@ -92,7 +92,7 @@ export default function OrdersWrite() {
                                     </svg>
                                     <input type="checkbox" style={{ zoom: 1.3 }} />
                                     <span className="write__cname">[쿠폰] 1000할인</span>
-                                    <span className="write__cprice">-1,000</span>
+                                    <span className="write__cprice">-1,000 원</span>
                                 </label>
                             </li>
                         </ul>
