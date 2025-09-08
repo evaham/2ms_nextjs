@@ -2,7 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 // import "./globals.css";
 import "./page_weblink.css";
 import FooterMenu from "./component/footerMenu";
-import LayerPopup from "./component/layerPopup";
+// import LayerPopup from "./component/layerPopup";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -91,7 +91,7 @@ export default function RootLayout({ children }) {
           {children}
           <FooterMenu />
         </div>
-        <LayerPopup />
+        {/* <LayerPopup /> */}
       </body>
     </html>
   );
