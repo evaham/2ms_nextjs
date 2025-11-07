@@ -23,10 +23,10 @@ export default function OrdersList() {
                 </div>
             </div>
             <div className="orderslist__info">※주문내역은 6개월 간 보관합니다.</div>
-            <ul className="orderslist">
+            <ul className="group">
                 {list.map((item, index) => (
                     <li key={index}>
-                        <Link href={"/ordersdetail"} className="ordersitem">
+                        <Link href={"/ordersdetail"} className="group-[p-10]">
                             <div className='ordersitem__group'>
                                 <div className="ordersitem__time">25.4.19 11:30 주문</div>
                                 <div className="ordersitem__name">{item.name}</div>

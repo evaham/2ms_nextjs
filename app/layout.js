@@ -1,6 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
-// import "./globals.css";
-import "./page_weblink.css";
+import "./globals.css";
 import FooterMenu from "./component/footerMenu";
 // import LayerPopup from "./component/layerPopup";
 
@@ -25,7 +24,7 @@ export default function RootLayout({ children }) {
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body style={{height: "100%"}}>
+      <body style={{height: "100%"}} className="min-h-screen bg-[#f7f7f7] pb-20">
         <style>
           {`
         html, body {touch-action: manipulation;} 
