@@ -66,7 +66,7 @@ export default function Home() {
         </div>
         <div className="goods w-full">
           {/* <!--템플릿 유형 가로형 --> */}
-          <ul id="js_changeList" className="goods__list goods__list--type2 grid px-1 py-2.5 group grid-cols-4 gap-[1px]">
+          <ul id="js_changeList" className="goods__list goods__list--type2 grid px-1 py-2.5 group grid-cols-4 gap-px">
             {list.map((item, index) => (
               <li key={index} onClick={() => setShowPopup2(true)} className="">
                 <div className="goods__card overflow-hidden w-full p-1 border border-[#d1d1d6] rounded-lg bg-white">
@@ -92,20 +92,20 @@ export default function Home() {
                       </svg>
                     </div>
                   </div>
-                  <div className="goods__info text-center">
-                    <div className="goods__delprice previewEtc1 h-4 text-sm text-[#999] leading-tight line-through
+                  <div className="goods__info text-center leading-tight">
+                    <div className="goods__delprice previewEtc1 h-4 text-sm text-[#999] line-through
                       group-[.grid-cols-1]:text-base
                       group-[.grid-cols-2]:text-sm
                       group-[.grid-cols-3]:text-xs
                       group-[.grid-cols-4]:text-xs
                     ">공유이미지</div>
-                    <div className="goods__price font-bold text-[#fa5252] tracking-tight leading-tight
+                    <div className="goods__price font-bold text-[#fa5252] tracking-tight
                       group-[.grid-cols-1]:text-[300%] 
                       group-[.grid-cols-2]:text-[190%] 
                       group-[.grid-cols-3]:text-[135%] 
                       group-[.grid-cols-4]:text-[100%]
                     ">{item.price.toLocaleString()}</div>
-                    <div className="goods__name line-clamp-2 max-w-64 h-12 mt-0.5 mb-auto mx-auto font-bold leading-tight break-all
+                    <div className="goods__name line-clamp-2 max-w-64 h-12 mt-0.5 mb-auto mx-auto font-bold break-all
                       group-[.grid-cols-1]:text-xl group-[.grid-cols-1]:h-12
                       group-[.grid-cols-2]:text-lg group-[.grid-cols-2]:h-11
                       group-[.grid-cols-3]:text-sm group-[.grid-cols-3]:h-9
@@ -118,7 +118,7 @@ export default function Home() {
           </ul>
 
           {/* <!--템플릿 유형 가로형 --> */}
-          <ul id="js_changeList" className={`goods__list goods__list--type3 grid px-1 py-2.5 group grid-cols-3 gap-[1px]`}>
+          <ul id="js_changeList" className={`goods__list goods__list--type3 grid px-1 py-2.5 group grid-cols-3 gap-px`}>
             {list.map((item, index) => (
               <li key={index} onClick={() => setShowPopup2(true)}>
                 <div className="goods__card overflow-hidden w-full p-1 border border-[#d1d1d6] rounded-lg bg-white">
@@ -143,20 +143,20 @@ export default function Home() {
                       </svg>
                     </div>
                   </div>
-                  <div className="goods__info text-center">
-                    <div className="goods__delprice previewEtc1 h-4 text-sm text-[#999] leading-tight line-through
+                  <div className="goods__info text-center leading-tight">
+                    <div className="goods__delprice previewEtc1 h-4 text-sm text-[#999] line-through
                       group-[.grid-cols-1]:text-base
                       group-[.grid-cols-2]:text-sm
                       group-[.grid-cols-3]:text-xs
                       group-[.grid-cols-4]:text-xs
                     ">공유이미지</div>
-                    <div className="goods__price font-bold text-[#fa5252] tracking-tight leading-tight
+                    <div className="goods__price font-bold text-[#fa5252] tracking-tight
                       group-[.grid-cols-1]:text-[300%] 
                       group-[.grid-cols-2]:text-[190%] 
                       group-[.grid-cols-3]:text-[135%] 
                       group-[.grid-cols-4]:text-[100%]
                     ">{item.price.toLocaleString()}</div>
-                    <div className="goods__name line-clamp-2 max-w-64 h-12 mt-0.5 mb-auto mx-auto font-bold leading-tight break-all
+                    <div className="goods__name line-clamp-2 max-w-64 h-12 mt-0.5 mb-auto mx-auto font-bold break-all
                       group-[.grid-cols-1]:text-xl group-[.grid-cols-1]:h-12
                       group-[.grid-cols-2]:text-lg group-[.grid-cols-2]:h-11
                       group-[.grid-cols-3]:text-sm group-[.grid-cols-3]:h-9
@@ -169,7 +169,7 @@ export default function Home() {
           </ul>
 
           {/* <!--템플릿 유형 가로형 --> */}
-          <ul id="js_changeList" className={`goods__list goods__list--type2 grid px-1 py-2.5 group grid-cols-2 gap-[1px]`}>
+          <ul id="js_changeList" className={`goods__list goods__list--type2 grid px-1 py-2.5 group grid-cols-2 gap-px`}>
             {list.map((item, index) => (
               <li key={index} onClick={() => setShowPopup2(true)}>
                 <div className="goods__card overflow-hidden w-full p-1 border border-[#d1d1d6] rounded-lg bg-white">
@@ -194,20 +194,20 @@ export default function Home() {
                       </svg>
                     </div>
                   </div>
-                  <div className="goods__info text-center">
-                    <div className="goods__delprice previewEtc1 h-4 text-sm text-[#999] leading-tight line-through
+                  <div className="goods__info text-center leading-tight">
+                    <div className="goods__delprice previewEtc1 h-4 text-sm text-[#999] line-through
                       group-[.grid-cols-1]:text-base
                       group-[.grid-cols-2]:text-sm
                       group-[.grid-cols-3]:text-xs
                       group-[.grid-cols-4]:text-xs
                     ">공유이미지</div>
-                    <div className="goods__price font-bold text-[#fa5252] tracking-tight leading-tight
+                    <div className="goods__price font-bold text-[#fa5252] tracking-tight
                       group-[.grid-cols-1]:text-[300%] 
                       group-[.grid-cols-2]:text-[190%] 
                       group-[.grid-cols-3]:text-[135%] 
                       group-[.grid-cols-4]:text-[100%]
                     ">{item.price.toLocaleString()}</div>
-                    <div className="goods__name line-clamp-2 max-w-64 h-12 mt-0.5 mb-auto mx-auto font-bold leading-tight break-all
+                    <div className="goods__name line-clamp-2 max-w-64 h-12 mt-0.5 mb-auto mx-auto font-bold break-all
                       group-[.grid-cols-1]:text-xl group-[.grid-cols-1]:h-12
                       group-[.grid-cols-2]:text-lg group-[.grid-cols-2]:h-11
                       group-[.grid-cols-3]:text-sm group-[.grid-cols-3]:h-9
@@ -219,7 +219,7 @@ export default function Home() {
             ))}
           </ul>
           {/* <!--템플릿 유형 가로형  --> */}
-          <ul id="js_changeList" className={`goods__list grid px-1 py-2.5 group grid-cols-1 gap-[1px]`}>
+          <ul id="js_changeList" className={`goods__list grid px-1 py-2.5 group grid-cols-1 gap-px`}>
             {list.map((item, index) => (
               <li key={index} onClick={() => setShowPopup2(true)}>
                 <div className="goods__card overflow-hidden w-full p-1 border border-[#d1d1d6] rounded-lg bg-white">
@@ -244,20 +244,20 @@ export default function Home() {
                       </svg>
                     </div>
                   </div>
-                  <div className="goods__info text-center">
-                    <div className="goods__delprice previewEtc1 h-4 text-sm text-[#999] leading-tight line-through
+                  <div className="goods__info text-center leading-tight">
+                    <div className="goods__delprice previewEtc1 h-4 text-sm text-[#999] line-through
                       group-[.grid-cols-1]:text-base
                       group-[.grid-cols-2]:text-sm
                       group-[.grid-cols-3]:text-xs
                       group-[.grid-cols-4]:text-xs
                     ">공유이미지</div>
-                    <div className="goods__price font-bold text-[#fa5252] tracking-tight leading-tight
+                    <div className="goods__price font-bold text-[#fa5252] tracking-tight
                       group-[.grid-cols-1]:text-[300%] 
                       group-[.grid-cols-2]:text-[190%] 
                       group-[.grid-cols-3]:text-[135%] 
                       group-[.grid-cols-4]:text-[100%]
                     ">{item.price.toLocaleString()}</div>
-                    <div className="goods__name line-clamp-2 max-w-64 h-12 mt-0.5 mb-auto mx-auto font-bold leading-tight break-all
+                    <div className="goods__name line-clamp-2 max-w-64 h-12 mt-0.5 mb-auto mx-auto font-bold break-all
                       group-[.grid-cols-1]:text-xl group-[.grid-cols-1]:h-12
                       group-[.grid-cols-2]:text-lg group-[.grid-cols-2]:h-11
                       group-[.grid-cols-3]:text-sm group-[.grid-cols-3]:h-9
@@ -270,12 +270,14 @@ export default function Home() {
           </ul>
 
           {/* <!--템플릿 유형 세로형 --> */}
-          <ul id="js_changeList" className={`goods__list goods__list--style2 flex flex-col px-0.5 py-2.5 gap-[1px]`}>
+          <ul id="js_changeList" className={`goods__list goods__list--style2 flex flex-col px-0.5 py-2.5 gap-px`}>
             {list.map((item, index) => (
               <li key={index} onClick={() => setShowPopup2(true)}>
-                <div className="goods__card overflow-hidden flex w-full p-1 border border-[#d1d1d6] rounded-lg bg-white">
+                <div className="goods__card overflow-hidden flex w-full p-1 gap-3 border border-[#d1d1d6] rounded-lg bg-white">
                   <div className="goods__imgbox relative flex flex-col justify-center items-center w-2/5 h-32 mx-auto bg-white">
-
+                    <div className="goods__badge absolute flex top-0 left-0 size-11">
+                      <img className="max-w-full max-h-full size-auto" src={badgeImg} alt="뱃지 이미지" />
+                    </div>
                     <img className="lazyload max-w-full max-h-full size-auto" src={item.image} alt="상품 이미지" />
                     <div className="icon__cartbox flex items-center justify-center absolute right-1/20 bottom-1/20 size-9 bg-white border border-black/15 rounded-full shadow-[0_0_3px_rgba(0,0,0,0.2)]">
                       <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8">
@@ -283,10 +285,10 @@ export default function Home() {
                       </svg>
                     </div>
                   </div>
-                  <div className="goods__info flex-1">
-                    <div className="goods__delprice previewEtc1 ">공유이미지</div>
-                    <div className="goods__price">{item.price.toLocaleString()}</div>
-                    <div className="goods__name">{item.name}</div>
+                  <div className="goods__info flex-1 flex flex-col justify-center leading-tight">
+                    <div className="goods__delprice h-4 text-sm text-[#999] line-through previewEtc1 text-[#517dfb] font-bold">공유이미지</div>
+                    <div className="goods__price text-[#fa5252] text-[195%] font-bold tracking-tight">{item.price.toLocaleString()}</div>
+                    <div className="goods__name line-clamp-2 h-11 text-lg font-bold break-all">{item.name}</div>
                   </div>
                 </div>
               </li>
@@ -294,27 +296,55 @@ export default function Home() {
           </ul>
 
           {/* <!--템플릿 유형 텍스트형 --> */}
-          <ul id="js_changeList" className={`goods__list goods__list--style3`}>
+          <ul id="js_changeList" className="goods__list goods__list--style3 flex flex-col px-0.5 py-2.5 gap-px">
             {list.map((item, index) => (
               <li key={index} onClick={() => setShowPopup3(true)}>
-                <div className="goods__card">
-                  <div className="goods__imgbox" style={{ background: "white" }}>
-                    
-                    <img data-src="" className="" src={item.image} />
-                    <div className="icon__cartbox active">
-                      <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8">
-                        <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
-                      </svg>
+                <div className="goods__card relative overflow-hidden flex flex-col w-full p-1 gap-3 border border-[#d1d1d6] rounded-lg bg-white">
+                  {/* <div className="goods__imgbox relative flex flex-col justify-center items-center w-2/5 h-32 mx-auto bg-white">
+                    <div className="goods__badge absolute flex top-0 left-0 size-11">
+                      <img className="max-w-full max-h-full size-auto" src={badgeImg} alt="뱃지 이미지" />
                     </div>
+                    <img data-src=""  className="lazyload max-w-full max-h-full size-auto" src={item.image} />
+                  </div> */}
+                  <div className="icon__cartbox flex items-center justify-center absolute left-1/20 bottom-1/20 size-9 bg-white border border-black/15 rounded-full shadow-[0_0_3px_rgba(0,0,0,0.2)]">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8">
+                      <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
+                    </svg>
                   </div>
-                  <div className="goods__info">
-                    <div className="goods__name">{item.name}</div>
-                    <div className="goods__delprice previewEtc1">공유이미지</div>
-                    <div className="goods__price">{item.price.toLocaleString()}</div>
+                  <div className="goods__info flex flex-col leading-tight">
+                    <div className="goods__name line-clamp-2 h-9.5 mt-1 font-bold break-all">{item.name}</div>
+                    <div className="flex items-center justify-end gap-2">
+                      <div className="goods__delprice previewEtc1 mt-3 text-sm">공유이미지</div>
+                      <div className="goods__price text-[#fa5252] text-[195%] font-bold">{item.price.toLocaleString()}</div>
+                    </div>
                   </div>
                 </div>
               </li>
             ))}
+          </ul>
+
+          {/* <!--템플릿 유형 장문편집형 --> */}
+          <ul className="goods__list goods__list--style3 flex flex-col px-0.5 py-2.5 gap-px">
+            <li>
+              <div className="goods__card" style={{ padding: 0 }}>
+                <pre className="goods__pre">
+                  <h4><span style={{ color: "#f40e32" }}>&lt;&lt; 양곡/잡곡 &gt;&gt;</span></h4>
+                  <h4><span style={{ color: "#0e22f4" }}>신동진옥토쌀20kg 47900</span></h4>
+                  <h4><span style={{ color: "#0e22f4" }}>황토미인쌀20kg 44500</span></h4>
+                  <h4><span style={{ color: "#0e22f4" }}>맛좋은영양쌀20kg 44500</span></h4>
+                  <h4><span style={{ color: "#0e22f4" }}>옥구농협공기밥쌀20kg 43500</span></h4>
+                  <p><br /></p><h4><span style={{ color: "#f40e32" }}>&lt;&lt; 계란 &gt;&gt;</span></h4>
+                  <h4><span style={{ color: "#0e22f4" }}>왕란30구*3판 20150</span></h4>
+                  <h4><span style={{ color: "#0e22f4" }}>대란30구*3판 18550</span></h4>
+                  <h4><span style={{ color: "#0e22f4" }}>특란1판 6850</span></h4>
+                  <h4><span style={{ color: "#0e22f4" }}>메추리알20구 1550</span></h4>
+                  <h4><span style={{ color: "#0e22f4" }}>화인깐메추리알1kg 6980</span></h4>
+                  <p><br /></p><h4><span style={{ color: "#f40e32" }}>&lt;&lt;김치 / 반찬&gt;&gt;</span></h4>
+                  <h4><span style={{ color: "#0e22f4" }}>명품김치10kg 12900</span></h4>
+                  <h4><span style={{ color: "#0e22f4" }}>처가애김치10kg 11900</span></h4>
+                </pre>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
