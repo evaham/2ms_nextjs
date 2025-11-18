@@ -26,7 +26,6 @@ export default function Home() {
 
   return (
     <div className="sample min-h-screen bg-[#f7f7f7] pb-20">
-
       <div className="sticky top-0 z-50">
         <div className="sample__name clearfix relative flex justify-center items-center h-16 bg-[#21409a] font-bold text-xl" style={{ color: "", background: "" }}>
           <span className="js_fontsize mart-info flex items-center cursor-pointer" style={{ fontSize: "2rem" }} onClick={() => setShowPopup(true)}>투게더마트
@@ -409,7 +408,7 @@ export default function Home() {
                 <button className="layer__quantitybtn layer__quantitybtn--left flex justify-center items-center w-10 h-full cursor-pointer">
                   <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" className="fill-black"><path d="M200-440v-80h560v80H200Z"></path></svg>
                 </button>
-                <span className="layer__quantitynum block w-13 mx-auto text-lg text-center">1</span>
+                <input className="layer__quantitynum block w-13 mx-auto text-lg text-center" value={1} />
                 <button className="layer__quantitybtn quantity__btn--right flex justify-center items-center w-10 h-full cursor-pointer">
                   <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" className="fill-black"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"></path></svg>
                 </button>
