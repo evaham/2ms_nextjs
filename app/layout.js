@@ -25,71 +25,8 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body style={{height: "100%"}} className="min-h-screen bg-[#f7f7f7] pb-20">
-        <style>
-          {`
-        html, body {touch-action: manipulation;} 
-        .goods__pre h1{font - size:35px; line-height:40px;}
-        .goods__pre h2{font - size:30px; line-height:40px;}
-        .goods__pre h3{font - size:25px; line-height:40px;}
-        .goods__pre h4{font - size:20px; line-height:30px;}
-        .goods__pre h5{font - size:18px; line-height:30px;}
-        .goods__pre h6{font - size:16px; line-height:30px;}
-        pre{font - family:"Helvetica Neue", Helvetica, Arial, sans-serif;}
-        .sample__name{color:#fff; font-size:1.1em;}
-
-        .swiper {background: #fff; border-bottom: 1px solid #c1c1c1; width:100%; height:40px;}
-        .swiper-slide {width: auto; /* 슬라이드 너비 설정 */}
-
-        .scroll_btn .btn_comm {padding: 6px 15px; border: 1px solid #636363; background: #fff; border-radius: 20px; margin-bottom: 4px; margin-top:4px; color: #636363; font-weight:bold;}
-
-        .scroll_btn .btn_comm:active {margin - bottom: 4px; margin-top:4px; border: 1px solid #21409a; border-radius: 20px; background: #21409a; font-weight: bold; color: #fff; box-shadow: 0 1px 3px 0 rgba(0,0,0,.06); }
-        .scroll_btn .btn_comm:hover{margin - bottom: 4px; margin-top:4px; border: 1px solid #21409a; border-radius: 20px; background: #21409a; font-weight: bold; color: #fff; box-shadow: 0 1px 3px 0 rgba(0,0,0,.06); }
-
-        .cnList .btn_comm {margin - right: 8px; margin-bottom: 4px; border: 1px solid #636363; background: #fff; border-radius: 20px; color: #636363; font-weight:bold;}
-        .cnList .btn_comm:hover {border: 1px solid #21409a; border-radius: 20px; background: #21409a; font-weight: bold; color: #fff; box-shadow: 0 1px 3px 0 rgba(0,0,0,.06); }
-        .radio_comm input[type=radio] {margin - left: 4px; margin-right: 4px;}
-        .thumb {cursor: pointer; }
-
-
-        /* 하단 sticky 버튼그룹 */
-        .wrap_stickyfooter {display: block; position: fixed; right:0; bottom: 80px; z-index:11; overflow-x: hidden;} /* sticky를 fixed로 변경 */
-        .btn_movetop {display: flex; flex-direction: column; align-items: center; justify-content: center; width: 60px; height:60px; margin:0 10px 10px auto;  font-size: 11px; font-weight: normal; line-height: 1; letter-spacing: -1px; border-radius: 30px; background: rgba(0, 0, 0, .7); color: #fff; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .3)}
-        .btn_movetop:hover {background: #333; text-decoration: none;}
-        .btn_movecoupon {
-          display: flex;
-        width: 150px;
-        height: auto;
-        margin: 10px 0 10px auto;
-        opacity: 0;
-        transform: translateX(100%);
-        transition: opacity 1s ease, transform 1s ease;
-	}
-        .btn_movecoupon:hover {text - decoration: none;}
-	.btn_movecoupon > span {font - size: 16px; font-weight: 600; line-height: 1.2; letter-spacing: -1px;}
-	.btn_movecoupon > span > span {font - size: 12px; font-weight: normal; color: #ffebeb;}
-        .btn_couponuse {display: flex; align-items: center; justify-content: center; border-radius: 5px; margin: 4px; padding: 8px; border: 1px solid rgb(253 164 175); background-color: rgb(255, 228, 230);}
-        .btn_couponuse:hover {text - decoration: none;}
-	.btn_couponuse > span {margin - left: 5px; font-size: 16px; font-weight: 600; letter-spacing: -1px;}
-        /* 애니메이션 적용을 위한 클래스 */
-        @keyframes slideIn {
-          from {
-          transform: translateX(100%);
-        opacity: 0;
-	    }
-        to {
-          transform: translateX(0);
-        opacity: 1;
-	    }
-	}
-        .btn_movecoupon.slide-in {
-          opacity: 1;
-        transform: translateX(0);
-	}
-      `}</style>
-        <div className="sample">
-          {children}
-          <FooterMenu />
-        </div>
+        {children}
+        <FooterMenu />
         {/* <LayerPopup /> */}
       </body>
     </html>

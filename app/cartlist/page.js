@@ -21,8 +21,9 @@ export default function CartList(){
     return (
         <>
             <div style={{ position: "sticky", zIndex: 999, top: 0 }}>
-                <div className="sample__name clearfix" style={{ color: "", background: "" }}>
-                    <Link href={"/"} className="sample__back" >
+                <div className="sample__name clearfix clearfix relative flex justify-center items-center h-64 bg-[#21409a] text-xl text-white font-bold"  
+                    style={{ color: "", background: "" }}>
+                    <Link href={"/"} className="sample__tel block absolute top-3.5 right-1.5 size-8 p-1 rounded-full bg-[#fafafa]" >
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z" /></svg>
                     </Link>
                     <span className="js_fontsize" style={{ fontSize: "20px" }}>장바구니</span>

@@ -38,14 +38,7 @@ body {
 
 /* 기본형 */
 html, body {@apply touch-manipulation;}
-.goods__pre h1{@apply text-[35px] leading-[40px];}
-.goods__pre h2{@apply text-[30px] leading-[40px];}
-.goods__pre h3{@apply text-[25px] leading-[40px];}
-.goods__pre h4{@apply text-[20px] leading-[30px];}
-.goods__pre h5{@apply text-[18px] leading-[30px];}
-.goods__pre h6{@apply text-[16px] leading-[30px];}
 
-pre{@apply font-sans;}
 .sample__name{@apply text-white text-[1.1em];}
 
 .swiper {@apply bg-white border-b border-[#c1c1c1] w-full h-[40px];}
@@ -61,7 +54,7 @@ pre{@apply font-sans;}
 .thumb {@apply cursor-pointer;}
 
 /* 하단 sticky 버튼그룹 */
-.wrap_stickyfooter {@apply block fixed right-0 bottom-[64px] z-[11] overflow-x-hidden;}
+/* .wrap_stickyfooter {@apply block fixed right-0 bottom-[64px] z-[11] overflow-x-hidden;}
 .btn_movetop {@apply flex flex-col items-center justify-center w-[60px] h-[60px] m-0 mr-auto mb-[10px] text-[11px] font-normal leading-none tracking-tight rounded-full bg-[rgba(0,0,0,.7)] text-white shadow-[0_4px_6px_-1px_rgba(0,0,0,.3)];}
 .btn_movetop:hover {@apply bg-[#333] no-underline;}
 .btn_movecoupon {@apply flex w-[150px] h-auto m-[10px_0_10px_auto] opacity-0 translate-x-full transition-opacity transition-transform duration-1000;}
@@ -70,7 +63,7 @@ pre{@apply font-sans;}
 .btn_movecoupon > span > span {@apply text-[12px] font-normal text-[#ffebeb];}
 .btn_couponuse {@apply flex items-center justify-center rounded m-1 p-2 border border-[#FDA4AF] bg-[#FFE4E6];}
 .btn_couponuse:hover {@apply no-underline;}
-.btn_couponuse > span {@apply ml-1 text-[16px] font-semibold tracking-tight;}
+.btn_couponuse > span {@apply ml-1 text-[16px] font-semibold tracking-tight;} */
 
 /* 애니메이션 적용을 위한 클래스 */
 @keyframes slideIn {
