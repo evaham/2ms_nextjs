@@ -25,7 +25,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="sample min-h-screen bg-[#f7f7f7] pb-20">
+    <div className="sample min-h-dvh bg-[#f7f7f7] pb-20">
       <div className="sticky top-0 z-50">
         <div className="sample__name clearfix relative flex justify-center items-center h-16 bg-[#21409a] font-bold text-xl" style={{ color: "", background: "" }}>
           <span className="js_fontsize mart-info flex items-center cursor-pointer" style={{ fontSize: "2rem" }} onClick={() => setShowPopup(true)}>투게더마트
