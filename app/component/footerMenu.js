@@ -12,7 +12,7 @@ const FooterMenu = () => {
 
     return (
         <>
-            <div className="footermenu fixed bottom-0 flex justify-around items-center w-full h-20 bg-white shadow-[0_0_12px_rgba(22,29,36,.1)] z-50">
+            <div className="footermenu sticky bottom-0 flex justify-around items-center w-full h-20 bg-white shadow-[0_0_12px_rgba(22,29,36,.1)] z-50">
                 <Link
                     className={`footermenu__link flex-1 relative flex flex-col justify-center items-center w-16 h-16 text-xs text-[#666] no-underline
                         ${pathname === "/" ? "active font-bold text-blue-500 [&_svg]:fill-[#3b82f6]" : "[&_svg]:fill-[#94a3b8]"}`}
