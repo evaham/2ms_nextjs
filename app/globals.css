@@ -39,7 +39,7 @@ body {
 /* 기본형 */
 html, body {@apply touch-manipulation;}
 
-.sample__name{@apply text-white text-[1.1em];}
+/* .sample__name{@apply text-white text-[1.1em];} */
 
 .swiper {@apply bg-white border-b border-[#c1c1c1] w-full h-[40px];}
 .swiper-slide {@apply w-auto;}
@@ -79,11 +79,9 @@ html, body {@apply touch-manipulation;}
 .btn_movecoupon.slide-in {
   @apply opacity-100 translate-x-0;
 }
-
 .iconbtn {
   @apply inline-block relative w-[26px] h-[26px] bg-white border border-[#ced4da] rounded align-middle;
 }
-
 .iconbtn > img {
   @apply absolute top-1/2 left-1/2 opacity-50;
   margin-top: -12px;
