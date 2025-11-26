@@ -78,7 +78,7 @@ export default function Home() {
                 </div>
                 <div className="goods w-full">
                 {/* <!--템플릿 유형 가로형 --> */}
-                <ul id="" className="goods__list goods__list--type2 grid px-0.5 py-2.5 group grid-cols-4 gap-px overflow-y-hidden">
+                <ul id="" className="goods__list goods__list--type2 grid px-0.5 py-2.5 group grid-cols-4 gap-px overflow-x-hidden">
                     {list.map((item, index) => (
                     <li key={index} onClick={() => {setShowPopup2(true); setOrderSystem(true);}} data-effectjs="fade-up">
                         <div className="goods__card overflow-hidden w-full p-1 border border-[#d1d1d6] rounded-lg bg-white">
@@ -128,7 +128,7 @@ export default function Home() {
                 </ul>
                
                 {/* <!--템플릿 유형 세로형 --> */}
-                <ul id="" className={`goods__list goods__list--style2 flex flex-col px-0.5 py-2.5 gap-px overflow-y-hidden`}>
+                <ul id="" className={`goods__list goods__list--style2 flex flex-col px-0.5 py-2.5 gap-px overflow-x-hidden`}>
                     {list.map((item, index) => (
                     <li key={index} onClick={() => setShowPopup2(true)} data-effectjs={index % 2 === 0 ? 'slide-left' : 'slide-right'} data-effectjs-duration="500">
                         <div className="goods__card overflow-hidden flex w-full p-1 gap-3 border border-[#d1d1d6] rounded-lg bg-white">
