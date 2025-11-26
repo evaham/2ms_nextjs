@@ -25,12 +25,12 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></link> */}
-        <link rel="stylesheet" href="/effectjs/effect-js.min.css" />
+        <link rel="stylesheet" href="effectjs/effect-js.min.css" />
       </head>
       <body style={{height: "100%"}} className="bg-slate-50">
         {children}
         <FooterMenu />
-        <Script src="/effectjs/effect-js.min.js" strategy="afterInteractive" />
+        <Script src="effectjs/effect-js.min.js" strategy="afterInteractive" />
       </body>
     </html>
   );
