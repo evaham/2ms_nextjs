@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import FooterMenu from "./component/footerMenu";
-import UserInfoWrite from "./component/userInfoWrite";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,10 +23,14 @@ export default function RootLayout({ children }) {
     <html lang="ko">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        {/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></link> */}
+        <link rel="stylesheet" href="/effectjs/effect-js.min.css" />
       </head>
-      <body style={{height: "100%"}} className="bg-[#f7f7f7]">
+      <body style={{height: "100%"}} className="bg-slate-50">
         {children}
         <FooterMenu />
+        <Script src="/effectjs/effect-js.min.js" strategy="afterInteractive" />
       </body>
     </html>
   );

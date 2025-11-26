@@ -9,25 +9,25 @@ export default function Home() {
     const [showPopup3, setShowPopup3] = useState(false);
     const [showPopup4, setShowPopup4] = useState(false);
 
+    const bannerImg = "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/image_audit/prod/26a4f3e8-5f26-4f9d-9404-18aa4680fa79_fixing_v2.png";
 
-    const sampleImg = "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg";
-    const bannerImg = "http://tdc-api-dev-3.togethers.kr:2004/WebLink/642/aaeb19e4-44ab-4dd8-8174-c82b59d5b6b1.jpeg";
+    const sampleImg = "https://image6.coupangcdn.com/image/mypromotion/CPI90_banner.png";
     const bannerImg2 = "http://tdc-api-dev-3.togethers.kr:8082/2ms/static/img/group_purchase.png";
-    const eventImg = "http://tdc-api-dev-3.togethers.kr:2004/WebLink/641/d-6e02dd2b-714c-4ac6-8da8-dd6a6455a216.png";
+    const eventImg = "//thumbnail.coupangcdn.com/thumbnails/remote/292x292ex/image/retail/images/77063589846760-dcd9d195-fbe6-49cb-b171-c2de956fac70.jpg";
     const badgeImg = "http://tdc-api-dev-3.togethers.kr:2004/WebLink/641/20221111_174111_272.png";
     const testImg = "http://tdc-api-dev-3.togethers.kr:2004/WebLink/641/d-abcc9566-cb5e-4767-bb01-10cdd49182b5.png";
 
     const list = [
         { id: 1, name: "자연그린 김밥단무지1", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
         { id: 2, name: "자연그린 김밥단무지2", cart: false, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
+        { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
         { id: 4, name: "자연그린 김밥단무지4", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
         { id: 5, name: "자연그린 김밥단무지4단무지4단무지4", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
     ];
 
   return (
     <>
-        <div className="sample min-h-screen bg-[#f7f7f7] pb-20">
+        <div className='sample relative flex flex-col min-h-screen pb-20 bg-slate-50'>
             <div className="sticky top-0 z-50">
                 <div className="sample__name clearfix relative flex justify-center items-center h-16 bg-[#21409a] text-xl text-white font-bold" style={{ color: "", background: "" }}>
                 <span className="js_fontsize mart-info flex items-center cursor-pointer" style={{ fontSize: "2rem" }} onClick={() => setShowPopup(true)}>투게더마트
@@ -57,7 +57,7 @@ export default function Home() {
                 <span className="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
             </div>
 
-            <div className="group-purchase">
+            <div className="group-purchase animate-slide-in-left">
                 <a href="http://naver.com">
                 <img className="w-full" src={bannerImg2} alt="공동구매 배너" />
                 </a>
@@ -66,7 +66,7 @@ export default function Home() {
             {/* <!-- 행사코너 --> */}
             <div style={{ background: "#fff382" }}>
                 {/* <!-- <span>행사코너1 배너</span> --> */}
-                <div className="sample__banner sample__banner--type2 flex text-center bg-slate-300">
+                <div className="sample__banner sample__banner--type2 flex items-center justify-center min-h-20 bg-slate-300">
                 <img className="size-full" src={eventImg} alt="행사코너 배너" />
                 </div>
                 <div className="goods w-full">
@@ -77,9 +77,7 @@ export default function Home() {
                         <div className="goods__card overflow-hidden w-full p-1 border border-[#d1d1d6] rounded-lg bg-white">
                         <div className="goods__imgbox relative flex flex-col justify-center items-center mx-auto bg-white group-[.grid-cols-2]:h-36 group-[.grid-cols-3]:h-23 group-[.grid-cols-4]:h-18" style={{ background: "white" }}>
                             <div className="goods__badge absolute flex top-0 left-0 size-17 
-                            group-[.grid-cols-2]:size-12 
-                            group-[.grid-cols-3]:size-8
-                            group-[.grid-cols-4]:size-6
+                                group-[.grid-cols-2]:size-12 group-[.grid-cols-3]:size-8 group-[.grid-cols-4]:size-6
                             ">
                             <img className="max-w-full max-h-full size-auto" src={badgeImg} alt="뱃지 이미지" />
                             </div>
@@ -125,7 +123,7 @@ export default function Home() {
                 {/* <!--템플릿 유형 세로형 --> */}
                 <ul id="" className={`goods__list goods__list--style2 flex flex-col px-0.5 py-2.5 gap-px`}>
                     {list.map((item, index) => (
-                    <li key={index} onClick={() => setShowPopup2(true)}>
+                    <li key={index} onClick={() => setShowPopup2(true)} className="500 effectJs-init" data-effectjs="slide-right"data-effectjs-duration="500">
                         <div className="goods__card overflow-hidden flex w-full p-1 gap-3 border border-[#d1d1d6] rounded-lg bg-white">
                         <div className="goods__imgbox relative flex flex-col justify-center items-center w-2/5 h-32 mx-auto bg-white">
                             <div className="goods__badge absolute flex top-0 left-0 size-11">

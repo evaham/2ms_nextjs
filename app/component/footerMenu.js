@@ -33,19 +33,19 @@ const FooterMenu = () => {
     return (
         <>
             <div className="footermenu fixed bottom-0 flex justify-around items-center w-full h-20 bg-white shadow-[0_0_12px_rgba(22,29,36,.1)] z-50">
-                <Link className={`footermenu__link flex-1 relative flex flex-col justify-center items-center w-16 h-16 text-xs text-[#666] no-underline
-                        ${pathname === "/" ? "active font-bold text-blue-500 [&_svg]:fill-[#3b82f6]" : "[&_svg]:fill-[#94a3b8]"}`}
+                <Link className={`footermenu-link flex-1 relative flex flex-col justify-center items-center w-16 h-16 text-xs no-underline
+                        ${pathname === "/" ? "active font-bold text-blue-500 [&_svg]:fill-blue-500" : "[&_svg]:fill-slate-400"}`}
                     href={"/"}
                 >
                     {pathname === "/" ? (
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill='#3b82f6'><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z" /></svg>
                     ) : (
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#94a3b8"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" /></svg>
                     )}
                     <span>전단</span>
                 </Link>
-                <Link className={`footermenu__link flex-1 relative flex flex-col justify-center items-center w-16 h-16 text-xs no-underline
-                        ${pathname === "/couponlist" ? "active font-bold text-blue-500 [&_svg]:fill-[#3b82f6]" : "[&_svg]:fill-[#94a3b8]"}`}
+                <Link className={`footermenu-link flex-1 relative flex flex-col justify-center items-center w-16 h-16 text-xs no-underline
+                        ${pathname === "/couponlist" ? "active font-bold text-blue-500 [&_svg]:fill-blue-500" : "[&_svg]:fill-slate-400"}`}
                     href={"/couponlist"} onClick={handleLinkClick('/couponlist')}
                 >
                     {pathname === "/couponlist" ? (
@@ -55,8 +55,8 @@ const FooterMenu = () => {
                     )}
                     <span>쿠폰</span>
                 </Link>
-                <Link className={`footermenu__link flex-1 relative flex flex-col justify-center items-center w-16 h-16 text-xs no-underline
-                        ${pathname === "/cartlist" ? "active font-bold text-blue-500 [&_svg]:fill-[#3b82f6]" : "[&_svg]:fill-[#94a3b8]"}`}
+                <Link className={`footermenu-link flex-1 relative flex flex-col justify-center items-center w-16 h-16 text-xs no-underline
+                        ${pathname === "/cartlist" ? "active font-bold text-blue-500 [&_svg]:fill-blue-500" : "[&_svg]:fill-slate-400"}`}
                     href={"/cartlist"} onClick={handleLinkClick('/cartlist')}
                 >
                     <span className='footermenu__num absolute top-1/2 left-1/2 flex justify-center items-center min-w-4.5 h-4.5 -mt-7.5 ml-1.5 px-1 rounded-full text-xs text-white font-bold bg-[#f43f5e]'>99</span>
@@ -68,8 +68,8 @@ const FooterMenu = () => {
                     )}
                     <span>장바구니</span>
                 </Link>
-                <Link className={`footermenu__link flex-1 relative flex flex-col justify-center items-center w-16 h-16 text-xs no-underline
-                        ${pathname === "/orderslist" ? "active font-bold text-blue-500 [&_svg]:fill-[#3b82f6]" : "[&_svg]:fill-[#94a3b8]"}`}
+                <Link className={`footermenu-link flex-1 relative flex flex-col justify-center items-center w-16 h-16 text-xs no-underline
+                        ${pathname === "/orderslist" ? "active font-bold text-blue-500 [&_svg]:fill-blue-500" : "[&_svg]:fill-slate-400"}`}
                     href={"/orderslist"} onClick={handleLinkClick('/orderslist')}
                 >
                     {pathname === "/orderslist" ? (

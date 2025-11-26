@@ -30,11 +30,14 @@ export default function UserInfoWrite({onClose}) {
                         {/* 개인정보 안내 모달 */}
                         {showPopup && (
                             <div className="encrypt-popup-bg fixed inset-0 flex justify-center items-center w-full h-full p-2.5 bg-black/50 z-10" style={{display:''}}>
-                                <div className="encrypt-modalbox popup relative flex flex-col w-full p-2.5 rounded bg-slate-50">
+                                <div className="encrypt-modalbox popup relative flex flex-col w-full p-2.5 rounded-2xl bg-slate-50">
                                     <button type="button" onClick={() => setShowPopup(false)} className="encrypt-modalbox-close absolute top-3 right-3 flex justify-center items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#666"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
                                     </button>
-                                    <div className="encrypt-popup-div overflow-y-auto h-120 mt-8">
+                                    <div className="encrypt-popup-div overflow-y-auto h-120 mt-8
+                                        [&_h3,&_h4]:font-bold [&_h3]:text-lg [&_h4]:text-md 
+                                        [&_table]:w-full [&_table]:border [&_table]:text-sm [&_table_td]:border [&_table_td]:border-slate-400 [&_table_td]:p-2
+                                    ">
                                         <h3>개인정보 수집·이용 동의서</h3>
                                         <br />
                                         ㈜투게더스는 『개인정보보호법』 제15조 개인정보의 수집·이용에 따라 귀하의 개인정보를 수집하고자 합니다.
