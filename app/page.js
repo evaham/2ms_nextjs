@@ -123,7 +123,7 @@ export default function Home() {
                 {/* <!--템플릿 유형 세로형 --> */}
                 <ul id="" className={`goods__list goods__list--style2 flex flex-col px-0.5 py-2.5 gap-px`}>
                     {list.map((item, index) => (
-                    <li key={index} onClick={() => setShowPopup2(true)} className="500 effectJs-init" data-effectjs="slide-right"data-effectjs-duration="500">
+                    <li key={index} onClick={() => setShowPopup2(true)} className="" data-effectjs="slide-right" data-effectjs-duration="500">
                         <div className="goods__card overflow-hidden flex w-full p-1 gap-3 border border-[#d1d1d6] rounded-lg bg-white">
                         <div className="goods__imgbox relative flex flex-col justify-center items-center w-2/5 h-32 mx-auto bg-white">
                             <div className="goods__badge absolute flex top-0 left-0 size-11">
