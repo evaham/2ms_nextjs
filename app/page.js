@@ -21,6 +21,13 @@ export default function Home() {
         { id: 1, name: "자연그린 김밥단무지1", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
         { id: 2, name: "자연그린 김밥단무지2", cart: false, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
         { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
+        { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
+        { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
+        { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
+        { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
+        { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
+        { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
+        { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
         { id: 4, name: "자연그린 김밥단무지4", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
         { id: 5, name: "자연그린 김밥단무지4단무지4단무지4", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
     ];
@@ -73,7 +80,7 @@ export default function Home() {
                 {/* <!--템플릿 유형 가로형 --> */}
                 <ul id="" className="goods__list goods__list--type2 grid px-0.5 py-2.5 group grid-cols-4 gap-px">
                     {list.map((item, index) => (
-                    <li key={index} onClick={() => {setShowPopup2(true); setOrderSystem(true);}}>
+                    <li key={index} onClick={() => {setShowPopup2(true); setOrderSystem(true);}} data-effectjs="fade-up">
                         <div className="goods__card overflow-hidden w-full p-1 border border-[#d1d1d6] rounded-lg bg-white">
                         <div className="goods__imgbox relative flex flex-col justify-center items-center mx-auto bg-white group-[.grid-cols-2]:h-36 group-[.grid-cols-3]:h-23 group-[.grid-cols-4]:h-18" style={{ background: "white" }}>
                             <div className="goods__badge absolute flex top-0 left-0 size-17 
@@ -123,7 +130,7 @@ export default function Home() {
                 {/* <!--템플릿 유형 세로형 --> */}
                 <ul id="" className={`goods__list goods__list--style2 flex flex-col px-0.5 py-2.5 gap-px`}>
                     {list.map((item, index) => (
-                    <li key={index} onClick={() => setShowPopup2(true)} className="" data-effectjs="slide-right" data-effectjs-duration="500">
+                    <li key={index} onClick={() => setShowPopup2(true)} data-effectjs={index % 2 === 0 ? 'slide-left' : 'slide-right'} data-effectjs-duration="500">
                         <div className="goods__card overflow-hidden flex w-full p-1 gap-3 border border-[#d1d1d6] rounded-lg bg-white">
                         <div className="goods__imgbox relative flex flex-col justify-center items-center w-2/5 h-32 mx-auto bg-white">
                             <div className="goods__badge absolute flex top-0 left-0 size-11">
@@ -151,7 +158,8 @@ export default function Home() {
                     {list.map((item, index) => (
                     <li key={index} onClick={() => {setShowPopup2(true),setOrderSystem()}}>
                         <div className="goods__card relative overflow-hidden flex flex-col w-full p-1 gap-3 border border-[#d1d1d6] rounded-lg bg-white">
-                        <div className="goods__imgbox relative flex flex-col justify-center items-center w-2/5 h-32 mx-auto bg-white">
+                        {/* 이미지 안보임 */}
+                        <div className="goods__imgbox relative flex flex-col justify-center items-center w-2/5 h-32 mx-auto bg-white" style={{ display: 'none'}}>
                             <div className="goods__badge absolute flex top-0 left-0 size-11">
                                 <img className="max-w-full max-h-full size-auto" src={badgeImg} alt="뱃지 이미지" />
                             </div>
