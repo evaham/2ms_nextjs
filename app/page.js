@@ -74,11 +74,11 @@ export default function Home() {
             <div style={{ background: "#fff382" }}>
                 {/* <!-- <span>행사코너1 배너</span> --> */}
                 <div className="sample__banner sample__banner--type2 flex items-center justify-center min-h-20 bg-slate-300">
-                <img className="size-full" src={eventImg} alt="행사코너 배너" />
+                    <img className="size-full" src={eventImg} alt="행사코너 배너" />
                 </div>
                 <div className="goods w-full">
                 {/* <!--템플릿 유형 가로형 --> */}
-                <ul id="" className="goods__list goods__list--type2 grid px-0.5 py-2.5 group grid-cols-4 gap-px overflow-x-hidden">
+                <ul id="" className="goods__list goods__list--type2 grid px-0.5 py-2.5 group grid-cols-1 gap-px overflow-x-hidden">
                     {list.map((item, index) => (
                     <li key={index} onClick={() => {setShowPopup2(true); setOrderSystem(true);}} data-effectjs="fade-up">
                         <div className="goods__card overflow-hidden w-full p-1 border border-[#d1d1d6] rounded-lg bg-white">
@@ -90,12 +90,8 @@ export default function Home() {
                             </div>
                             <img className="lazyload max-w-full max-h-full size-auto" src={item.image} alt="상품 이미지" />
 
-                            <div className="icon__cartbox flex items-center justify-center absolute right-1/20 bottom-1/20 bg-white border border-black/15 rounded-full shadow-[0_0_3px_rgba(0,0,0,0.2)] 
-                            group-[.grid-cols-1]:size-11 
-                            group-[.grid-cols-2]:size-11 
-                            group-[.grid-cols-3]:size-8 
-                            group-[.grid-cols-4]:size-7
-                            
+                            <div className="icon__cartbox active flex items-center justify-center absolute right-1/20 bottom-1/20 bg-white border border-black/15 rounded-full shadow-[0_0_3px_rgba(0,0,0,0.2)] 
+                                group-[.grid-cols-1]:size-11 group-[.grid-cols-2]:size-11 group-[.grid-cols-3]:size-8 group-[.grid-cols-4]:size-7 [&.active]:border-blue-300 [&.active_svg]:fill-blue-500
                             ">
                             <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8">
                                 <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />

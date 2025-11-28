@@ -27,7 +27,7 @@ export default function CartList(){
         <>
             <div className='sample relative flex flex-col min-h-screen pb-20 bg-slate-50'>
                 <div className="sticky top-0 z-50">
-                    <div className="sample__name clearfix clearfix relative flex justify-center items-center h-16 bg-[#21409a] text-xl text-white font-bold"  
+                    <div className="sample__name clearfix relative flex justify-center items-center h-16 bg-[#21409a] text-xl text-white font-bold"  
                         style={{ color: "", background: "" }}
                     >
                         <Link href={"/"} className="sample__back flex justify-center items-center absolute top-0 left-0 w-13 h-full text-white no-underline" >
@@ -36,36 +36,37 @@ export default function CartList(){
                         <span className="js_fontsize" style={{ fontSize: "20px" }}>장바구니</span>
                     </div>
                 </div>
-                <div className="info-div flex justify-center items-center min-h-8 text-sm text-red-600 bg-[#fee2e2]">
+                <div className="info-div flex justify-center items-center min-h-8 text-sm text-red-600 bg-red-50">
                     ⓘ 행사를 종료한 상품은 장바구니에서 자동 삭제합니다.
                 </div>
-                <div className="control-div flex items-center min-h-10 px-2.5 bg-white">
-                    <label className="flex gap-1 text-sm">
-                        <input id="checkboxall" type="checkbox" className="chkAll w-5 h-5" defaultChecked />
-                        전체 선택
-                    </label>
-                    <button className="delete-all flex ml-auto px-1 border rounded text-sm items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 -960 960 960" width="25px"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
-                        선택 삭제
-                    </button>
-                </div>
+
 
 
 
                 {!showData ? (
-                    <div className="empty-div flex flex-col justify-center items-center h-60 gap-4">
-                        <div className='flex flex-col my-20 text-xl text-gray-500 font-bold'>
-                            주문내역이 없습니다.
+                    <div className="empty-div flex flex-col justify-center items-center min-h-60">
+                        <div className='flex flex-col items-center my-20 text-xl text-center font-bold text-slate-400'>
+                            장바구니가 비어 있습니다.
                         </div>
                         <button className='border' onClick={()=>setShowData(true)}>테스트용 화면전환</button>
                     </div>
                 ) : (
                     <>
+                    <div className="control-div flex items-center min-h-10 px-2.5 bg-white">
+                        <label className="flex gap-1 text-sm">
+                            <input id="checkboxall" type="checkbox" className="chkAll size-5" defaultChecked />
+                            전체 선택
+                        </label>
+                        <button className="delete-all flex ml-auto px-1 border rounded text-sm items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 -960 960 960" width="25px"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
+                            선택 삭제
+                        </button>
+                    </div>
                     <div className="cart-list flex flex-col mt-1.5 px-1 pb-2.5 gap-0.5">
                         {list.map((item, index) => (
                             <div key={index} className="cart-div relative flex gap-2 px-2.5 py-5 rounded  border border-slate-200 bg-white">
                                 <div className="flex items-center">
-                                    <input type="checkbox" className="w-5 h-5" />
+                                    <input type="checkbox" className="chkChoose size-5" />
                                 </div>
                                 <img src={item.image} alt={item.name} className="cartitem__img size-20 object-cover aspect-square" />
                                 <div className="product-info flex-1 flex flex-col">
