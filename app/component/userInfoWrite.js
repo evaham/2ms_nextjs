@@ -13,9 +13,9 @@ export default function UserInfoWrite({onClose}) {
                     <p className="encrypt-title mb-2 text-xl text-center font-bold leading-tight">고객정보</p>
                     <div className="overflow-y-auto flex flex-col max-h-96 rounded-lg bg-white p-4">
                         <label className="encrypt-txt mb-2 text-lg font-bold leading-tight">온라인 주문 및 쿠폰기능을 사용하기 위해 휴대폰 번호를 입력해주세요</label>
-                        <p className="encrypt-mobile flex px-2.5 py-1.5 bg-white border border-black/10 rounded-lg text-lg tracking-widest">
+                        <p className="encrypt-mobile flex px-2.5 py-1.5 bg-white border border-black/10 rounded-lg text-lg tracking-widest focus-within:border-blue-500">
                             010-
-                            <input type="text" maxLength="9" inputMode="numeric" className="w-full text-lg tracking-widest" />
+                            <input type="text" maxLength="9" inputMode="numeric" className="w-full text-lg outline-none tracking-widest" />
                         </p>
                         <div className="flex mx-auto my-6">
                             <label className="flex">

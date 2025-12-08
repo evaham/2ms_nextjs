@@ -83,7 +83,6 @@ export default function ordersdetail() {
                                                 <span className="cp-price ml-auto font-bold text-[#dc2626]">-1,000 원</span>
                                             </div>
                                         )}
-
                                     </li>
                                 ))}
                             </ul>

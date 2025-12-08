@@ -56,7 +56,7 @@ export default function Home() {
                 <img className="size-full" src={bannerImg} alt="배너이미지" />
             </div>
 
-            <div className="swiper mySwiper swiper-initialized swiper-horizontal swiper-free-mode swiper-backface-hidden sticky w-full h-10 border-b border-slate-300 bg-white z-50" style={{ top: 110 }}>
+            <div className="swiper mySwiper swiper-initialized swiper-horizontal swiper-free-mode swiper-backface-hidden sticky w-full h-10 border-b border-slate-300 bg-white z-40" style={{ top: 110 }}>
                 <div className="scroll_btn swiper-wrapper" style={{ height: "80%" }} id="swiper-wrapper-d43ae10c1abe2cef9" aria-live="polite">
                 <div className="btn_comm btn_0 swiper-slide swiper-slide-active" onClick={() => scrollBubble(0)} role="group" aria-label="1 / 2" style={{ marginRight: "5px" }}>행사코너1</div>
                 <div className="btn_comm btn_1 swiper-slide swiper-slide-next" onClick={() => scrollBubble(1)} role="group" aria-label="2 / 2" style={{ marginRight: "5px" }}>행사코너2</div>
@@ -78,10 +78,10 @@ export default function Home() {
                 </div>
                 <div className="goods w-full">
                 {/* <!--템플릿 유형 가로형 --> */}
-                <ul id="" className="goods__list goods__list--type2 grid px-0.5 py-2.5 group grid-cols-1 gap-px overflow-x-hidden">
+                <ul id="" className="goods__list goods__list--type2 grid px-0.5 py-2.5 group grid-cols-1 gap-px overflow-hidden">
                     {list.map((item, index) => (
                     <li key={index} onClick={() => {setShowPopup2(true); setOrderSystem(true);}} data-effectjs="fade-up">
-                        <div className="goods__card overflow-hidden w-full p-1 border border-[#d1d1d6] rounded-lg bg-white">
+                        <div className="goods__card relative overflow-hidden w-full p-1 border border-[#d1d1d6] rounded-lg bg-white">
                         <div className="goods__imgbox relative flex flex-col justify-center items-center mx-auto bg-white group-[.grid-cols-2]:h-36 group-[.grid-cols-3]:h-23 group-[.grid-cols-4]:h-18" style={{ background: "white" }}>
                             <div className="goods__badge absolute flex top-0 left-0 size-17 
                                 group-[.grid-cols-2]:size-12 group-[.grid-cols-3]:size-8 group-[.grid-cols-4]:size-6
@@ -124,23 +124,25 @@ export default function Home() {
                 </ul>
                
                 {/* <!--템플릿 유형 세로형 --> */}
-                <ul id="" className={`goods__list goods__list--style2 flex flex-col px-0.5 py-2.5 gap-px overflow-x-hidden`}>
+                <ul id="" className={`goods__list goods__list--style2 flex flex-col px-0.5 py-2.5 gap-px overflow-hidden`}>
                     {list.map((item, index) => (
                     <li key={index} onClick={() => setShowPopup2(true)} data-effectjs={index % 2 === 0 ? 'slide-left' : 'slide-right'} data-effectjs-duration="500">
                         <div className="goods__card overflow-hidden flex w-full p-1 gap-3 border border-[#d1d1d6] rounded-lg bg-white">
                         <div className="goods__imgbox relative flex flex-col justify-center items-center w-2/5 h-32 mx-auto bg-white">
                             <div className="goods__badge absolute flex top-0 left-0 size-11">
-                            <img className="max-w-full max-h-full size-auto" src={badgeImg} alt="뱃지 이미지" />
+                                <img className="max-w-full max-h-full size-auto" src={badgeImg} alt="뱃지 이미지" />
                             </div>
                             <img className="lazyload max-w-full max-h-full size-auto" src={item.image} alt="상품 이미지" />
-                            <div className="icon__cartbox flex items-center justify-center absolute right-1/20 bottom-1/20 size-9 bg-white border border-black/15 rounded-full shadow-[0_0_3px_rgba(0,0,0,0.2)]">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8">
-                                <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
-                            </svg>
+                            <div className="icon__cartbox flex items-center justify-center absolute right-1/20 bottom-1/20 size-9 bg-white border border-black/15 rounded-full shadow-[0_0_3px_rgba(0,0,0,0.2)]
+                                [&.active]:border-blue-300 [&.active_svg]:fill-blue-500
+                            ">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8">
+                                    <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
+                                </svg>
                             </div>
                         </div>
                         <div className="goods__info flex-1 flex flex-col justify-center">
-                            <div className="goods__delprice h-4 text-sm text-[#999] line-through leading-tight previewEtc1 text-[#517dfb] font-bold">공유이미지</div>
+                            <div className="goods__delprice previewEtc1 h-4 text-sm text-[#999] line-through leading-tight [&.previewEtc1]:text-[#517dfb] [&.previewEtc1]:font-bold [&.previewEtc1]:no-underline">공유이미지</div>
                             <div className="goods__price text-[#fa5252] text-[195%] font-bold tracking-tight leading-tight">{item.price.toLocaleString()}</div>
                             <div className="goods__name line-clamp-2 h-11 text-lg font-bold break-all leading-tight">{item.name}</div>
                         </div>
@@ -161,7 +163,9 @@ export default function Home() {
                             </div>
                             <img data-src=""  className="lazyload max-w-full max-h-full size-auto" src={item.image} />
                         </div>
-                        <div className="icon__cartbox flex items-center justify-center absolute left-1/20 bottom-1/20 size-9 bg-white border border-black/15 rounded-full shadow-[0_0_3px_rgba(0,0,0,0.2)]">
+                        <div className="icon__cartbox flex items-center justify-center absolute left-1/20 bottom-1/20 size-9 bg-white border border-black/15 rounded-full shadow-[0_0_3px_rgba(0,0,0,0.2)]
+                            [&.active]:border-blue-300 [&.active_svg]:fill-blue-500
+                        ">
                             <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8">
                             <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
                             </svg>
@@ -169,8 +173,8 @@ export default function Home() {
                         <div className="goods__info flex flex-col">
                             <div className="goods__name line-clamp-2 h-9.5 mt-1 font-bold break-all leading-tight">{item.name}</div>
                             <div className="flex items-center justify-end gap-2">
-                            <div className="goods__delprice previewEtc1 mt-3 text-sm leading-tight">공유이미지</div>
-                            <div className="goods__price text-[#fa5252] text-[195%] font-bold leading-tight">{item.price.toLocaleString()}</div>
+                                <div className="goods__delprice previewEtc1 mt-3 text-sm leading-tight">공유이미지</div>
+                                <div className="goods__price text-[#fa5252] text-[195%] font-bold tracking-tight leading-tight">{item.price.toLocaleString()}</div>
                             </div>
                         </div>
                         </div>
@@ -216,8 +220,8 @@ export default function Home() {
                 <ul id="js_changeList5" className="goods__list flex flex-col p-0 gap-px">
                     <li className="mb-3.5">
                     <div className="goods__card flex flex-col">
-                        <div className="goods__imgbox goods__imgbox--only w-full h-auto mx-auto bg-white">
-                        <img className="lazyload w-full max-h-full ${fn:contains(f, 'thumb_') ? 'thumb cursor-pointer' : ''}" src={testImg} alt="이미지"  />
+                        <div className="goods__imgbox goods__imgbox--only flex felx-col w-full h-auto mx-auto bg-white">
+                            <img className="lazyload w-full max-h-full ${fn:contains(f, 'thumb_') ? 'thumb cursor-pointer' : ''}" src={testImg} alt="이미지"  />
                         </div>
                     </div>
                     </li>
@@ -234,15 +238,15 @@ export default function Home() {
             {/* 레이어 팝업 안내창 */}
             {showPopup && (
                 <div className="layer__wrap flex justify-center items-center fixed inset-0 p-3 z-50">
-                <div className="layer__bg absolute inset-0 bg-black/40"></div>
-                <div className="layer__panel relative overflow-hidden flex flex-col w-full p-4 bg-slate-50 rounded-2xl z-50">
-                    <p className="layer__tit mb-2 text-xl text-center font-bold leading-tight">공지사항</p>
-                    <div className="layer__notice overflow-y-auto flex flex-col h-60 p-4 rounded-lg text-base bg-white">
-                    오후2시 까지 배달 주문 시 당일 저녁에 배송 드립니다..<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />asdf<br /><br /><br /><br /><br /></div>
-                    <button onClick={() => setShowPopup(false)} className="layer__close absolute top-3 right-3 flex justify-center items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#64748b"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
-                    </button>
-                </div>
+                    <div className="layer__bg absolute inset-0 bg-black/40"></div>
+                    <div className="layer__panel relative overflow-hidden flex flex-col w-full p-4 bg-slate-50 rounded-2xl z-50">
+                        <p className="layer__tit mb-2 text-xl text-center font-bold leading-tight">공지사항</p>
+                        <div className="layer__notice overflow-y-auto flex flex-col h-60 p-4 rounded-lg text-base bg-white">
+                        오후2시 까지 배달 주문 시 당일 저녁에 배송 드립니다..<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />asdf<br /><br /><br /><br /><br /></div>
+                        <button onClick={() => setShowPopup(false)} className="layer__close absolute top-3 right-3 flex justify-center items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#64748b"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
@@ -283,28 +287,24 @@ export default function Home() {
                 // 주문기능 off
                 <div className="layer__wrap flex justify-center items-center fixed inset-0 p-3 z-50">
                     <div className="layer__bg absolute inset-0 bg-black/40"></div>
-                    <div className="layer__panel layer__panel--white relative overflow-hidden flex flex-col w-full p-4 bg-white rounded-2xl z-50">
-                        <p className="layer__tit mb-2 text-xl text-center font-bold leading-tight">상품정보</p>
-
-                        <div className="layer__goodsinfo flex flex-col">
-                            <p className="layer__goodstxt mx-auto my-2 text-sm">※수량을 선택해서 장바구니에 담아주세요</p>
-                            <div className="layer__quantity flex items-center relative w-33 h-10 mx-auto my-2 border border-slate-400 rounded-full bg-white">
-                                <button className="layer__quantitybtn layer__quantitybtn--left flex justify-center items-center w-10 h-full cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" className="fill-black"><path d="M200-440v-80h560v80H200Z"></path></svg>
-                                </button>
-                                <span className="layer__quantitynum block w-13 mx-auto text-lg text-center">1</span>
-                                <button className="layer__quantitybtn quantity__btn--right flex justify-center items-center w-10 h-full cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" className="fill-black"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"></path></svg>
-                                </button>
-                            </div>
-                            <div className="layer__goodsdelprice previewEtc1 mt-2.5 mx-auto text-lg font-bold line-through" style={{ fontSize: "18px" }}>센터이미지</div>
-                            <div className="layer__goodsprice mx-auto text-3xl text-rose-500 font-bold tracking-tight">999,999,999,999</div>
-                            <div className="layer__goodsname mx-auto text-lg font-bold">크라운 쿠크다스 144g 1입</div>
-                            <button className="layer__goodsbtn flex justify-center items-center w-50 h-11 mx-auto my-4 rounded-lg text-lg text-white font-bold bg-rose-500" onClick={() => setShowPopup3(false)}>장바구니 담기</button>
-                        </div>
-                        <button onClick={() => setShowPopup2(false)} className="layer__close absolute top-3 right-3 flex justify-center items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#64748b"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
-                        </button>
+                    <div className="layer__panel layer__panel--white overflow-hidden fixed flex top-[10%] left-0 flex-col w-full h-auto p-4 rounded-2xl z-50">
+                        <ul className="block py-2.5 px-0.5">
+                            <li className="p-6">
+                                <div className="goods__card overflow-hidden relative flex flex-col px-[2%] py-[6%] rounded-lg bg-white">
+                                    <div className="goods__imgbox overflow-hidden flex justify-center items-center h-55 mx-auto">
+                                        <img className="max-w-[75%] w-auto h-auto" src={sampleImg} />
+                                    </div>
+                                    <div className="layer__goodsinfo flex flex-col mt-[8%]">
+                                        <div className="layer__goodsdelprice previewEtc1 mt-2.5 mx-auto text-lg font-bold line-through" style={{ fontSize: "18px" }}>센터이미지</div>
+                                        <div className="layer__goodsprice mx-auto text-4xl text-rose-500 font-bold tracking-tight">999,999,999,999</div>
+                                        <div className="layer__goodsname mx-auto text-lg font-bold">크라운 쿠크다스 144g 1입</div>
+                                    </div>
+                                    <button onClick={() => setShowPopup2(false)} className="layer__close absolute top-3 right-3 flex justify-center items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#64748b"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             )}
