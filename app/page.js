@@ -8,6 +8,8 @@ export default function Home() {
     const [showPopup2, setShowPopup2] = useState(false);
     const [showPopup3, setShowPopup3] = useState(false);
     const [showPopup4, setShowPopup4] = useState(false);
+    const [showSearchPopup, setShowSearchPopup] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
 
     const bannerImg = "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/image_audit/prod/26a4f3e8-5f26-4f9d-9404-18aa4680fa79_fixing_v2.png";
 
@@ -32,6 +34,10 @@ export default function Home() {
         { id: 5, name: "자연그린 김밥단무지4단무지4단무지4", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
     ];
 
+    const filteredList = list.filter((item) =>
+        item.name.toLowerCase().includes(searchQuery.trim().toLowerCase())
+    );
+
   return (
     <>
         <div className='sample relative flex flex-col min-h-screen pb-20 bg-slate-50'>
@@ -47,9 +53,10 @@ export default function Home() {
                 </Link>
                 </div>
                 <div className="sample__tit p-2.5 text-center bg-slate-100 text-black">
-                <span className="block text-xl">11</span>
-                <span className="sample__date popStartDate block text-lg"></span>
-                <span className="popExDate block text-lg"></span>
+                    <button onClick={() => {setSearchQuery(""); setShowSearchPopup(true);}}>검색</button>
+                    <span className="block text-xl">11</span>
+                    <span className="sample__date popStartDate block text-lg"></span>
+                    <span className="popExDate block text-lg"></span>
                 </div>
             </div>
             <div className="sample__banner flex text-center bg-slate-400">
@@ -245,6 +252,66 @@ export default function Home() {
                         오후2시 까지 배달 주문 시 당일 저녁에 배송 드립니다..<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />asdf<br /><br /><br /><br /><br /></div>
                         <button onClick={() => setShowPopup(false)} className="layer__close absolute top-3 right-3 flex justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#64748b"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            )}
+            {/* 검색 레이어 팝업 */}
+            {showSearchPopup && (
+                <div className="layer__wrap flex justify-center items-center fixed inset-0 p-3 z-50">
+                    <div
+                        className="layer__bg absolute inset-0 bg-black/40"
+                        onClick={() => setShowSearchPopup(false)}
+                    ></div>
+                    <div className="layer__panel relative overflow-hidden flex flex-col w-full p-4 bg-white rounded-2xl z-50">
+                        <p className="layer__tit mb-3 text-xl text-center font-bold leading-tight">상품 검색</p>
+                        <div className="flex items-center gap-2 mb-3">
+                            <input
+                                className="flex-1 h-11 px-3 border border-slate-300 rounded-lg text-base"
+                                placeholder="상품명을 입력하세요"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                autoFocus
+                            />
+                            <button
+                                className="h-11 px-4 rounded-lg text-white font-bold bg-[#21409a]"
+                                onClick={() => null}
+                            >
+                                검색
+                            </button>
+                        </div>
+                        <div className="overflow-y-auto max-h-[70vh] border border-slate-200 rounded-lg bg-slate-50">
+                            {searchQuery.trim() === "" ? (
+                                <div className="p-4 text-center text-slate-500">검색어를 입력해주세요.</div>
+                            ) : filteredList.length === 0 ? (
+                                <div className="p-4 text-center text-slate-500">검색 결과가 없습니다.</div>
+                            ) : (
+                                <ul className="divide-y divide-slate-200">
+                                    {filteredList.map((item, index) => (
+                                        <li
+                                            key={`${item.id}-${index}`}
+                                            className="p-3 flex items-center gap-3 cursor-pointer hover:bg-white"
+                                            onClick={() => {
+                                                setShowSearchPopup(false);
+                                                setShowPopup2(true);
+                                                setOrderSystem(true);
+                                            }}
+                                        >
+                                            <img className="size-12 rounded-md object-cover" src={item.image} alt="상품 이미지" />
+                                            <div className="flex-1">
+                                                <div className="text-sm font-bold line-clamp-1">{item.name}</div>
+                                                <div className="text-rose-500 font-bold">{item.price.toLocaleString()}</div>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                        <button
+                            onClick={() => setShowSearchPopup(false)}
+                            className="layer__close absolute top-3 right-3 flex justify-center items-center"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#64748b"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
                         </button>
                     </div>
                 </div>
