@@ -258,7 +258,7 @@ export default function Home() {
             )}
             {/* 검색 레이어 팝업 */}
             {showSearchPopup && (
-                <div className="layer__wrap flex justify-center items-center fixed inset-0 p-3 z-50">
+                <div className="layer__wrap flex justify-center items-start fixed inset-0 p-3 pt-10 z-50">
                     <div
                         className="layer__bg absolute inset-0 bg-black/40"
                         onClick={() => setShowSearchPopup(false)}
