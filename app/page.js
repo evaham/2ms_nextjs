@@ -265,20 +265,33 @@ export default function Home() {
                     ></div>
                     <div className="layer__panel relative overflow-hidden flex flex-col w-full p-4 bg-white rounded-2xl z-50">
                         <p className="layer__tit mb-3 text-xl text-center font-bold leading-tight">상품 검색</p>
-                        <div className="flex items-center gap-2 mb-3">
+                        <div className="relative mb-3">
+                            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="fill-slate-400" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
+                            </span>
                             <input
-                                className="flex-1 h-11 px-3 border border-slate-300 rounded-lg text-base"
+                                className="w-full h-11 pl-10 pr-11 border border-slate-300 rounded-lg text-base"
                                 placeholder="상품명을 입력하세요"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        e.preventDefault();
+                                        e.currentTarget.blur();
+                                    }
+                                }}
                                 autoFocus
                             />
-                            <button
-                                className="h-11 px-4 rounded-lg text-white font-bold bg-[#21409a]"
-                                onClick={() => null}
-                            >
-                                검색
-                            </button>
+                            {searchQuery && (
+                                <button
+                                    type="button"
+                                    aria-label="검색어 지우기"
+                                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600"
+                                    onClick={() => setSearchQuery("")}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#333"><path d="m336-307.69 144-144 144 144L652.31-336l-144-144 144-144L624-652.31l-144 144-144-144L307.69-624l144 144-144 144L336-307.69ZM480.13-120q-74.67 0-140.41-28.34-65.73-28.34-114.36-76.92-48.63-48.58-76.99-114.26Q120-405.19 120-479.87q0-74.67 28.34-140.41 28.34-65.73 76.92-114.36 48.58-48.63 114.26-76.99Q405.19-840 479.87-840q74.67 0 140.41 28.34 65.73 28.34 114.36 76.92 48.63 48.58 76.99 114.26Q840-554.81 840-480.13q0 74.67-28.34 140.41-28.34 65.73-76.92 114.36-48.58 48.63-114.26 76.99Q554.81-120 480.13-120Zm-.13-40q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+                                </button>
+                            )}
                         </div>
                         <div className="overflow-y-auto max-h-[70vh] border border-slate-200 rounded-lg bg-slate-50">
                             {searchQuery.trim() === "" ? (
