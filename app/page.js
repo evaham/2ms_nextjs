@@ -295,7 +295,7 @@ export default function Home() {
                                 </button>
                             )}
                         </div>
-                        <div className="overflow-y-auto max-h-[70vh] border border-slate-200 rounded-lg bg-slate-50">
+                        <div className="overflow-y-auto max-h-[70svh] border border-slate-200 rounded-lg bg-slate-50">
                             {searchQuery.trim() === "" ? (
                                 <div className="p-4">
                                     <div className="mb-2 text-sm text-slate-500">추천 검색어</div>
