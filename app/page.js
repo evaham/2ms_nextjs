@@ -34,6 +34,8 @@ export default function Home() {
         { id: 5, name: "자연그린 김밥단무지4단무지4단무지4", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
     ];
 
+    const recommendedKeywords = ["김밥", "단무지", "쌀", "계란", "김치", "반찬", "과자"];
+
     const filteredList = list.filter((item) =>
         item.name.toLowerCase().includes(searchQuery.trim().toLowerCase())
     );
@@ -295,7 +297,22 @@ export default function Home() {
                         </div>
                         <div className="overflow-y-auto max-h-[70vh] border border-slate-200 rounded-lg bg-slate-50">
                             {searchQuery.trim() === "" ? (
-                                <div className="p-4 text-center text-slate-500">검색어를 입력해주세요.</div>
+                                <div className="p-4">
+                                    <div className="mb-2 text-sm text-slate-500">추천 검색어</div>
+                                    <ul className="flex flex-wrap gap-2">
+                                        {recommendedKeywords.map((keyword) => (
+                                            <li key={keyword}>
+                                                <button
+                                                    type="button"
+                                                    className="px-3 py-1.5 text-sm rounded-full bg-white border border-slate-200 text-slate-600 hover:bg-slate-100"
+                                                    onClick={() => setSearchQuery(keyword)}
+                                                >
+                                                    {keyword}
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
                             ) : filteredList.length === 0 ? (
                                 <div className="p-4 text-center text-slate-500">검색 결과가 없습니다.</div>
                             ) : (
