@@ -272,7 +272,7 @@ export default function Home() {
                                 <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
                             </span>
                             <input
-                                className="w-full h-11 pl-10 pr-11 border border-slate-300 rounded-lg text-base"
+                                className="w-full h-10 pl-10 pr-11 border border-slate-300 rounded-lg text-base"
                                 placeholder="상품명을 입력하세요"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -295,9 +295,9 @@ export default function Home() {
                                 </button>
                             )}
                         </div>
-                        <div className="overflow-y-auto max-h-[70svh] border border-slate-200 rounded-lg bg-slate-50">
+                        <div className="overflow-y-auto border border-slate-200 rounded-lg bg-slate-50">
                             {searchQuery.trim() === "" ? (
-                                <div className="p-4">
+                                <div className="p-2">
                                     <div className="mb-2 text-sm text-slate-500">추천 검색어</div>
                                     <ul className="flex flex-wrap gap-2">
                                         {recommendedKeywords.map((keyword) => (
@@ -316,20 +316,20 @@ export default function Home() {
                             ) : filteredList.length === 0 ? (
                                 <div className="p-4 text-center text-slate-500">검색 결과가 없습니다.</div>
                             ) : (
-                                <ul className="divide-y divide-slate-200">
+                                <ul className="h-[70svh] divide-y divide-slate-200">
                                     {filteredList.map((item, index) => (
                                         <li
                                             key={`${item.id}-${index}`}
-                                            className="p-3 flex items-center gap-3 cursor-pointer hover:bg-white"
+                                            className="p-1 flex items-center gap-3 cursor-pointer hover:bg-white"
                                             onClick={() => {
                                                 setShowSearchPopup(false);
                                                 setShowPopup2(true);
                                                 setOrderSystem(true);
                                             }}
                                         >
-                                            <img className="size-12 rounded-md object-cover" src={item.image} alt="상품 이미지" />
+                                            <img className="size-20 rounded-md object-cover" src={item.image} alt="상품 이미지" />
                                             <div className="flex-1">
-                                                <div className="text-sm font-bold line-clamp-1">{item.name}</div>
+                                                <div className="font-bold line-clamp-1">{item.name}</div>
                                                 <div className="text-rose-500 font-bold">{item.price.toLocaleString()}</div>
                                             </div>
                                         </li>

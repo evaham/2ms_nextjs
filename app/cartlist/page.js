@@ -40,9 +40,6 @@ export default function CartList(){
                     ⓘ 행사를 종료한 상품은 장바구니에서 자동 삭제합니다.
                 </div>
 
-
-
-
                 {!showData ? (
                     <div className="empty-div flex flex-col justify-center items-center min-h-60">
                         <div className='flex flex-col items-center my-20 text-xl text-center font-bold text-slate-400'>
