@@ -39,6 +39,8 @@ export default function Home() {
         item.name.toLowerCase().includes(searchQuery.trim().toLowerCase())
     );
 
+    const hasQuery = searchQuery.trim() !== "";
+
   return (
     <>
         <div className='sample relative flex flex-col min-h-screen pb-20 bg-slate-50'>
@@ -305,44 +307,45 @@ export default function Home() {
                                 <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
                             </button>
                         </div>
-                        <div className="overflow-y-auto border border-slate-200 rounded-lg bg-slate-50">
+                        <div
+                            className="overflow-y-auto border border-slate-200 rounded-lg bg-slate-50"
+                            style={{
+                                maxHeight: hasQuery ? "70svh" : "220px",
+                                transition: "max-height 260ms ease",
+                            }}
+                        >
                             {searchQuery.trim() === "" ? (
-                                <div className="h-50 p-2">
+                                <div className="p-2">
                                     <div className="text-slate-600">최근 검색어</div>
                                     <p className="mb-2 text-sm text-slate-400">검색어는 최대5개, 30일동안 저장합니다.</p>
-                                    <div className="h-30">
-                                        <ul className="flex flex-wrap gap-x-2 gap-y-2">
-                                            {recentKeywords.map((keyword, index) => (
-                                                <li key={`${keyword}-${index}`} className="flex items-center rounded-full bg-white border border-slate-200">
-                                                    <button
-                                                        type="button"
-                                                        className="pl-3 pr-1 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded-l-full"
-                                                        onClick={() => setSearchQuery(keyword)}
-                                                    >
-                                                        {keyword}
-                                                    </button>
-                                                    <button
-                                                        type="button"
-                                                        aria-label="최근 검색어 삭제"
-                                                        className="pr-2 pl-1 py-1.5 text-slate-400 hover:text-slate-600"
-                                                        onClick={() =>
-                                                            setRecentKeywords((prev) =>
-                                                                prev.filter((_, prevIndex) => prevIndex !== index)
-                                                            )
-                                                        }
-                                                    >
-                                                        <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"/></svg>
-                                                    </button>
-                                                </li>
-                                            ))}
-                                        </ul>
-
-
-                                    </div>
-
+                                    <ul className="flex flex-wrap gap-x-2 gap-y-2">
+                                        {recentKeywords.map((keyword, index) => (
+                                            <li key={`${keyword}-${index}`} className="flex items-center rounded-full bg-white border border-slate-200">
+                                                <button
+                                                    type="button"
+                                                    className="pl-3 pr-1 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded-l-full"
+                                                    onClick={() => setSearchQuery(keyword)}
+                                                >
+                                                    {keyword}
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    aria-label="최근 검색어 삭제"
+                                                    className="pr-2 pl-1 py-1.5 text-slate-400 hover:text-slate-600"
+                                                    onClick={() =>
+                                                        setRecentKeywords((prev) =>
+                                                            prev.filter((_, prevIndex) => prevIndex !== index)
+                                                        )
+                                                    }
+                                                >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"/></svg>
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
                             ) : filteredList.length === 0 ? (
-                                <div className="flex flex-col items-center justify-center h-50 p-4 text-center text-slate-500">검색 결과가 없습니다.</div>
+                                <div className="flex flex-col items-center justify-center h-[70svh] p-4 text-center text-slate-500">검색 결과가 없습니다.</div>
                             ) : (
                                 <ul className="h-[70svh] divide-y divide-slate-200">
                                     {filteredList.map((item, index) => (
