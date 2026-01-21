@@ -13,6 +13,7 @@ export default function Home() {
     const [searchInput, setSearchInput] = useState("");
     const [recentKeywords, setRecentKeywords] = useState(["일이삼사오육칠팔구십일이삼사오육칠팔구십", "일이삼사오육칠팔구십", "김밥", "1", "일이삼사오육칠팔구십"]);
     const [showRecentKeywords, setShowRecentKeywords] = useState(false);
+    const [isLargeSearchImage, setIsLargeSearchImage] = useState(false);
     const searchInputRef = useRef(null);
 
     const bannerImg = "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/image_audit/prod/26a4f3e8-5f26-4f9d-9404-18aa4680fa79_fixing_v2.png";
@@ -26,12 +27,12 @@ export default function Home() {
     const list = [
         { id: 1, name: "자연그린 김밥단무지1", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
         { id: 2, name: "자연그린 김밥단무지2", cart: false, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
+        { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "https://nng-phinf.pstatic.net/MjAyNjAxMjBfMjc3/MDAxNzY4ODkzNzkzMTA2.9FWLw-05xDx5QgZPw4sbTGC-j-MmFlyxewyXHsxqCoog.I-SPCydKgS_UYn9YhAckfPiF255iHdbEuB7fBtUvXgUg.JPEG/main.jpg" },
         { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
         { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
         { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
         { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
+        { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNTEwMjFfMjkz%2FMDAxNzYxMDE2MTEyMzAx.CkjID8Nc3fHBStIqQvLBok5-5QZWjUcgILDM852Sx2kg.swrY1ik00q-fnn6-JbUMsOOAEXUYYBKMS1i3EJET2qwg.JPEG%2FKakaoTalk_20251021_115627207_06.jpg" },
         { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
         { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
         { id: 4, name: "자연그린 김밥단무지4", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
@@ -373,13 +374,25 @@ export default function Home() {
                                     
                                 </div>
                             ) : (
-                                <ul className="h-[65vh] divide-y divide-slate-200">
+                                <div className="flex flex-col h-[65vh]">
+                                    <div className="flex justify-end px-2 py-2">
+                                        <button
+                                            type="button"
+                                            className="text-sm text-slate-500 hover:text-slate-700"
+                                            onClick={() => setIsLargeSearchImage((prev) => !prev)}
+                                        >
+                                            이미지크기 변경
+                                        </button>
+                                    </div>
+                                    <ul className="flex-1 divide-y divide-slate-200 overflow-y-auto">
                                     {filteredList.map((item, index) => (
                                         <div
                                             key={`${item.id}-${index}`}
                                             className="p-1 flex items-center gap-3"
                                         >
-                                            <img className="size-24 rounded-md object-cover" src={item.image} alt="상품 이미지" />
+                                            <div className={`flex flex-col justify-center items-center ${isLargeSearchImage ? "size-32" : "size-20"}`}>
+                                                <img className="max-w-full max-h-full size-auto" src={item.image} alt="상품 이미지" />
+                                            </div>
                                             <div className="flex-1">
                                                 <div className="text-sm">오늘만</div>
                                                 <div className="text-xl text-rose-500 font-bold">{item.price.toLocaleString()}</div>
@@ -393,7 +406,8 @@ export default function Home() {
 
                                         </div>
                                     ))}
-                                </ul>
+                                    </ul>
+                                </div>
                             )}
                         </div>
                         <button
