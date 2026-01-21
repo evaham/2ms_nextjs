@@ -336,7 +336,7 @@ export default function Home() {
                                                 <li key={`${keyword}-${index}`} className="flex items-center rounded-full bg-white border border-slate-400">
                                                     <button
                                                         type="button"
-                                                        className="max-w-56 h-8 pl-3 pr-1 text-slate-600 rounded-l-full line-clamp-1"
+                                                        className="flex max-w-56 h-8 pl-3 pr-1 py-1 text-slate-600 rounded-l-full line-clamp-1"
                                                         onClick={() => setSearchInput(keyword)}
                                                     >
                                                         {keyword}
