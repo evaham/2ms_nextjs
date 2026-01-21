@@ -1,5 +1,5 @@
 "use client";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import Link from "next/link";
 
 export default function Home() {
@@ -13,6 +13,7 @@ export default function Home() {
     const [searchInput, setSearchInput] = useState("");
     const [recentKeywords, setRecentKeywords] = useState(["일이삼사오육칠팔구십일이삼사오육칠팔구십", "일이삼사오육칠팔구십", "김밥", "1", "일이삼사오육칠팔구십"]);
     const [showRecentKeywords, setShowRecentKeywords] = useState(false);
+    const searchInputRef = useRef(null);
 
     const bannerImg = "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/image_audit/prod/26a4f3e8-5f26-4f9d-9404-18aa4680fa79_fixing_v2.png";
 
@@ -271,6 +272,7 @@ export default function Home() {
                         <p className="layer__tit mb-3 text-xl text-center font-bold leading-tight">상품 검색</p>
                         <div className="relative mb-3">
                             <input
+                                ref={searchInputRef}
                                 className="w-full h-10 pl-4 pr-20 border border-slate-400 rounded-lg text-base bg-white"
                                 placeholder="상품명을 입력하세요"
                                 value={searchInput}
@@ -290,6 +292,9 @@ export default function Home() {
                                     className="absolute right-11 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600"
                                     onClick={() => {
                                         setSearchInput("");
+                                        requestAnimationFrame(() => {
+                                            searchInputRef.current?.focus();
+                                        });
                                     }}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" className="fill-slate-400" height="24px" viewBox="0 -960 960 960" width="24px" fill="#333"><path d="m336-293.85 144-144 144 144L666.15-336l-144-144 144-144L624-666.15l-144 144-144-144L293.85-624l144 144-144 144L336-293.85ZM480.07-100q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Z"/></svg>
