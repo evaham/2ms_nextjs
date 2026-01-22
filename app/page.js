@@ -1,6 +1,7 @@
 "use client";
-import {useRef, useState} from "react";
+import {useState} from "react";
 import Link from "next/link";
+import SearchLayerPopup from "./component/SearchLayerPopup";
 
 export default function Home() {
     const [orderSystem, setOrderSystem] = useState(true);
@@ -9,12 +10,6 @@ export default function Home() {
     const [showPopup3, setShowPopup3] = useState(false);
     const [showPopup4, setShowPopup4] = useState(false);
     const [showSearchPopup, setShowSearchPopup] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
-    const [searchInput, setSearchInput] = useState("");
-    const [recentKeywords, setRecentKeywords] = useState(["일이삼사오육칠팔구십일이삼사오육칠팔구십", "일이삼사오육칠팔구십", "김밥", "1", "일이삼사오육칠팔구십"]);
-    const [showRecentKeywords, setShowRecentKeywords] = useState(false);
-    const [isLargeSearchImage, setIsLargeSearchImage] = useState(false);
-    const searchInputRef = useRef(null);
 
     const bannerImg = "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/image_audit/prod/26a4f3e8-5f26-4f9d-9404-18aa4680fa79_fixing_v2.png";
 
@@ -39,12 +34,6 @@ export default function Home() {
         { id: 5, name: "자연그린 김밥단무지4단무지4단무지4", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
     ];
 
-    const filteredList = list.filter((item) =>
-        item.name.toLowerCase().includes(searchQuery.trim().toLowerCase())
-    );
-
-    const hasQuery = searchQuery.trim() !== "";
-
   return (
     <>
         <div className='sample relative flex flex-col min-h-screen pb-20 bg-slate-50'>
@@ -53,7 +42,7 @@ export default function Home() {
                 <span className="js_fontsize mart-info flex items-center cursor-pointer" style={{ fontSize: "2rem" }} onClick={() => setShowPopup(true)}>투게더마트
                     <svg xmlns="http://www.w3.org/2000/svg" fill="#fafafa" height="32px" viewBox="0 -960 960 960" width="32px"><path d="M460-300h40v-220h-40v220Zm20-276.92q10.46 0 17.54-7.08 7.08-7.08 7.08-17.54 0-10.46-7.08-17.54-7.08-7.07-17.54-7.07-10.46 0-17.54 7.07-7.08 7.08-7.08 17.54 0 10.46 7.08 17.54 7.08 7.08 17.54 7.08Zm.13 456.92q-74.67 0-140.41-28.34-65.73-28.34-114.36-76.92-48.63-48.58-76.99-114.26Q120-405.19 120-479.87q0-74.67 28.34-140.41 28.34-65.73 76.92-114.36 48.58-48.63 114.26-76.99Q405.19-840 479.87-840q74.67 0 140.41 28.34 65.73 28.34 114.36 76.92 48.63 48.58 76.99 114.26Q840-554.81 840-480.13q0 74.67-28.34 140.41-28.34 65.73-76.92 114.36-48.58 48.63-114.26 76.99Q554.81-120 480.13-120Zm-.13-40q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"></path></svg>
                 </span>
-                <button onClick={() => {setSearchQuery(""); setSearchInput(""); setShowSearchPopup(true);}} className="sample__tel block absolute top-3.5 right-12 size-8 p-1 rounded-full bg-[#fafafa]">
+                <button onClick={() => setShowSearchPopup(true)} className="sample__tel block absolute top-3.5 right-12 size-8 p-1 rounded-full bg-[#fafafa]">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#333"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
                 </button>
                 <Link href={"/"} onClick={() => window.location.href = 'tel:1577-4550'} className="sample__tel block absolute top-3.5 right-1.5 size-8 p-1 rounded-full bg-[#fafafa]">
@@ -266,159 +255,11 @@ export default function Home() {
                 </div>
             )}
             {/* 검색 레이어 팝업 */}
-            {showSearchPopup && (
-                <div className="layer__wrap flex justify-center items-start fixed inset-0 p-3 pt-10 z-50">
-                    <div className="layer__bg absolute inset-0 bg-black/40" onClick={() => setShowSearchPopup(false)}></div>
-                    <div className="layer__panel relative overflow-hidden flex flex-col w-full p-4 bg-slate-50 rounded-2xl z-50">
-                        <p className="layer__tit mb-3 text-xl text-center font-bold leading-tight">상품 검색</p>
-                        <div className="relative mb-3">
-                            <input
-                                ref={searchInputRef}
-                                className="w-full h-10 pl-4 pr-20 border border-slate-400 rounded-lg text-base bg-white"
-                                placeholder="상품명을 입력하세요"
-                                value={searchInput}
-                                onChange={(e) => setSearchInput(e.target.value)}
-                                onKeyDown={(e) => {
-                                    if (e.key === "Enter") {
-                                        e.preventDefault();
-                                        e.currentTarget.blur();
-                                    }
-                                }}
-                                autoFocus
-                            />
-                            {searchInput && (
-                                <button
-                                    type="button"
-                                    aria-label="검색어 지우기"
-                                    className="absolute right-11 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600"
-                                    onClick={() => {
-                                        setSearchInput("");
-                                        requestAnimationFrame(() => {
-                                            searchInputRef.current?.focus();
-                                        });
-                                    }}
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="fill-slate-400" height="24px" viewBox="0 -960 960 960" width="24px" fill="#333"><path d="m336-293.85 144-144 144 144L666.15-336l-144-144 144-144L624-666.15l-144 144-144-144L293.85-624l144 144-144 144L336-293.85ZM480.07-100q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Z"/></svg>
-                                </button>
-                            )}
-                            <button
-                                type="button"
-                                aria-label="검색"
-                                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600"
-                                onClick={() => {
-                                    if (document.activeElement instanceof HTMLElement) {
-                                        document.activeElement.blur();
-                                    }
-                                    setSearchQuery(searchInput.trim());
-                                }}
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
-                            </button>
-                        </div>
-                        <div className="flex-1 flex flex-col overflow-y-auto rounded-lg bg-white"
-                            style={{
-                                maxHeight: hasQuery ? "70vh" : "460px",
-                                transition: "max-height 500ms ease",
-                            }}
-                        >
-                            {searchQuery.trim() === "" ? (
-                                <div className="flex flex-col p-2">
-                                    <div className="text-slate-500">최근 검색어</div>
-                                    <p className="mb-2 text-sm text-slate-400">검색어는 최대5개, 30일동안 저장합니다.</p>
-                                    {!showRecentKeywords ? (
-                                        <div className="px-2 py-10 text-center text-slate-500">
-                                            <p className="text-lg font-bold">최근 검색 내역이 없습니다</p>
-                                            <button
-                                                type="button"
-                                                className="block mx-auto text-blue-500 hover:text-blue-600"
-                                                onClick={() => setShowRecentKeywords(true)}
-                                            >
-                                                최근검색어 추가
-                                            </button>
-                                        </div>
-                                    ) : (
-                                        <ul className="flex flex-wrap gap-x-2 gap-y-2">
-                                            {recentKeywords.map((keyword, index) => (
-                                                <li key={`${keyword}-${index}`} className="flex items-center rounded-full bg-white border border-slate-400">
-                                                    <button
-                                                        type="button"
-                                                        className="flex max-w-56 h-8 pl-3 pr-1 py-1 text-slate-600 rounded-l-full line-clamp-1"
-                                                        onClick={() => setSearchInput(keyword)}
-                                                    >
-                                                        {keyword}
-                                                    </button>
-                                                    <button
-                                                        type="button"
-                                                        aria-label="최근 검색어 삭제"
-                                                        className="pr-2 pl-1 py-1 text-slate-600"
-                                                        onClick={() =>
-                                                            setRecentKeywords((prev) =>
-                                                                prev.filter((_, prevIndex) => prevIndex !== index)
-                                                            )
-                                                        }
-                                                    >
-                                                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"/></svg>
-                                                    </button>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
-                                </div>
-                            ) : filteredList.length === 0 ? (
-                                <div className="flex flex-col items-center justify-center min-h-40 p-4 text-center text-slate-500">
-                                    <p className="text-lg font-bold">검색 결과가 없습니다.</p>
-                                    <p className="mt-5">
-                                        찾으시는 상품이 없으신가요? <br />
-                                        주문서 작성 시 요청사항에 기재해 주세요
-                                    </p>
-                                    
-                                </div>
-                            ) : (
-                                <div className="flex flex-col h-[65vh]">
-                                    <div className="flex justify-end px-2 py-2">
-                                        <button
-                                            type="button"
-                                            className="text-sm text-slate-500 hover:text-slate-700"
-                                            onClick={() => setIsLargeSearchImage((prev) => !prev)}
-                                        >
-                                            이미지크기 변경
-                                        </button>
-                                    </div>
-                                    <ul className="flex-1 divide-y divide-slate-200 overflow-y-auto">
-                                    {filteredList.map((item, index) => (
-                                        <div
-                                            key={`${item.id}-${index}`}
-                                            className="p-1 flex items-center gap-3"
-                                        >
-                                            <div className={`flex flex-col justify-center items-center ${isLargeSearchImage ? "size-32" : "size-20"}`}>
-                                                <img className="max-w-full max-h-full size-auto" src={item.image} alt="상품 이미지" />
-                                            </div>
-                                            <div className="flex-1">
-                                                <div className="text-sm">오늘만</div>
-                                                <div className="text-xl text-rose-500 font-bold">{item.price.toLocaleString()}</div>
-                                                <div className="font-bold">{item.name}</div>
-                                            </div>
-                                            <div className="pr-2">
-                                                <div className="icon__cartbox active flex items-center justify-center w-10 h-10 bg-white border border-black/15 rounded-full">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z"></path></svg>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    ))}
-                                    </ul>
-                                </div>
-                            )}
-                        </div>
-                        <button
-                            onClick={() => setShowSearchPopup(false)}
-                            className="layer__close absolute top-3 right-3 flex justify-center items-center"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#64748b"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
-                        </button>
-                    </div>
-                </div>
-            )}
+            <SearchLayerPopup
+                open={showSearchPopup}
+                onClose={() => setShowSearchPopup(false)}
+                list={list}
+            />
         </div>
         {/* 상품 팝업 */}
         {showPopup2 && (

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link type="text/css" rel="stylesheet" href="page_weblink.css" />
+
+  <title>검색 레이어 팝업</title>
+  <style>
+    * { box-sizing: border-box; }
+    .layer__wrap { position: fixed; inset: 0; padding: 12px; padding-top: 40px; display: flex; justify-content: center; align-items: flex-start; z-index: 50; }
+    .layer__bg { position: absolute; inset: 0; background: rgba(0,0,0,0.4); }
+    .layer__panel { position: relative; width: 100%; max-width: 520px; background: #f8fafc; border-radius: 16px; padding: 16px; z-index: 1; overflow: hidden; display: flex; flex-direction: column; }
+    .layer__tit { margin: 0 0 12px; text-align: center; font-size: 20px; font-weight: 700; line-height: 1.2; }
+
+    .search__wrap { position: relative; margin-bottom: 12px; }
+    .search__input { width: 100%; height: 40px; padding: 0 70px 0 16px; border: 1px solid #94a3b8; border-radius: 8px; font-size: 16px; background: #fff; }
+    .search__input::placeholder { color: #aaa; }
+    .search__clear { position: absolute; right: 40px; top: 50%; display: flex; transform: translateY(-50%); background: transparent; border: 0; color: #94a3b8; cursor: pointer; padding: 4px; }
+    .search__clear:hover { color: #475569; }
+    .search__submit { position: absolute; right: 8px; top: 50%; display: flex; transform: translateY(-50%); background: transparent; border: 0; color: #94a3b8; cursor: pointer; padding: 4px; }
+    .search__submit:hover { color: #475569; }
+
+    .search__panel { flex: 1; display: flex; flex-direction: column; padding: 8px; background: #fff; border-radius: 8px; overflow: hidden; }
+
+    .search__section-title { font-size: 16px; color: #64748b; margin: 2px 0 6px; }
+    .search__subtext { font-size: 14px; color: #94a3b8; margin: 0 0 10px; }
+
+    .search__empty { padding: 24px 8px; text-align: center; color: #94a3b8; }
+    .search__empty-text { display: block; font-size: 18px; font-weight: 700; color: #62748e; }
+    .search__empty-subtext { margin-top: 20px; font-size: 16px; color: #62748e; line-height: 1.4; }
+
+    .search__chips { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+    .search__chip { display: inline-flex; align-items: center; border: 1px solid #90a1b9; background: #fff; border-radius: 999px; overflow: hidden; }
+    .search__chip button { border: 0; background: transparent; cursor: pointer; }
+    .search__chip-name { padding: 4px 4px 4px 12px; font-size: 16px; color: #475569; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .search__chip-del { display: flex; align-items: center; padding: 4px 8px 4px 4px; color: #64748b; }
+
+    .search__list { flex: 1; display: flex; flex-direction: column; background: #fff; border-radius: 8px; height: 65vh; }
+    .search__items { flex:1; list-style: none; padding: 0; margin: 0; overflow-y: auto; }
+    .search__item { display: flex; align-items: center; gap: 12px; padding: 10px 6px; border-top: 1px solid #e2e8f0; }
+    .search__item:first-child { border-color:transparent; }
+    .search__thumb-wrap { width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; }
+    .search__thumb { max-width: 100%; max-height: 100%; object-fit: cover; border-radius: 8px; }
+    .search__price { color: #f43f5e; font-weight: 700; font-size: 20px; }
+    .search__tag { font-size: 14px; color: #64748b; }
+    .search__name { font-size:16px; line-height: 1.2; font-weight: 700; }
+
+    .search__spacer { padding-right: 8px; }
+    .search__cart { width: 40px; height: 40px; border: 1px solid rgba(0,0,0,0.15); border-radius: 999px; display: flex; align-items: center; justify-content: center; }
+    .search__cart.active { border-color: #93c5fd; }
+    .search__cart svg { fill: #94a3b8; }
+    .search__cart.active svg { fill: #3b82f6; }
+
+
+    .layer__close { position: absolute; right: 10px; top: 10px; background: transparent; border: 0; cursor: pointer; color: #64748b; }
+    .layer__close:hover { color: #475569; }
+
+    @media (min-width: 768px) {
+      .layer__wrap { padding-top: 56px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layer__wrap" aria-modal="true" role="dialog">
+    <div class="layer__bg"></div>
+    <div class="layer__panel">
+      <p class="layer__tit">상품 검색</p>
+
+      <div class="search__wrap">
+        <input class="search__input" placeholder="상품명을 입력하세요" />
+        <button type="button" aria-label="검색어 지우기" class="search__clear">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+            <path d="m336-293.85 144-144 144 144L666.15-336l-144-144 144-144L624-666.15l-144 144-144-144L293.85-624l144 144-144 144L336-293.85ZM480.07-100q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Z" />
+          </svg>
+        </button>
+        <button type="button" aria-label="검색" class="search__submit">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+            <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+          </svg>
+        </button>
+      </div>
+      <div style="max-height: 70svh; transition: max-height 500ms ease;">
+        <!--검색어가 없을경우-->
+        <div id="S1" class="search__panel">
+          <div class="search__section-title">최근 검색어</div>
+          <p class="search__subtext">검색어는 최대5개, 30일동안 저장합니다.</p>
+          <div class="search__empty">
+            <p class="search__empty-text">최근 검색 내역이 없습니다</p>
+          </div>
+        </div>
+        <!--검색어가 있을경우-->
+        <div id="S2" class="search__panel">
+          <div class="search__section-title">최근 검색어</div>
+          <p class="search__subtext">검색어는 최대5개, 30일동안 저장합니다.</p>
+          <ul class="search__chips">
+            <li class="search__chip">
+              <button class="search__chip-name">
+                <span>일이삼사오육칠팔구십일이삼사오육칠팔구십</span>
+              </button>
+              <button class="search__chip-del" aria-label="최근 검색어 삭제">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"/></svg>
+              </button>
+            </li>
+            <li class="search__chip">
+              <button class="search__chip-name">일이삼사오육칠팔구십</button>
+              <button class="search__chip-del" aria-label="최근 검색어 삭제">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"/></svg>
+              </button>
+            </li>
+            <li class="search__chip">
+              <button class="search__chip-name">김밥</button>
+              <button class="search__chip-del" aria-label="최근 검색어 삭제">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"/></svg>
+              </button>
+            </li>
+            <li class="search__chip">
+              <button class="search__chip-name">1</button>
+              <button class="search__chip-del" aria-label="최근 검색어 삭제">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"/></svg>
+              </button>
+            </li>
+            <li class="search__chip">
+              <button class="search__chip-name">일이삼사오육칠팔구십</button>
+              <button class="search__chip-del" aria-label="최근 검색어 삭제">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"/></svg>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <!--검색 결과가 없을경우-->
+        <div id="S3" class="search__panel">
+            <div class="search__empty">
+              <p class="search__empty-text">검색 결과가 없습니다.</p>
+              <p class="search__empty-subtext">찾으시는 상품이 없으신가요?<br />주문서 작성 시 요청사항에 기재해 주세요</p>
+            </div>
+        </div>
+        <!--검색 결과가 있을경우-->
+        <div id="S4" class="search__list">
+          <ul class="search__items">
+            <li class="search__item">
+              <div class="search__thumb-wrap">
+                <img class="search__thumb" src="https://thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" alt="상품 이미지" />
+              </div>
+              <div style="flex:1;">
+                <div class="search__tag">오늘만</div>
+                <div class="search__price">2,558</div>
+                <div class="search__name">자연그린 김밥단무지1</div>
+              </div>
+              <div class="search__spacer">
+                <div class="search__cart">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z"></path></svg>
+                </div>
+              </div>
+            </li>
+            <li class="search__item">
+              <div class="search__thumb-wrap">
+                <img class="search__thumb" src="https://thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" alt="상품 이미지" />
+              </div>
+              <div style="flex:1;">
+                <div class="search__tag">오늘만</div>
+                <div class="search__price">2,558</div>
+                <div class="search__name">자연그린 김밥단무지3</div>
+              </div>
+              <div class="search__spacer">
+                <div class="search__cart active">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z"></path></svg>
+                </div>
+              </div>
+            </li>
+            <li class="search__item">
+              <div class="search__thumb-wrap">
+                <img class="search__thumb" src="https://thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" alt="상품 이미지" />
+              </div>
+              <div style="flex:1;">
+                <div class="search__tag">오늘만</div>
+                <div class="search__price">1,990</div>
+                <div class="search__name">자연그린 김밥단무지4</div>
+              </div>
+              <div class="search__spacer">
+                <div class="search__cart">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z"></path></svg>
+                </div>
+              </div>
+            </li>
+            <li class="search__item">
+              <div class="search__thumb-wrap">
+                <img class="search__thumb" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNTEwMjFfMjkz%2FMDAxNzYxMDE2MTEyMzAx.CkjID8Nc3fHBStIqQvLBok5-5QZWjUcgILDM852Sx2kg.swrY1ik00q-fnn6-JbUMsOOAEXUYYBKMS1i3EJET2qwg.JPEG%2FKakaoTalk_20251021_115627207_06.jpg" alt="상품 이미지" />
+              </div>
+              <div style="flex:1;">
+                <div class="search__tag">오늘만</div>
+                <div class="search__price">3,580</div>
+                <div class="search__name">자연그린 김밥단무지5</div>
+              </div>
+              <div class="search__spacer">
+                <div class="search__cart">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z"></path></svg>
+                </div>
+              </div>
+            </li>
+            <li class="search__item">
+              <div class="search__thumb-wrap">
+                <img class="search__thumb" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNTEwMjFfMjkz%2FMDAxNzYxMDE2MTEyMzAx.CkjID8Nc3fHBStIqQvLBok5-5QZWjUcgILDM852Sx2kg.swrY1ik00q-fnn6-JbUMsOOAEXUYYBKMS1i3EJET2qwg.JPEG%2FKakaoTalk_20251021_115627207_06.jpg" alt="상품 이미지" />
+              </div>
+              <div style="flex:1;">
+                <div class="search__tag">오늘만</div>
+                <div class="search__price">3,580</div>
+                <div class="search__name">자연그린 김밥단무지5</div>
+              </div>
+              <div class="search__spacer">
+                <div class="search__cart">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z"></path></svg>
+                </div>
+              </div>
+            </li>
+            <li class="search__item">
+              <div class="search__thumb-wrap">
+                <img class="search__thumb" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNTEwMjFfMjkz%2FMDAxNzYxMDE2MTEyMzAx.CkjID8Nc3fHBStIqQvLBok5-5QZWjUcgILDM852Sx2kg.swrY1ik00q-fnn6-JbUMsOOAEXUYYBKMS1i3EJET2qwg.JPEG%2FKakaoTalk_20251021_115627207_06.jpg" alt="상품 이미지" />
+              </div>
+              <div style="flex:1;">
+                <div class="search__tag">오늘만</div>
+                <div class="search__price">3,580</div>
+                <div class="search__name">자연그린 김밥단무지5</div>
+              </div>
+              <div class="search__spacer">
+                <div class="search__cart">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z"></path></svg>
+                </div>
+              </div>
+            </li>
+            <li class="search__item">
+              <div class="search__thumb-wrap">
+                <img class="search__thumb" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNTEwMjFfMjkz%2FMDAxNzYxMDE2MTEyMzAx.CkjID8Nc3fHBStIqQvLBok5-5QZWjUcgILDM852Sx2kg.swrY1ik00q-fnn6-JbUMsOOAEXUYYBKMS1i3EJET2qwg.JPEG%2FKakaoTalk_20251021_115627207_06.jpg" alt="상품 이미지" />
+              </div>
+              <div style="flex:1;">
+                <div class="search__tag">오늘만</div>
+                <div class="search__price">3,580</div>
+                <div class="search__name">자연그린 김밥단무지5</div>
+              </div>
+              <div class="search__spacer">
+                <div class="search__cart">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z"></path></svg>
+                </div>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+      <button id="viewToggle" type="button" style="position: absolute; top: 0; left: 10px;">화면뷰</button>
+      <button class="layer__close" aria-label="닫기">
+        <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32" fill="currentColor">
+          <path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const panels = ["S1", "S2", "S3", "S4"].map((id) => document.getElementById(id));
+      let currentIndex = 0;
+
+      function showPanel(index) {
+        panels.forEach((panel, i) => {
+          if (!panel) return;
+          panel.style.display = i === index ? "flex" : "none";
+        });
+      }
+
+      showPanel(currentIndex);
+
+      const button = document.getElementById("viewToggle");
+      if (button) {
+        button.addEventListener("click", function () {
+          currentIndex = (currentIndex + 1) % panels.length;
+          showPanel(currentIndex);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
