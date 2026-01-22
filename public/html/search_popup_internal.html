@@ -21,8 +21,10 @@
     .search__submit { position: absolute; right: 8px; top: 50%; display: flex; transform: translateY(-50%); background: transparent; border: 0; color: #94a3b8; cursor: pointer; padding: 4px; }
     .search__submit:hover { color: #475569; }
 
-    .search__panel { flex: 1; display: flex; flex-direction: column; padding: 8px; background: #fff; border-radius: 8px; overflow: hidden; }
 
+    .search__content{display: flex; flex-direction: column; max-height: 70svh; transition:max-height 500ms ease;}
+    .search__panel { display: flex; flex-direction: column; padding: 0; background: #fff; border-radius: 8px; overflow: hidden; transition: height 500ms ease; }
+    .search__panel-inner { padding: 8px; overflow: visible; }
     .search__section-title { font-size: 16px; color: #64748b; margin: 2px 0 6px; }
     .search__subtext { font-size: 14px; color: #94a3b8; margin: 0 0 10px; }
 
@@ -36,8 +38,8 @@
     .search__chip-name { padding: 4px 4px 4px 12px; font-size: 16px; color: #475569; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .search__chip-del { display: flex; align-items: center; padding: 4px 8px 4px 4px; color: #64748b; }
 
-    .search__list { flex: 1; display: flex; flex-direction: column; background: #fff; border-radius: 8px; height: 65vh; }
-    .search__items { flex:1; list-style: none; padding: 0; margin: 0; overflow-y: auto; }
+    .search__list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; margin:-8px; background: #fff; border-radius: 8px; height: 65vh; }
+    .search__items { flex:1; list-style: none; padding: 0; margin: 0; }
     .search__item { display: flex; align-items: center; gap: 12px; padding: 10px 6px; border-top: 1px solid #e2e8f0; }
     .search__item:first-child { border-color:transparent; }
     .search__thumb-wrap { width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; }
@@ -80,9 +82,10 @@
           </svg>
         </button>
       </div>
-      <div style="max-height: 70svh; transition: max-height 500ms ease;">
+      <div class="search__panel">
+        <div class="search__panel-inner">
         <!--검색어가 없을경우-->
-        <div id="S1" class="search__panel">
+        <div id="S1">
           <div class="search__section-title">최근 검색어</div>
           <p class="search__subtext">검색어는 최대5개, 30일동안 저장합니다.</p>
           <div class="search__empty">
@@ -90,7 +93,7 @@
           </div>
         </div>
         <!--검색어가 있을경우-->
-        <div id="S2" class="search__panel">
+        <div id="S2">
           <div class="search__section-title">최근 검색어</div>
           <p class="search__subtext">검색어는 최대5개, 30일동안 저장합니다.</p>
           <ul class="search__chips">
@@ -129,11 +132,11 @@
           </ul>
         </div>
         <!--검색 결과가 없을경우-->
-        <div id="S3" class="search__panel">
-            <div class="search__empty">
-              <p class="search__empty-text">검색 결과가 없습니다.</p>
-              <p class="search__empty-subtext">찾으시는 상품이 없으신가요?<br />주문서 작성 시 요청사항에 기재해 주세요</p>
-            </div>
+        <div id="S3">
+          <div class="search__empty">
+            <p class="search__empty-text">검색 결과가 없습니다.</p>
+            <p class="search__empty-subtext">찾으시는 상품이 없으신가요?<br />주문서 작성 시 요청사항에 기재해 주세요</p>
+          </div>
         </div>
         <!--검색 결과가 있을경우-->
         <div id="S4" class="search__list">
@@ -243,8 +246,8 @@
                 </div>
               </div>
             </li>
-
           </ul>
+        </div>
         </div>
       </div>
       <button id="viewToggle" type="button" style="position: absolute; top: 0; left: 10px;">화면뷰</button>
@@ -256,6 +259,28 @@
     </div>
   </div>
   <script>
+    // search__panel 높이 동기화 (컨텐츠 높이에 맞춰 부드럽게 전환)
+    (function () {
+      function syncPanelHeights() {
+        const panels = document.querySelectorAll(".search__panel");
+        panels.forEach((panel) => {
+          if (panel.style.display === "none") return;
+          const inner = panel.querySelector(".search__panel-inner");
+          if (!inner) return;
+          panel.style.height = `${inner.scrollHeight}px`;
+        });
+      }
+
+      syncPanelHeights();
+      window.addEventListener("resize", syncPanelHeights);
+
+      const observer = new MutationObserver(syncPanelHeights);
+      observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+
+      window.__syncSearchPanelHeights = syncPanelHeights;
+    })();
+
+    // 화면뷰 전환 (테스트용)
     (function () {
       const panels = ["S1", "S2", "S3", "S4"].map((id) => document.getElementById(id));
       let currentIndex = 0;
@@ -263,7 +288,7 @@
       function showPanel(index) {
         panels.forEach((panel, i) => {
           if (!panel) return;
-          panel.style.display = i === index ? "flex" : "none";
+          panel.style.display = i === index ? "block" : "none";
         });
       }
 
@@ -274,6 +299,9 @@
         button.addEventListener("click", function () {
           currentIndex = (currentIndex + 1) % panels.length;
           showPanel(currentIndex);
+          if (typeof window.__syncSearchPanelHeights === "function") {
+            window.__syncSearchPanelHeights();
+          }
         });
       }
     })();
