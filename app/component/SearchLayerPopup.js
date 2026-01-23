@@ -15,6 +15,10 @@ export default function SearchLayerPopup({ open, onClose, list }) {
     const [showRecentKeywords, setShowRecentKeywords] = useState(false);
     const [isLargeSearchImage, setIsLargeSearchImage] = useState(false);
     const searchInputRef = useRef(null);
+    // 내부 컨텐츠 높이를 측정하기 위한 ref
+    const contentRef = useRef(null);
+    // 높이 트랜지션에 사용할 현재 컨텐츠 높이
+    const [contentHeight, setContentHeight] = useState(0);
 
     useEffect(() => {
         if (!open) return;
@@ -30,6 +34,29 @@ export default function SearchLayerPopup({ open, onClose, list }) {
         [list, searchQuery]
     );
 
+    // 렌더링 직후 실제 높이를 측정해 자연스럽게 늘어나도록 처리
+    useEffect(() => {
+        if (!open) return;
+        const rafId = requestAnimationFrame(() => {
+            if (!contentRef.current) return;
+            setContentHeight(contentRef.current.scrollHeight);
+        });
+
+        return () => cancelAnimationFrame(rafId);
+    }, [open, searchQuery, filteredList.length, showRecentKeywords, recentKeywords.length, isLargeSearchImage]);
+
+    // 컨텐츠 크기 변화(이미지 토글, 검색결과 등)를 감지해 높이 갱신
+    useEffect(() => {
+        if (!open || !contentRef.current) return;
+        const element = contentRef.current;
+        const observer = new ResizeObserver(() => {
+            setContentHeight(element.scrollHeight);
+        });
+
+        observer.observe(element);
+        return () => observer.disconnect();
+    }, [open]);
+
     const hasQuery = searchQuery.trim() !== "";
 
     if (!open) return null;
@@ -42,7 +69,7 @@ export default function SearchLayerPopup({ open, onClose, list }) {
                 <div className="relative mb-3">
                     <input
                         ref={searchInputRef}
-                        className="w-full h-10 pl-4 pr-20 border border-slate-400 rounded-lg text-base bg-white"
+                        className="w-full h-10 pl-4 pr-20 border border-slate-400 rounded-full text-base bg-white"
                         placeholder="상품명을 입력하세요"
                         value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
@@ -83,56 +110,57 @@ export default function SearchLayerPopup({ open, onClose, list }) {
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
                     </button>
                 </div>
-                <div
-                    className="flex-1 flex flex-col overflow-y-auto rounded-lg bg-white"
-                    style={{
-                        maxHeight: hasQuery ? "70vh" : "460px",
-                        transition: "max-height 500ms ease",
-                    }}
+                {/* 검색 결과영역 */}
+                {/* contentHeight로 감싼 래퍼에 height 트랜지션 적용 */}
+                <div className="overflow-hidden transition-[height] duration-300 ease-in-out"
+                    style={{ height: contentHeight ? `${contentHeight}px` : "auto" }}
                 >
+                    {/* 실제 컨텐츠 영역(높이 측정 대상) */}
+                    <div ref={contentRef} className="flex flex-col rounded-lg bg-white">
+
                     {searchQuery.trim() === "" ? (
-                        <div className="flex flex-col p-2">
-                            <div className="text-slate-500">최근 검색어</div>
-                            <p className="mb-2 text-sm text-slate-400">검색어는 최대5개, 30일동안 저장합니다.</p>
-                            {!showRecentKeywords ? (
-                                <div className="px-2 py-10 text-center text-slate-500">
-                                    <p className="text-lg font-bold">최근 검색 내역이 없습니다</p>
-                                    <button
-                                        type="button"
-                                        className="block mx-auto text-blue-500 hover:text-blue-600"
-                                        onClick={() => setShowRecentKeywords(true)}
-                                    >
-                                        최근검색어 추가
-                                    </button>
-                                </div>
-                            ) : (
-                                <ul className="flex flex-wrap gap-x-2 gap-y-2">
-                                    {recentKeywords.map((keyword, index) => (
-                                        <li key={`${keyword}-${index}`} className="flex items-center rounded-full bg-white border border-slate-400">
-                                            <button
-                                                type="button"
-                                                className="flex max-w-56 pl-3 pr-1 py-1 text-slate-600 rounded-l-full"
-                                                onClick={() => setSearchInput(keyword)}
-                                            >
-                                                <span className="line-clamp-1">{keyword}</span>
-                                            </button>
-                                            <button
-                                                type="button"
-                                                aria-label="최근 검색어 삭제"
-                                                className="pr-2 pl-1 py-1 text-slate-600"
-                                                onClick={() =>
-                                                    setRecentKeywords((prev) =>
-                                                        prev.filter((_, prevIndex) => prevIndex !== index)
-                                                    )
-                                                }
-                                            >
-                                                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"/></svg>
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                        </div>
+                      <div className="flex flex-col p-2">
+                          <div className="text-slate-500">최근 검색어</div>
+                          <p className="mb-2 text-sm text-slate-400">검색어는 최대5개, 30일동안 저장합니다.</p>
+                          {!showRecentKeywords ? (
+                              <div className="px-2 py-10 text-center text-slate-500">
+                                  <p className="text-lg font-bold">최근 검색 내역이 없습니다</p>
+                                  <button
+                                      type="button"
+                                      className="block mx-auto text-blue-500 hover:text-blue-600"
+                                      onClick={() => setShowRecentKeywords(true)}
+                                  >
+                                      최근검색어 추가
+                                  </button>
+                              </div>
+                          ) : (
+                              <ul className="flex flex-wrap gap-x-2 gap-y-2">
+                                  {recentKeywords.map((keyword, index) => (
+                                      <li key={`${keyword}-${index}`} className="flex items-center rounded-full bg-white border border-slate-400">
+                                          <button
+                                              type="button"
+                                              className="flex max-w-56 pl-3 pr-1 py-1 text-slate-600 rounded-l-full"
+                                              onClick={() => setSearchInput(keyword)}
+                                          >
+                                              <span className="line-clamp-1">{keyword}</span>
+                                          </button>
+                                          <button
+                                              type="button"
+                                              aria-label="최근 검색어 삭제"
+                                              className="pr-2 pl-1 py-1 text-slate-600"
+                                              onClick={() =>
+                                                  setRecentKeywords((prev) =>
+                                                      prev.filter((_, prevIndex) => prevIndex !== index)
+                                                  )
+                                              }
+                                          >
+                                              <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"/></svg>
+                                          </button>
+                                      </li>
+                                  ))}
+                              </ul>
+                          )}
+                      </div>
                     ) : filteredList.length === 0 ? (
                         <div className="flex flex-col items-center justify-center min-h-40 p-4 text-center text-slate-500">
                             <p className="text-lg font-bold">검색 결과가 없습니다.</p>
@@ -176,6 +204,7 @@ export default function SearchLayerPopup({ open, onClose, list }) {
                             </ul>
                         </div>
                     )}
+                    </div>
                 </div>
                 <button
                     onClick={onClose}
