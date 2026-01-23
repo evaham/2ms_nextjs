@@ -11,6 +11,16 @@ export default function Home() {
     const [showPopup4, setShowPopup4] = useState(false);
     const [showSearchPopup, setShowSearchPopup] = useState(false);
 
+    const titleText = "투게더마트모바일전단모바일전단모바일전단모바일전단";
+    const getTitleFontSize = (length) => {
+        if (length < 11) return "1.9em";
+        if (length >= 11 && length < 13) return "1.6em";
+        if (length >= 13 && length < 15) return "1.4em";
+        if (length >= 15 && length < 17) return "1.2em";
+        if (length >= 17 && length < 19) return "1em";
+        return "0.98em";
+    };
+
     const bannerImg = "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/image_audit/prod/26a4f3e8-5f26-4f9d-9404-18aa4680fa79_fixing_v2.png";
 
     const sampleImg = "https://image6.coupangcdn.com/image/mypromotion/CPI90_banner.png";
@@ -38,14 +48,21 @@ export default function Home() {
     <>
         <div className='sample relative flex flex-col min-h-screen pb-20 bg-slate-50'>
             <div className="sticky top-0 z-50">
-                <div className="sample__name clearfix relative flex justify-center items-center h-16 bg-[#21409a] text-xl text-white font-bold" style={{ color: "", background: "" }}>
-                <span className="js_fontsize mart-info flex items-center cursor-pointer" style={{ fontSize: "2rem" }} onClick={() => setShowPopup(true)}>투게더마트
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="#fafafa" height="32px" viewBox="0 -960 960 960" width="32px"><path d="M460-300h40v-220h-40v220Zm20-276.92q10.46 0 17.54-7.08 7.08-7.08 7.08-17.54 0-10.46-7.08-17.54-7.08-7.07-17.54-7.07-10.46 0-17.54 7.07-7.08 7.08-7.08 17.54 0 10.46 7.08 17.54 7.08 7.08 17.54 7.08Zm.13 456.92q-74.67 0-140.41-28.34-65.73-28.34-114.36-76.92-48.63-48.58-76.99-114.26Q120-405.19 120-479.87q0-74.67 28.34-140.41 28.34-65.73 76.92-114.36 48.58-48.63 114.26-76.99Q405.19-840 479.87-840q74.67 0 140.41 28.34 65.73 28.34 114.36 76.92 48.63 48.58 76.99 114.26Q840-554.81 840-480.13q0 74.67-28.34 140.41-28.34 65.73-76.92 114.36-48.58 48.63-114.26 76.99Q554.81-120 480.13-120Zm-.13-40q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"></path></svg>
+                <div className="sample__name clearfix relative flex items-center gap-1.5 h-16 p-2.5 bg-[#21409a] text-[20px] text-white font-bold" style={{ color: "", background: "" }}>
+                <span
+                    className="js_fontsize mart-info relative flex mr-auto pr-8 items-center leading-tight cursor-pointer"
+                    style={{ fontSize: getTitleFontSize(titleText.length) }}
+                    onClick={() => setShowPopup(true)}
+                >
+                    {titleText}
+                    <span className="absolute right-0 top-1/2 -translate-y-1/2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="#fafafa" height="32px" viewBox="0 -960 960 960" width="32px"><path d="M460-300h40v-220h-40v220Zm20-276.92q10.46 0 17.54-7.08 7.08-7.08 7.08-17.54 0-10.46-7.08-17.54-7.08-7.07-17.54-7.07-10.46 0-17.54 7.07-7.08 7.08-7.08 17.54 0 10.46 7.08 17.54 7.08 7.08 17.54 7.08Zm.13 456.92q-74.67 0-140.41-28.34-65.73-28.34-114.36-76.92-48.63-48.58-76.99-114.26Q120-405.19 120-479.87q0-74.67 28.34-140.41 28.34-65.73 76.92-114.36 48.58-48.63 114.26-76.99Q405.19-840 479.87-840q74.67 0 140.41 28.34 65.73 28.34 114.36 76.92 48.63 48.58 76.99 114.26Q840-554.81 840-480.13q0 74.67-28.34 140.41-28.34 65.73-76.92 114.36-48.58 48.63-114.26 76.99Q554.81-120 480.13-120Zm-.13-40q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"></path></svg>
+                    </span>
                 </span>
-                <button onClick={() => setShowSearchPopup(true)} className="sample__tel block absolute top-3.5 right-12 size-8 p-1 rounded-full bg-[#fafafa]">
+                <button onClick={() => setShowSearchPopup(true)} className="sample__tel block size-8 p-1 rounded-full bg-[#fafafa]">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#333"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
                 </button>
-                <Link href={"/"} onClick={() => window.location.href = 'tel:1577-4550'} className="sample__tel block absolute top-3.5 right-1.5 size-8 p-1 rounded-full bg-[#fafafa]">
+                <Link href={"/"} onClick={() => window.location.href = 'tel:1577-4550'} className="sample__tel block size-8 p-1 rounded-full bg-[#fafafa]">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#333">
                     <path d="m720-560-58-56 64-64H520v-80h206l-62-62 56-58 160 162-160 158Zm78 440q-125 0-247-54.5T329-329Q229-429 174.5-551T120-798q0-18 12-30t30-12h162q14 0 25 9.5t13 22.5l26 140q2 16-1 27t-11 19l-97 98q20 37 47.5 71.5T387-386q31 31 65 57.5t72 48.5l94-94q9-9 23.5-13.5T670-390l138 28q14 4 23 14.5t9 23.5v162q0 18-12 30t-30 12ZM241-600l66-66-17-94h-89q5 41 14 81t26 79Zm358 358q39 17 79.5 27t81.5 13v-88l-94-19-67 67ZM241-600Zm358 358Z" />
                     </svg>

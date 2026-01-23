@@ -14,6 +14,7 @@ export default function SearchLayerPopup({ open, onClose, list }) {
     ]);
     const [showRecentKeywords, setShowRecentKeywords] = useState(false);
     const [isLargeSearchImage, setIsLargeSearchImage] = useState(false);
+    const [activeCartKeys, setActiveCartKeys] = useState(new Set());
     const searchInputRef = useRef(null);
     // 내부 컨텐츠 높이를 측정하기 위한 ref
     const contentRef = useRef(null);
@@ -171,7 +172,7 @@ export default function SearchLayerPopup({ open, onClose, list }) {
                         </div>
                     ) : (
                         <div className="flex flex-col h-[65vh]">
-                            <div className="flex justify-end px-2 py-2">
+                            {/* <div className="flex justify-end px-2 py-2">
                                 <button
                                     type="button"
                                     className="text-sm text-slate-500 hover:text-slate-700"
@@ -179,28 +180,59 @@ export default function SearchLayerPopup({ open, onClose, list }) {
                                 >
                                     이미지크기 변경
                                 </button>
-                            </div>
+                            </div> */}
                             <ul className="flex-1 divide-y divide-slate-200 overflow-y-auto">
-                                {filteredList.map((item, index) => (
+                                {filteredList.map((item, index) => {
+                                    const cartKey = `${item.id}-${index}`;
+                                    const isActive = activeCartKeys.has(cartKey);
+
+                                    return (
                                     <li
                                         key={`${item.id}-${index}`}
                                         className="p-1 flex items-center gap-3"
                                     >
-                                        <div className={`flex flex-col justify-center items-center ${isLargeSearchImage ? "size-32" : "size-20"}`}>
+                                        <div className="flex flex-col justify-center items-center size-32">
                                             <img className="max-w-full max-h-full size-auto" src={item.image} alt="상품 이미지" />
                                         </div>
                                         <div className="flex-1">
                                             <div className="text-sm">오늘만</div>
                                             <div className="text-xl text-rose-500 font-bold">{item.price.toLocaleString()}</div>
-                                            <div className="font-bold">{item.name}</div>
+                                            <div className="font-bold leading-tight line-clamp-2">{item.name}</div>
                                         </div>
                                         <div className="pr-2">
-                                            <div className="icon__cartbox active flex items-center justify-center w-10 h-10 bg-white border border-black/15 rounded-full">
-                                                <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z"></path></svg>
-                                            </div>
+                                            <button
+                                                type="button"
+                                                aria-pressed={isActive}
+                                                className={`icon__cartbox flex items-center justify-center w-10 h-10 bg-white border rounded-full ${
+                                                    isActive ? "border-blue-300" : "border-black/15"
+                                                }`}
+                                                onClick={() =>
+                                                    setActiveCartKeys((prev) => {
+                                                        const next = new Set(prev);
+                                                        if (next.has(cartKey)) {
+                                                            next.delete(cartKey);
+                                                        } else {
+                                                            next.add(cartKey);
+                                                        }
+                                                        return next;
+                                                    })
+                                                }
+                                            >
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    height="60%"
+                                                    viewBox="0 -960 960 960"
+                                                    width="60%"
+                                                    className={isActive ? "fill-blue-500" : "fill-slate-400"}
+                                                >
+                                                    <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
+                                                </svg>
+                                            </button>
+
                                         </div>
                                     </li>
-                                ))}
+                                    );
+                                })}
                             </ul>
                         </div>
                     )}
