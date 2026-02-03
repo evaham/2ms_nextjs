@@ -12,15 +12,15 @@ const FooterMenu = () => {
     const [showUserInfo, setShowUserInfo] = useState(false);
     const [pendingPath, setPendingPath] = useState(null);
 
-    const openUserInfoForPath = (path) => {
-        setPendingPath(path);
-        setShowUserInfo(true);
-    };
+    // const openUserInfoForPath = (path) => {
+    //     setPendingPath(path);
+    //     setShowUserInfo(true);
+    // };
 
-    const handleLinkClick = (path) => (e) => {
-        e.preventDefault();           // 즉시 이동 방지
-        openUserInfoForPath(path);    // 모달 열기
-    };
+    // const handleLinkClick = (path) => (e) => {
+    //     e.preventDefault();           // 즉시 이동 방지
+    //     openUserInfoForPath(path);    // 모달 열기
+    // };
 
     const closeUserInfo = () => {
         setShowUserInfo(false);
@@ -46,7 +46,7 @@ const FooterMenu = () => {
                 </Link>
                 <Link className={`footermenu-link flex-1 relative flex flex-col justify-center items-center w-16 h-16 text-xs no-underline
                         ${pathname === "/couponlist" ? "active font-bold text-blue-500 [&_svg]:fill-blue-500" : "[&_svg]:fill-slate-400"}`}
-                    href={"/couponlist"} onClick={handleLinkClick('/couponlist')}
+                    href={"/couponlist"}
                 >
                     {pathname === "/couponlist" ? (
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm0-160q17 0 28.5-11.5T520-480q0-17-11.5-28.5T480-520q-17 0-28.5 11.5T440-480q0 17 11.5 28.5T480-440Zm0-160q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm320 440H160q-33 0-56.5-23.5T80-240v-160q33 0 56.5-23.5T160-480q0-33-23.5-56.5T80-560v-160q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v160q-33 0-56.5 23.5T800-480q0 33 23.5 56.5T880-400v160q0 33-23.5 56.5T800-160Z" /></svg>
@@ -57,7 +57,7 @@ const FooterMenu = () => {
                 </Link>
                 <Link className={`footermenu-link flex-1 relative flex flex-col justify-center items-center w-16 h-16 text-xs no-underline
                         ${pathname === "/cartlist" ? "active font-bold text-blue-500 [&_svg]:fill-blue-500" : "[&_svg]:fill-slate-400"}`}
-                    href={"/cartlist"} onClick={handleLinkClick('/cartlist')}
+                    href={"/cartlist"}
                 >
                     <span className='footermenu__num absolute top-1/2 left-1/2 flex justify-center items-center min-w-4.5 h-4.5 -mt-7.5 ml-1.5 px-1 rounded-full text-xs text-white font-bold bg-[#f43f5e]'>99</span>
                     
@@ -70,7 +70,7 @@ const FooterMenu = () => {
                 </Link>
                 <Link className={`footermenu-link flex-1 relative flex flex-col justify-center items-center w-16 h-16 text-xs no-underline
                         ${pathname === "/orderslist" ? "active font-bold text-blue-500 [&_svg]:fill-blue-500" : "[&_svg]:fill-slate-400"}`}
-                    href={"/orderslist"} onClick={handleLinkClick('/orderslist')}
+                    href={"/orderslist"}
                 >
                     {pathname === "/orderslist" ? (
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M320-280q17 0 28.5-11.5T360-320q0-17-11.5-28.5T320-360q-17 0-28.5 11.5T280-320q0 17 11.5 28.5T320-280Zm0-160q17 0 28.5-11.5T360-480q0-17-11.5-28.5T320-520q-17 0-28.5 11.5T280-480q0 17 11.5 28.5T320-440Zm0-160q17 0 28.5-11.5T360-640q0-17-11.5-28.5T320-680q-17 0-28.5 11.5T280-640q0 17 11.5 28.5T320-600Zm120 320h240v-80H440v80Zm0-160h240v-80H440v80Zm0-160h240v-80H440v80ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Z" /></svg>

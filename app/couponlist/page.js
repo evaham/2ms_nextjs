@@ -366,8 +366,8 @@ export default function CouponList() {
 										<svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#666"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z" /></svg>
 									</a>
 									<div className="popup-div overflow-y-auto h-120 mt-8
-                                        [&_h3,&_h4]:font-bold [&_h3]:text-lg [&_h4]:text-md 
-                                        [&_table]:w-full [&_table]:border [&_table]:text-sm [&_table_td]:border [&_table_td]:border-slate-400 [&_table_td]:p-2
+										[&_h3,&_h4]:font-bold [&_h3]:text-lg [&_h4]:text-md 
+										[&_table]:w-full [&_table]:border [&_table]:text-sm [&_table_td]:border [&_table_td]:border-slate-400 [&_table_td]:p-2
 									">
 										<h3>개인정보 수집·이용 동의서</h3>
 										<br />
@@ -376,16 +376,18 @@ export default function CouponList() {
 										귀하께서는 아래 개인정보의 수집 항목, 이용 목적, 이용기간을 확인하고, 이용동의서에 체크해 주시기 바랍니다.
 										<br />
 										<table className="tbl_comm">
-											<tr>
-												<td>수집 항목</td>
-												<td>이용 목적</td>
-												<td>이용 기간</td>
-											</tr>
-											<tr>
-												<td>휴대폰번호</td>
-												<td>동의자가 다운받은 쿠폰을 포스 프로그램에 적용시 활용</td>
-												<td>쿠폰 다운 받은 해당월</td>
-											</tr>
+											<tbody>
+												<tr>
+													<td>수집 항목</td>
+													<td>이용 목적</td>
+													<td>이용 기간</td>
+												</tr>
+												<tr>
+													<td>휴대폰번호</td>
+													<td>동의자가 다운받은 쿠폰을 포스 프로그램에 적용시 활용</td>
+													<td>쿠폰 다운 받은 해당월</td>
+												</tr>
+											</tbody>
 										</table>
 										<br />
 										<h4>1. 개인정보 수집 및 이용목적</h4>

@@ -45,17 +45,19 @@ export default function UserInfoWrite({onClose}) {
                                         귀하께서는 아래 개인정보의 수집 항목, 이용 목적, 이용기간을 확인하고, 이용동의서에 체크해 주시기 바랍니다.
                                         <br />
                                         <table className="tbl_comm">
-                                            <tbody><tr>
-                                                <td>수집 항목</td>
-                                                <td>이용 목적</td>
-                                                <td>이용 기간</td>
-                                            </tr>
+                                            <tbody>
+                                                <tr>
+                                                    <td>수집 항목</td>
+                                                    <td>이용 목적</td>
+                                                    <td>이용 기간</td>
+                                                </tr>
                                                 <tr>
                                                     <td>휴대폰번호</td>
                                                     <td>동의자가 다운받은 쿠폰을 포스 프로그램에 적용시 활용</td>
                                                     <td>쿠폰 다운 받은 해당월</td>
                                                 </tr>
-                                            </tbody></table>
+                                            </tbody>
+                                        </table>
                                         <br />
                                         <h4>1. 개인정보 수집 및 이용목적</h4>
                                         <br />

@@ -1,5 +1,5 @@
 "use client";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Link from "next/link";
 import SearchLayerPopup from "./component/SearchLayerPopup";
 
@@ -14,6 +14,22 @@ export default function Home() {
     const handleScrollTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
+
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+
+        const refreshEffect = () => {
+            if (window.effectJs?.refreshHard) {
+                window.effectJs.refreshHard();
+                return;
+            }
+            if (window.effectJs?.refresh) {
+                window.effectJs.refresh();
+            }
+        };
+
+        requestAnimationFrame(refreshEffect);
+    }, []);
 
     const titleText = "투게더DEV";
     const getTitleFontSize = (length) => {
@@ -30,7 +46,7 @@ export default function Home() {
     const sampleImg = "https://image6.coupangcdn.com/image/mypromotion/CPI90_banner.png";
     const bannerImg2 = "http://tdc-api-dev-3.togethers.kr:8082/2ms/static/img/group_purchase.png";
     const eventImg = "//thumbnail.coupangcdn.com/thumbnails/remote/292x292ex/image/retail/images/77063589846760-dcd9d195-fbe6-49cb-b171-c2de956fac70.jpg";
-    const badgeImg = "/img/123.jpg";
+    const badgeImg = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/img/123.jpg`;
     const testImg = "http://tdc-api-dev-3.togethers.kr:2004/WebLink/641/d-abcc9566-cb5e-4767-bb01-10cdd49182b5.png";
 
     const list = [
