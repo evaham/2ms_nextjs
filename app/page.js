@@ -11,9 +11,13 @@ export default function Home() {
     const [showPopup4, setShowPopup4] = useState(false);
     const [showSearchPopup, setShowSearchPopup] = useState(false);
 
-    const titleText = "투게더마트모바일전단모바일전단모바일전단모바일전단";
+    const handleScrollTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    const titleText = "투게더DEV";
     const getTitleFontSize = (length) => {
-        if (length < 11) return "1.9em";
+        // if (length < 11) return "1rem";
         if (length >= 11 && length < 13) return "1.6em";
         if (length >= 13 && length < 15) return "1.4em";
         if (length >= 15 && length < 17) return "1.2em";
@@ -26,7 +30,7 @@ export default function Home() {
     const sampleImg = "https://image6.coupangcdn.com/image/mypromotion/CPI90_banner.png";
     const bannerImg2 = "http://tdc-api-dev-3.togethers.kr:8082/2ms/static/img/group_purchase.png";
     const eventImg = "//thumbnail.coupangcdn.com/thumbnails/remote/292x292ex/image/retail/images/77063589846760-dcd9d195-fbe6-49cb-b171-c2de956fac70.jpg";
-    const badgeImg = "http://tdc-api-dev-3.togethers.kr:2004/WebLink/641/20221111_174111_272.png";
+    const badgeImg = "/img/123.jpg";
     const testImg = "http://tdc-api-dev-3.togethers.kr:2004/WebLink/641/d-abcc9566-cb5e-4767-bb01-10cdd49182b5.png";
 
     const list = [
@@ -92,7 +96,7 @@ export default function Home() {
                 </a>
             </div>
 
-            {/* <!-- 행사코너 --> */}
+            {/* <!-- 행사코너1 --> */}
             <div style={{ background: "#fff382" }}>
                 {/* <!-- <span>행사코너1 배너</span> --> */}
                 <div className="sample__banner sample__banner--type2 flex items-center justify-center min-h-20 bg-slate-300">
@@ -251,10 +255,14 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="wrap_stickyfooter overflow-x-hidden fixed right-0 bottom-23 z-50">
-                <a className="scroll_top btn_movetop flex flex-col items-center justify-center w-15 h-15 ml-auto mr-2.5 rounded-full bg-black/70 hover:bg-[#333] ">
-                <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#fff"><path d="M160-760v-80h640v80H160Zm280 640v-408L336-424l-56-56 200-200 200 200-56 56-104-104v408h-80Z"></path></svg>
-                <span className="text-xs text-white tracking-tight">맨위로</span>
+            <div className="wrap_stickyfooter fixed right-0 bottom-23 w-auto h-auto z-50">
+                <a className="scroll_top btn_movetop flex border flex-col items-center justify-center w-15 h-15 ml-auto mr-2.5 rounded-full bg-black/70 hover:bg-[#333] shadow-md shadow-black/50"
+                    onClick={handleScrollTop}
+                    role="button"
+                    aria-label="맨위로 이동"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#fff"><path d="M160-760v-80h640v80H160Zm280 640v-408L336-424l-56-56 200-200 200 200-56 56-104-104v408h-80Z"></path></svg>
+                    <span className="text-xs text-white tracking-tight">맨위로</span>
                 </a>
             </div>
             {/* 레이어 팝업 안내창 */}
