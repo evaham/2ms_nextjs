@@ -67,10 +67,10 @@ export default function SearchLayerPopup({ open, onClose, list }) {
             <div className="layer__bg absolute inset-0 bg-black/40" onClick={onClose}></div>
             <div className="layer__panel relative overflow-hidden flex flex-col w-full p-4 bg-slate-50 rounded-2xl z-50">
                 <p className="layer__tit mb-3 text-xl text-center font-bold leading-tight">상품 검색</p>
-                <div className="relative mb-3">
+                <div className="relative mb-3 w-full h-10 pl-4 pr-10 border border-slate-400 rounded-full text-base bg-white focus-within:border-slate-700">
                     <input
                         ref={searchInputRef}
-                        className="w-full h-10 pl-4 pr-20 border border-slate-400 rounded-full text-base bg-white"
+                        className="w-full h-full pr-10 text-base outline-none"
                         placeholder="상품명을 입력하세요"
                         value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}

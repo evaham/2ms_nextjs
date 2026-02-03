@@ -545,20 +545,6 @@ export default function Home() {
             )}
             </>
         )}
-
-        <div className="notice-div">
-            <div className="background"></div>
-            <div>
-            <p>공지사항</p>
-            <div>
-                오후2시 까지 배달 주문 시 당일 저녁에 배송 드립니다..
-            </div>
-            <button className="notice-close-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
-            </button>
-            </div>
-        </div>
-
     </>
   );
 }
