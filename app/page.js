@@ -15,6 +15,17 @@ export default function Home() {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
+    const handleScrollToSection = (sectionId) => {
+        const target = document.getElementById(sectionId);
+        if (!target) return;
+
+        const headerOffset = 110;
+        const elementPosition = target.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - headerOffset;
+
+        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+    };
+
     useEffect(() => {
         if (typeof window === "undefined") return;
 
@@ -46,7 +57,7 @@ export default function Home() {
     const sampleImg = "https://image6.coupangcdn.com/image/mypromotion/CPI90_banner.png";
     const bannerImg2 = "http://tdc-api-dev-3.togethers.kr:8082/2ms/static/img/group_purchase.png";
     const eventImg = "//thumbnail.coupangcdn.com/thumbnails/remote/292x292ex/image/retail/images/77063589846760-dcd9d195-fbe6-49cb-b171-c2de956fac70.jpg";
-    const badgeImg = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/img/123.jpg`;
+    const badgeImg = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/img/123.jpg`; //로컬이미지
     const testImg = "http://tdc-api-dev-3.togethers.kr:2004/WebLink/641/d-abcc9566-cb5e-4767-bb01-10cdd49182b5.png";
 
     const list = [
@@ -100,20 +111,20 @@ export default function Home() {
 
             <div className="swiper mySwiper swiper-initialized swiper-horizontal swiper-free-mode swiper-backface-hidden sticky w-full h-10 border-b border-slate-300 bg-white z-40" style={{ top: 110 }}>
                 <div className="scroll_btn swiper-wrapper" style={{ height: "80%" }} id="swiper-wrapper-d43ae10c1abe2cef9" aria-live="polite">
-                <div className="btn_comm btn_0 swiper-slide swiper-slide-active" onClick={() => scrollBubble(0)} role="group" aria-label="1 / 2" style={{ marginRight: "5px" }}>행사코너1</div>
-                <div className="btn_comm btn_1 swiper-slide swiper-slide-next" onClick={() => scrollBubble(1)} role="group" aria-label="2 / 2" style={{ marginRight: "5px" }}>행사코너2</div>
+                <div className="btn_comm btn_0 swiper-slide swiper-slide-active" onClick={() => handleScrollToSection("event-corner-1")} role="group" aria-label="1 / 2" style={{ marginRight: "5px" }}>행사코너1</div>
+                <div className="btn_comm btn_1 swiper-slide swiper-slide-next" onClick={() => handleScrollToSection("event-corner-2")} role="group" aria-label="2 / 2" style={{ marginRight: "5px" }}>행사코너2</div>
                 </div>
                 <span className="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
             </div>
 
             <div className="group-purchase animate-slide-in-left">
                 <a href="http://naver.com">
-                <img className="w-full" src={bannerImg2} alt="공동구매 배너" />
+                    <img className="w-full" src={bannerImg2} alt="공동구매 배너" />
                 </a>
             </div>
 
             {/* <!-- 행사코너1 --> */}
-            <div style={{ background: "#fff382" }}>
+            <div id="event-corner-1" style={{ background: "#fff382" }}>
                 {/* <!-- <span>행사코너1 배너</span> --> */}
                 <div className="sample__banner sample__banner--type2 flex items-center justify-center min-h-20 bg-slate-300">
                     <img className="size-full" src={eventImg} alt="행사코너 배너" />
@@ -270,6 +281,178 @@ export default function Home() {
                 </ul>
                 </div>
             </div>
+
+            {/* <!-- 행사코너2 --> */}
+            <div id="event-corner-2" style={{ background: "#fff382" }}>
+                {/* <!-- <span>행사코너2 배너</span> --> */}
+                <div className="sample__banner sample__banner--type2 flex items-center justify-center min-h-20 bg-slate-300">
+                    <img className="size-full" src={eventImg} alt="행사코너 배너" />
+                </div>
+                <div className="goods w-full">
+                {/* <!--템플릿 유형 가로형 --> */}
+                <ul id="" className="goods__list goods__list--type2 grid px-0.5 py-2.5 group grid-cols-1 gap-px overflow-hidden">
+                    {list.map((item, index) => (
+                    <li key={index} onClick={() => {setShowPopup2(true); setOrderSystem(true);}} data-effectjs="fade-up">
+                        <div className="goods__card relative overflow-hidden w-full p-1 border border-[#d1d1d6] rounded-lg bg-white">
+                        <div className="goods__imgbox relative flex flex-col justify-center items-center mx-auto bg-white group-[.grid-cols-2]:h-36 group-[.grid-cols-3]:h-23 group-[.grid-cols-4]:h-18" style={{ background: "white" }}>
+                            <div className="goods__badge absolute flex top-0 left-0 size-17 
+                                group-[.grid-cols-2]:size-12 group-[.grid-cols-3]:size-8 group-[.grid-cols-4]:size-6
+                            ">
+                            <img className="max-w-full max-h-full size-auto" src={badgeImg} alt="뱃지 이미지" />
+                            </div>
+                            <img className="lazyload max-w-full max-h-full size-auto" src={item.image} alt="상품 이미지" />
+
+                            <div className="icon__cartbox active flex items-center justify-center absolute right-1/20 bottom-1/20 bg-white border border-black/15 rounded-full shadow-[0_0_3px_rgba(0,0,0,0.2)] 
+                                group-[.grid-cols-1]:size-11 group-[.grid-cols-2]:size-11 group-[.grid-cols-3]:size-8 group-[.grid-cols-4]:size-7 [&.active]:border-blue-300 [&.active_svg]:fill-blue-500
+                            ">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8">
+                                <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
+                            </svg>
+                            </div>
+                        </div>
+                        <div className="goods__info text-center">
+                            <div className="goods__delprice previewEtc1 h-4 text-sm text-[#999] line-through leading-tight
+                            group-[.grid-cols-1]:text-base
+                            group-[.grid-cols-2]:text-sm
+                            group-[.grid-cols-3]:text-xs
+                            group-[.grid-cols-4]:text-xs
+                            ">공유이미지</div>
+                            <div className="goods__price font-bold text-[#fa5252] tracking-tight leading-tight
+                            group-[.grid-cols-1]:text-[300%] 
+                            group-[.grid-cols-2]:text-[190%] 
+                            group-[.grid-cols-3]:text-[135%] 
+                            group-[.grid-cols-4]:text-[100%]
+                            ">{item.price.toLocaleString()}</div>
+                            <div className="goods__name line-clamp-2 max-w-64 h-12 mt-0.5 mb-auto mx-auto font-bold break-all leading-tight
+                            group-[.grid-cols-1]:text-xl group-[.grid-cols-1]:h-12
+                            group-[.grid-cols-2]:text-lg group-[.grid-cols-2]:h-11
+                            group-[.grid-cols-3]:text-sm group-[.grid-cols-3]:h-9
+                            group-[.grid-cols-4]:text-xs group-[.grid-cols-4]:h-8
+                            ">{item.name}</div>
+                        </div>
+                        </div>
+                    </li>
+                    ))}
+                </ul>
+               
+                {/* <!--템플릿 유형 세로형 --> */}
+                <ul id="" className={`goods__list goods__list--style2 flex flex-col px-0.5 py-2.5 gap-px overflow-hidden`}>
+                    {list.map((item, index) => (
+                    <li key={index} onClick={() => setShowPopup2(true)} data-effectjs={index % 2 === 0 ? 'slide-left' : 'slide-right'} data-effectjs-duration="500">
+                        <div className="goods__card overflow-hidden flex w-full p-1 gap-3 border border-[#d1d1d6] rounded-lg bg-white">
+                        <div className="goods__imgbox relative flex flex-col justify-center items-center w-2/5 h-32 mx-auto bg-white">
+                            <div className="goods__badge absolute flex top-0 left-0 size-11">
+                                <img className="max-w-full max-h-full size-auto" src={badgeImg} alt="뱃지 이미지" />
+                            </div>
+                            <img className="lazyload max-w-full max-h-full size-auto" src={item.image} alt="상품 이미지" />
+                            <div className="icon__cartbox flex items-center justify-center absolute right-1/20 bottom-1/20 size-9 bg-white border border-black/15 rounded-full shadow-[0_0_3px_rgba(0,0,0,0.2)]
+                                [&.active]:border-blue-300 [&.active_svg]:fill-blue-500
+                            ">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8">
+                                    <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div className="goods__info flex-1 flex flex-col justify-center">
+                            <div className="goods__delprice previewEtc1 h-4 text-sm text-[#999] line-through leading-tight [&.previewEtc1]:text-[#517dfb] [&.previewEtc1]:font-bold [&.previewEtc1]:no-underline">공유이미지</div>
+                            <div className="goods__price text-[#fa5252] text-[195%] font-bold tracking-tight leading-tight">{item.price.toLocaleString()}</div>
+                            <div className="goods__name line-clamp-2 h-11 text-lg font-bold break-all leading-tight">{item.name}</div>
+                        </div>
+                        </div>
+                    </li>
+                    ))}
+                </ul>
+
+                {/* <!--템플릿 유형 텍스트형 --> */}
+                <ul id="js_changeList" className="goods__list goods__list--style3 flex flex-col px-0.5 py-2.5 gap-px">
+                    {list.map((item, index) => (
+                    <li key={index} onClick={() => {setShowPopup2(true),setOrderSystem()}}>
+                        <div className="goods__card relative overflow-hidden flex flex-col w-full p-1 gap-3 border border-[#d1d1d6] rounded-lg bg-white">
+                        {/* 이미지 안보임 */}
+                        <div className="goods__imgbox relative flex flex-col justify-center items-center w-2/5 h-32 mx-auto bg-white" style={{ display: 'none'}}>
+                            <div className="goods__badge absolute flex top-0 left-0 size-11">
+                                <img className="max-w-full max-h-full size-auto" src={badgeImg} alt="뱃지 이미지" />
+                            </div>
+                            <img data-src=""  className="lazyload max-w-full max-h-full size-auto" src={item.image} />
+                        </div>
+                        <div className="icon__cartbox flex items-center justify-center absolute left-1/20 bottom-1/20 size-9 bg-white border border-black/15 rounded-full shadow-[0_0_3px_rgba(0,0,0,0.2)]
+                            [&.active]:border-blue-300 [&.active_svg]:fill-blue-500
+                        ">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="60%" viewBox="0 -960 960 960" width="60%" fill="#94a3b8">
+                            <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" />
+                            </svg>
+                        </div>
+                        <div className="goods__info flex flex-col">
+                            <div className="goods__name line-clamp-2 h-9.5 mt-1 font-bold break-all leading-tight">{item.name}</div>
+                            <div className="flex items-center justify-end gap-2">
+                                <div className="goods__delprice previewEtc1 mt-3 text-sm leading-tight">공유이미지</div>
+                                <div className="goods__price text-[#fa5252] text-[195%] font-bold tracking-tight leading-tight">{item.price.toLocaleString()}</div>
+                            </div>
+                        </div>
+                        </div>
+                    </li>
+                    ))}
+                </ul>
+
+                {/* <!--템플릿 유형 장문편집형 --> */}
+                <ul className="goods__list flex flex-col px-0.5 py-2.5 gap-px">
+                    <li>
+                    <div className="goods__card relative overflow-hidden flex flex-col w-full p-1 gap-3 border border-[#d1d1d6] rounded-lg bg-white">
+                        <pre className="goods__pre text-sm text-left p-1.5 font-sans
+                        [&_h1,&_h2,&_h3,&_h4,&_h5,&_h6]:font-bold
+                        [&_h1,&_h2,&_h3]:leading-10
+                        [&_h4,&_h5,&_h6]:leading-7.5
+                        [&_h1]:text-[35px]
+                        [&_h2]:text-[30px]
+                        [&_h3]:text-[25px]
+                        [&_h4]:text-[20px]
+                        [&_h5]:text-[18px]
+                        [&_h6]:text-[16px]
+                        ">
+                        <h1><span style={{ color: "#f40e32" }}>&lt;&lt; 양곡/잡곡 &gt;&gt;</span></h1>
+                        <h2><span style={{ color: "#0e22f4" }}>신동진옥토쌀20kg 47900</span></h2>
+                        <h3><span style={{ color: "#0e22f4" }}>황토미인쌀20kg 44500</span></h3>
+                        <h4><span style={{ color: "#0e22f4" }}>맛좋은영양쌀20kg 44500</span></h4>
+                        <h5><span style={{ color: "#0e22f4" }}>옥구농협공기밥쌀20kg 43500</span></h5>
+                        <h6><span style={{ color: "#0e22f4" }}>왕란30구*3판 20150</span></h6>
+                        <p><br /></p><h4><span style={{ color: "#f40e32" }}>&lt;&lt; 계란 &gt;&gt;</span></h4>
+                        <h4><span style={{ color: "#0e22f4" }}>대란30구*3판 18550</span></h4>
+                        <h4><span style={{ color: "#0e22f4" }}>특란1판 6850</span></h4>
+                        <h4><span style={{ color: "#0e22f4" }}>메추리알20구 1550</span></h4>
+                        <h4><span style={{ color: "#0e22f4" }}>화인깐메추리알1kg 6980</span></h4>
+                        <p><br /></p><h4><span style={{ color: "#f40e32" }}>&lt;&lt;김치 / 반찬&gt;&gt;</span></h4>
+                        <h4><span style={{ color: "#0e22f4" }}>명품김치10kg 12900</span></h4>
+                        <h4><span style={{ color: "#0e22f4" }}>처가애김치10kg 11900</span></h4>
+                        </pre>
+                    </div>
+                    </li>
+                </ul>
+
+                {/* <!--이미지 직접추가형 --> */}
+                <ul id="js_changeList5" className="goods__list flex flex-col p-0 gap-px">
+                    <li className="mb-3.5">
+                    <div className="goods__card flex flex-col">
+                        <div className="goods__imgbox goods__imgbox--only flex felx-col w-full h-auto mx-auto bg-white">
+                            <img className="lazyload w-full max-h-full ${fn:contains(f, 'thumb_') ? 'thumb cursor-pointer' : ''}" src={testImg} alt="이미지"  />
+                        </div>
+                    </div>
+                    </li>
+                </ul>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <div className="wrap_stickyfooter fixed right-0 bottom-23 w-auto h-auto z-50">
                 <a className="scroll_top btn_movetop flex border flex-col items-center justify-center w-15 h-15 ml-auto mr-2.5 rounded-full bg-black/70 hover:bg-[#333] shadow-md shadow-black/50"
