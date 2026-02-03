@@ -77,6 +77,7 @@ export default function SearchLayerPopup({ open, onClose, list }) {
                         onKeyDown={(e) => {
                             if (e.key === "Enter") {
                                 e.preventDefault();
+                                setSearchQuery(searchInput.trim());
                                 e.currentTarget.blur();
                             }
                         }}
