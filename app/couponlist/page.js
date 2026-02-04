@@ -12,6 +12,23 @@ export default function CouponList() {
 		{ id: 1, },
 	];
 
+	// 쿠폰 노출 여부
+	const couponActive = true;
+	
+	// 사용가능 쿠폰 리스트
+	const availableCoupons = [
+		{ id: 1, name: '쿠폰1', barcode: '8801062 632978', discount: 1000, quantity: 2, Date: '2026.01.12 ~ 02.28 (25일 남음)' },
+		{ id: 2, name: '쿠폰2', barcode: '8801062 250691', discount: 2000, quantity: 1, Date: '2026.02.01 ~ 03.15 (40일 남음)' },
+		{ id: 3, name: '쿠폰3', barcode: '8801062 789456', discount: 1500, quantity: 5, Date: '2026.03.01 ~ 04.10 (55일 남음)' },
+	]
+	// 원쿠폰 리스트
+	const oneCoupons = [
+		
+	]
+
+
+
+
 
 	return (
 		<>
@@ -155,8 +172,8 @@ export default function CouponList() {
 					</div>
 					<ul id="js_changeList" className="coupons__list group flex flex-col mt-1.5 px-1 pb-2.5 gap-0.5">
 						{/* 사용가능 ec 마트쿠폰 */}
-						{list.map((item, index) => (
-							<li className="ec" key={index} data-code="166">
+						{availableCoupons.map((item) => (
+							<li className="ec" key={item.id} data-code="166">
 								<input type="hidden" className="coupons__code" value="2705" />
 								<div className="coupons__card overflow-hidden flex flex-col w-full border border-slate-300 rounded-lg bg-white">
 									<div className="coupons__header flex p-2 items-center bg-slate-200/20">
@@ -187,15 +204,13 @@ export default function CouponList() {
 											<div className="coupons__price text-[#fa5252]">
 												<em className="discount__price text-[2.6rem] tracking-tight font-extrabold not-italic">200</em>원 할인
 											</div>
-											<span className="coupons__name line-clamp-2 leading-tight font-bold break-words">신라면블랙</span>
-											<span className="coupons__barcode text-sm" style={{ display: "none" }} >8801043012225</span>
-											<span className="coupons__barcode__88 text-sm">8801043 012225</span>
+											<span className="coupons__name line-clamp-2 leading-tight font-bold break-words">{item.name}</span>
+											<span className="coupons__barcode text-sm" style={{ display: "none" }} >{item.barcode.replace(/\s/g, "")}</span>
+											<span className="coupons__barcode__88 text-sm">{item.barcode}</span>
+											<span className="coupons__quantity text-sm text-slate-500">수량 {item.quantity}개</span>
 											<span className="coupons__date mt-auto text-sm">
 												<input className="coupons__expire" type="hidden" value="2025-12-31T00:00" />
-												2025.10.23
-												~
-												12.31
-												<span className="text-red-500">(49일 남음)</span>
+												{item.Date}
 											</span>
 										</div>
 									</div>

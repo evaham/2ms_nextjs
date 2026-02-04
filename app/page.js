@@ -6,17 +6,19 @@ import ProductPopup from "./component/ProductPopup";
 
 export default function Home() {
   // 팝업창 여닫기
-  const [showPopup, setShowPopup] = useState(false);
-  const [showPopup2, setShowPopup2] = useState(false);
+  const [isNoticePopupOpen, setIsNoticePopupOpen] = useState(false);
+  const [isProductPopupOpen, setIsProductPopupOpen] = useState(false);
   const [showPopup3, setShowPopup3] = useState(false);
   const [showPopup4, setShowPopup4] = useState(false);
+  const [isFloatingAdOpen, setIsFloatingAdOpen] = useState(true);
 
   // 검색팝업 여닫기
-  const [showSearchPopup, setShowSearchPopup] = useState(false);
+  const [isSearchPopupOpen, setisSearchPopupOpen] = useState(false);
 
   // 행사코너 높이 조정
   const [stickyHeight, setStickyHeight] = useState(0);
   const stickyRef = useRef(null);
+  const [currentCornerId, setCurrentCornerId] = useState(null);
   // 행사코너 메뉴 가로 스크롤(드래그) 상태
   const eventScrollRef = useRef(null);
   const isDraggingRef = useRef(false);
@@ -31,6 +33,8 @@ export default function Home() {
   const handleScrollToSection = (sectionId) => {
     const target = document.getElementById(sectionId);
     if (!target) return;
+
+    setCurrentCornerId(sectionId);
 
     const headerOffset = stickyHeight;
     const elementPosition = target.getBoundingClientRect().top + window.scrollY;
@@ -76,6 +80,44 @@ export default function Home() {
 
     requestAnimationFrame(refreshEffect);
   }, []);
+
+  // 스크롤 위치에 따라 활성 코너 업데이트
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const updateActiveCorner = () => {
+      const offset = stickyHeight + 1;
+      let currentId = null;
+      let currentTop = -Infinity;
+
+      eventGroupList.forEach((corner) => {
+        const element = document.getElementById(corner.id);
+        if (!element) return;
+
+        const top = element.getBoundingClientRect().top - offset;
+        if (top <= 0 && top > currentTop) {
+          currentTop = top;
+          currentId = corner.id;
+        }
+      });
+
+      if (!currentId) {
+        const firstVisible = eventGroupList.find((corner) => document.getElementById(corner.id));
+        currentId = firstVisible ? firstVisible.id : null;
+      }
+
+      setCurrentCornerId(currentId);
+    };
+
+    updateActiveCorner();
+    window.addEventListener("scroll", updateActiveCorner, { passive: true });
+    window.addEventListener("resize", updateActiveCorner);
+
+    return () => {
+      window.removeEventListener("scroll", updateActiveCorner);
+      window.removeEventListener("resize", updateActiveCorner);
+    };
+  }, [stickyHeight]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -127,8 +169,18 @@ export default function Home() {
   // 공동구매 배너 링크
   const groupPurchaseBannerLink = "/group-purchase";
   // 공동구매 배너 이미지
-  const groupPurchaseBannerImg = "http://tdc-api-dev-3.togethers.kr:8082/2ms/static/img/group_purchase.png";
-  // 행사코너 리스트
+  const groupPurchaseBannerImg = "/img/group_purchase.png";
+  // 플로팅 광고 배너 사용여부
+  const useFloatingAdBanner = true;
+  // 플로팅 광고 배너 데이터
+  const floatingAdBanner = {
+    title: "이번 주 특가",
+    description: "인기 상품 최대 30% 할인",
+    cta: "자세히 보기",
+    link: "https://www.naver.com",
+    image: "/img/group_purchase.png",
+  };
+  // 행사코너 리스트(데이터)
   const eventGroupList = [
     {
       "id": "event-corner-1",
@@ -229,22 +281,27 @@ export default function Home() {
       ]
     },
   ]
+  // 행사코너 상태(장바구니/수량 반영용)
   const [eventGroups, setEventGroups] = useState(eventGroupList);
+  // 검색용 상품 목록(모든 코너 products 합치기)
   const searchList = eventGroups.flatMap((corner) => corner.products || []);
   
   // 샘플이미지 불러오기 실패시 대체이미지
   const emptyImg= "https://image6.coupangcdn.com/image/mypromotion/CPI90_banner.png";
-  // const badgeImg = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/img/123.jpg`; //로컬이미지
   
+  // 선택 상품 선택 상태
   const [selectedItem, setSelectedItem] = useState(null);
+  // 선택 상품이 속한 코너 key
   const [selectedListKey, setSelectedListKey] = useState(null);
 
+  // 팝업창 전부 닫기
   const handleClosePopup = () => {
-    setShowPopup2(false);
+    setIsProductPopupOpen(false);
     setSelectedItem(null);
     setSelectedListKey(null);
   };
 
+  // 장바구니 담기(선택 상품의 cart/quantity 갱신)
   const handleAddToCart = (quantity) => {
     const nextQuantity = Math.max(1, Number(quantity) || 1);
 
@@ -275,7 +332,7 @@ export default function Home() {
       <div className='sample relative flex flex-col min-h-screen pb-20 bg-slate-50'>
         <div ref={stickyRef} className="js_sticky sticky top-0 z-50">
           <div className="sample__name clearfix relative flex items-center gap-1.5 h-16 p-2.5 bg-[#21409a] text-[20px] text-white font-bold" style={{ color: "", background: "" }}>
-            <span onClick={() => setShowPopup(true)}
+            <span onClick={() => setIsNoticePopupOpen(true)}
               className="js_fontsize mart-info relative flex mr-auto pr-8 items-center leading-tight cursor-pointer"
             >
               {martName}
@@ -283,7 +340,7 @@ export default function Home() {
                 <svg xmlns="http://www.w3.org/2000/svg" fill="#fafafa" height="32px" viewBox="0 -960 960 960" width="32px"><path d="M460-300h40v-220h-40v220Zm20-276.92q10.46 0 17.54-7.08 7.08-7.08 7.08-17.54 0-10.46-7.08-17.54-7.08-7.07-17.54-7.07-10.46 0-17.54 7.07-7.08 7.08-7.08 17.54 0 10.46 7.08 17.54 7.08 7.08 17.54 7.08Zm.13 456.92q-74.67 0-140.41-28.34-65.73-28.34-114.36-76.92-48.63-48.58-76.99-114.26Q120-405.19 120-479.87q0-74.67 28.34-140.41 28.34-65.73 76.92-114.36 48.58-48.63 114.26-76.99Q405.19-840 479.87-840q74.67 0 140.41 28.34 65.73 28.34 114.36 76.92 48.63 48.58 76.99 114.26Q840-554.81 840-480.13q0 74.67-28.34 140.41-28.34 65.73-76.92 114.36-48.58 48.63-114.26 76.99Q554.81-120 480.13-120Zm-.13-40q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"></path></svg>
               </span>
             </span>
-            <button onClick={() => setShowSearchPopup(true)} className="sample__tel block size-8 p-1 rounded-full bg-[#fafafa]">
+            <button onClick={() => setisSearchPopupOpen(true)} className="sample__tel block size-8 p-1 rounded-full bg-[#fafafa]">
               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#333"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" /></svg>
             </button>
             <Link href={"/"} onClick={() => window.location.href = 'tel:1577-4550'} className="sample__tel block size-8 p-1 rounded-full bg-[#fafafa]">
@@ -309,10 +366,10 @@ export default function Home() {
 
         {/* 행사코너 이동 */}
         { useEventCorner ? (
-          <div className="sticky w-full h-10 border-b border-slate-300 bg-white z-40" style={{ top: stickyHeight }}>
+          <div className="sticky flex w-full h-10 border-b border-slate-300 bg-white z-40" style={{ top: stickyHeight }}>
             <div
               ref={eventScrollRef}
-              className="scroll_btn flex items-center gap-2 overflow-x-auto whitespace-nowrap px-2"
+              className="flex items-center gap-2 overflow-x-auto whitespace-nowrap px-2"
               style={{
                 scrollbarWidth: "none",
                 msOverflowStyle: "none",
@@ -326,15 +383,16 @@ export default function Home() {
               aria-live="polite"
             >
               {eventGroupList.map((corner, index) => (
-                <div
+                <button
+                  type="button"
                   key={corner.id}
-                  className="btn_comm btn_0 swiper-slide swiper-slide-active flex-shrink-0"
+                  className={`flex items-center h-8 px-3 border border-gray-500 rounded-full text-sm text-gray-500 font-bold cursor-pointer active:bg-blue-800 active:text-white`}
                   onClick={() => handleScrollToSection(corner.id)}
                   role="group"
                   aria-label={`${index + 1} / ${eventGroupList.length}`}
                 >
                   {corner.title}
-                </div>
+                </button>
               ))}
             </div>
             <style jsx>{`
@@ -349,7 +407,7 @@ export default function Home() {
         { useGroupPurchaseBanner ? (
           <div className="group-purchase animate-slide-in-left">
             <a href="http://naver.com">
-              <img className="w-full" src={groupPurchaseBannerImg} alt="공동구매 배너" />
+              <img className="w-full" src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${groupPurchaseBannerImg}`} alt="공동구매 배너" />
             </a>
           </div>
         ): null }
@@ -357,14 +415,13 @@ export default function Home() {
 
         {eventGroups.map(corner => (
 
-          <div id={corner.id} style={{ background: corner.bgColor }}>
+          <div id={corner.id} key={corner.id} style={{ background: corner.bgColor }}>
             {/* <!-- <span>행사코너1 배너</span> --> */}
             {corner.eventImg ? (
               <div className="sample__banner sample__banner--type2 flex items-center justify-center min-h-20 bg-slate-300">
                 <img className="size-full" src={corner.eventImg} alt="행사코너 배너" />
               </div>
             ) : null}
-
 
             <div className="goods w-full">
               {/* <!--템플릿 유형 가로형 --> */}
@@ -373,7 +430,7 @@ export default function Home() {
                   ${corner.layoutType === "type1" ? "grid-cols-1" : ""} ${corner.layoutType === "type2" ? "grid-cols-2" : ""} ${corner.layoutType === "type3" ? "grid-cols-3" : ""} ${corner.layoutType === "type4" ? "grid-cols-4" : ""}
                 `}>
                   {corner.products.map((item, index) => (
-                    <li key={index} onClick={() => { setSelectedItem(item); setSelectedListKey(corner.id); setShowPopup2(true); }} data-effectjs="fade-up">
+                    <li key={index} onClick={() => { setSelectedItem(item); setSelectedListKey(corner.id); setIsProductPopupOpen(true); }} data-effectjs="fade-up">
                       <div className="goods__card relative overflow-hidden w-full p-1 border border-[#d1d1d6] rounded-lg bg-white">
                         <div className="goods__imgbox relative flex flex-col justify-center items-center mx-auto bg-white group-[.grid-cols-2]:h-36 group-[.grid-cols-3]:h-23 group-[.grid-cols-4]:h-18" style={{ background: "white" }}>
                           <div className="goods__badge absolute flex top-0 left-0 size-17 
@@ -424,7 +481,7 @@ export default function Home() {
               {corner.templateType === "typeB" && (
                 <ul id="" className={`goods__list goods__list--style2 flex flex-col px-0.5 py-2.5 gap-px overflow-hidden`}>
                   {corner.products.map((item, index) => (
-                    <li key={index} onClick={() => { setSelectedItem(item); setSelectedListKey(corner.id); setShowPopup2(true); }} data-effectjs={index % 2 === 0 ? 'slide-left' : 'slide-right'} data-effectjs-duration="500">
+                    <li key={index} onClick={() => { setSelectedItem(item); setSelectedListKey(corner.id); setIsProductPopupOpen(true); }} data-effectjs={index % 2 === 0 ? 'slide-left' : 'slide-right'} data-effectjs-duration="500">
                       <div className="goods__card overflow-hidden flex w-full p-1 gap-3 border border-[#d1d1d6] rounded-lg bg-white">
                         <div className="goods__imgbox relative flex flex-col justify-center items-center w-2/5 h-32 mx-auto bg-white">
                           <div className="goods__badge absolute flex top-0 left-0 size-11">
@@ -458,7 +515,7 @@ export default function Home() {
               { corner.templateType === "typeC" && (
                 <ul id="js_changeList" className="goods__list goods__list--style3 flex flex-col px-0.5 py-2.5 gap-px">
                   {corner.products.map((item, index) => (
-                    <li key={index} onClick={() => { setSelectedItem(item); setSelectedListKey(corner.id); setShowPopup2(true);}}>
+                    <li key={index} onClick={() => { setSelectedItem(item); setSelectedListKey(corner.id); setIsProductPopupOpen(true);}}>
                       <div className="goods__card relative overflow-hidden flex flex-col w-full p-1 gap-3 border border-[#d1d1d6] rounded-lg bg-white">
                         {/* 이미지 안보임 */}
                         <div className="goods__imgbox relative flex flex-col justify-center items-center w-2/5 h-32 mx-auto bg-white" style={{ display: 'none' }}>
@@ -520,7 +577,7 @@ export default function Home() {
                   <div className="goods__card flex flex-col">
                     {corner.imageContent.map((item, index) => (
 
-                      <div className="goods__imgbox goods__imgbox--only flex felx-col w-full h-auto mx-auto bg-white">
+                      <div key={index} className="goods__imgbox goods__imgbox--only flex felx-col w-full h-auto mx-auto bg-white">
                         <img src={item.image} alt="이미지" className="lazyload w-full max-h-full ${fn:contains(f, 'thumb_') ? 'thumb cursor-pointer' : ''}" />
                       </div>
                     ))}
@@ -531,6 +588,46 @@ export default function Home() {
             </div>
           </div>
         ))}
+        {/* 플로팅 광고 배너 샘플 */}
+        {useFloatingAdBanner ? (
+          <div className="fixed right-2 top-48 z-50">
+            <div
+              className="relative transition-transform duration-300"
+              style={{
+                transform: isFloatingAdOpen ? "translateX(0)" : "translateX(calc(100% - 2.5rem))",
+              }}
+            >
+              <div className="relative flex items-center gap-3 rounded-2xl border border-amber-200 bg-white px-3 py-2 shadow-lg">
+                <a href={floatingAdBanner.link} className="flex items-center gap-3">
+                  <div className="flex size-14 items-center justify-center overflow-hidden rounded-xl bg-amber-50">
+                    <img
+                      src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${floatingAdBanner.image}`}
+                      alt="광고 배너"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-bold text-slate-900">{floatingAdBanner.title}</span>
+                    <span className="text-xs text-slate-500">{floatingAdBanner.description}</span>
+                    <span className="mt-1 inline-flex w-fit rounded-full bg-amber-400 px-2 py-0.5 text-xs font-bold text-white">
+                      {floatingAdBanner.cta}
+                    </span>
+                  </div>
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setIsFloatingAdOpen((prev) => !prev)}
+                  className="absolute -left-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-amber-500 text-sm font-bold text-white shadow"
+                  aria-label="플로팅 광고 토글"
+                >
+                  {isFloatingAdOpen ? "닫기" : "열기"}
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : null}
+
+
         {/* 맨위로 이동 버튼 */}
         <div className="wrap_stickyfooter fixed right-0 bottom-23 w-auto h-auto z-50">
           <a className="scroll_top btn_movetop flex border flex-col items-center justify-center w-15 h-15 ml-auto mr-2.5 rounded-full bg-black/70 hover:bg-[#333] shadow-md shadow-black/50"
@@ -543,14 +640,14 @@ export default function Home() {
           </a>
         </div>
         {/* 레이어 팝업 안내창 */}
-        {showPopup && (
+        {isNoticePopupOpen && (
           <div className="layer__wrap flex justify-center items-center fixed inset-0 p-3 z-50">
             <div className="layer__bg absolute inset-0 bg-black/40"></div>
             <div className="layer__panel relative overflow-hidden flex flex-col w-full p-4 bg-slate-50 rounded-2xl z-50">
               <p className="layer__tit mb-2 text-xl text-center font-bold leading-tight">공지사항</p>
               <div className="layer__notice overflow-y-auto flex flex-col h-60 p-4 rounded-lg text-base bg-white">
                 오후2시 까지 배달 주문 시 당일 저녁에 배송 드립니다..<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />asdf<br /><br /><br /><br /><br /></div>
-              <button onClick={() => setShowPopup(false)} className="layer__close absolute top-3 right-3 flex justify-center items-center">
+              <button onClick={() => setIsNoticePopupOpen(false)} className="layer__close absolute top-3 right-3 flex justify-center items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#64748b"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
               </button>
             </div>
@@ -558,13 +655,13 @@ export default function Home() {
         )}
         {/* 검색 레이어 팝업 */}
         <SearchLayerPopup
-          open={showSearchPopup}
-          onClose={() => setShowSearchPopup(false)}
+          open={isSearchPopupOpen}
+          onClose={() => setisSearchPopupOpen(false)}
           list={searchList}
         />
       </div>
       <ProductPopup
-        open={showPopup2}
+        open={isProductPopupOpen}
         orderSystem={useOrderSystem} //주문기능의 유무
         item={selectedItem}
         fallbackImage={emptyImg}
