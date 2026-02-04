@@ -378,7 +378,7 @@ export default function Home() {
                         <div className="goods__imgbox relative flex flex-col justify-center items-center mx-auto bg-white group-[.grid-cols-2]:h-36 group-[.grid-cols-3]:h-23 group-[.grid-cols-4]:h-18" style={{ background: "white" }}>
                           <div className="goods__badge absolute flex top-0 left-0 size-17 
                             group-[.grid-cols-2]:size-12 group-[.grid-cols-3]:size-8 group-[.grid-cols-4]:size-6">
-                            <img className="max-w-full max-h-full size-auto" src={item.badgeImg} alt="뱃지 이미지" />
+                            <img className="max-w-full max-h-full size-auto" src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${item.badgeImg}`} alt="뱃지 이미지" />
                           </div>
                           <img className="lazyload max-w-full max-h-full size-auto" src={item.image} alt="상품 이미지" />
                           {useOrderSystem ? (
@@ -428,7 +428,7 @@ export default function Home() {
                       <div className="goods__card overflow-hidden flex w-full p-1 gap-3 border border-[#d1d1d6] rounded-lg bg-white">
                         <div className="goods__imgbox relative flex flex-col justify-center items-center w-2/5 h-32 mx-auto bg-white">
                           <div className="goods__badge absolute flex top-0 left-0 size-11">
-                            <img className="max-w-full max-h-full size-auto" src={item.badgeImg} alt="뱃지 이미지" />
+                            <img className="max-w-full max-h-full size-auto" src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${item.badgeImg}`} alt="뱃지 이미지" />
                           </div>
                           <img className="lazyload max-w-full max-h-full size-auto" src={item.image} alt="상품 이미지" />
                           
@@ -463,7 +463,7 @@ export default function Home() {
                         {/* 이미지 안보임 */}
                         <div className="goods__imgbox relative flex flex-col justify-center items-center w-2/5 h-32 mx-auto bg-white" style={{ display: 'none' }}>
                           <div className="goods__badge absolute flex top-0 left-0 size-11">
-                            <img className="max-w-full max-h-full size-auto" src={item.badgeImg} alt="뱃지 이미지" />
+                            <img className="max-w-full max-h-full size-auto" src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${item.badgeImg}`} alt="뱃지 이미지" />
                           </div>
                           <img data-src="" className="lazyload max-w-full max-h-full size-auto" src={item.image} />
                         </div>
@@ -530,10 +530,7 @@ export default function Home() {
               )}
             </div>
           </div>
-        
         ))}
-
-
         {/* 맨위로 이동 버튼 */}
         <div className="wrap_stickyfooter fixed right-0 bottom-23 w-auto h-auto z-50">
           <a className="scroll_top btn_movetop flex border flex-col items-center justify-center w-15 h-15 ml-auto mr-2.5 rounded-full bg-black/70 hover:bg-[#333] shadow-md shadow-black/50"
