@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import SearchLayerPopup from "./component/SearchLayerPopup";
 import ProductPopup from "./component/ProductPopup";
+import FloatingAdBanner from "./component/FloatingAdBanner";
 
 export default function Home() {
   // 팝업창 여닫기
@@ -174,11 +175,11 @@ export default function Home() {
   const useFloatingAdBanner = true;
   // 플로팅 광고 배너 데이터
   const floatingAdBanner = {
-    title: "이번 주 특가",
-    description: "인기 상품 최대 30% 할인",
-    cta: "자세히 보기",
+    // title: "이번 주 특가",
+    // description: "인기 상품 최대 30% 할인",
+    // cta: "자세히 보기",
     link: "https://www.naver.com",
-    image: "/img/group_purchase.png",
+    image: "/img/sampleAd.png",
   };
   // 행사코너 리스트(데이터)
   const eventGroupList = [
@@ -588,44 +589,14 @@ export default function Home() {
             </div>
           </div>
         ))}
-        {/* 플로팅 광고 배너 샘플 */}
-        {useFloatingAdBanner ? (
-          <div className="fixed right-2 top-48 z-50">
-            <div
-              className="relative transition-transform duration-300"
-              style={{
-                transform: isFloatingAdOpen ? "translateX(0)" : "translateX(calc(100% - 2.5rem))",
-              }}
-            >
-              <div className="relative flex items-center gap-3 rounded-2xl border border-amber-200 bg-white px-3 py-2 shadow-lg">
-                <a href={floatingAdBanner.link} className="flex items-center gap-3">
-                  <div className="flex size-14 items-center justify-center overflow-hidden rounded-xl bg-amber-50">
-                    <img
-                      src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${floatingAdBanner.image}`}
-                      alt="광고 배너"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-sm font-bold text-slate-900">{floatingAdBanner.title}</span>
-                    <span className="text-xs text-slate-500">{floatingAdBanner.description}</span>
-                    <span className="mt-1 inline-flex w-fit rounded-full bg-amber-400 px-2 py-0.5 text-xs font-bold text-white">
-                      {floatingAdBanner.cta}
-                    </span>
-                  </div>
-                </a>
-                <button
-                  type="button"
-                  onClick={() => setIsFloatingAdOpen((prev) => !prev)}
-                  className="absolute -left-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-amber-500 text-sm font-bold text-white shadow"
-                  aria-label="플로팅 광고 토글"
-                >
-                  {isFloatingAdOpen ? "닫기" : "열기"}
-                </button>
-              </div>
-            </div>
-          </div>
-        ) : null}
+
+        {/* 플로팅 광고 배너 */}
+        <FloatingAdBanner
+          enabled={useFloatingAdBanner}
+          isOpen={isFloatingAdOpen}
+          banner={floatingAdBanner}
+          onToggle={() => setIsFloatingAdOpen((prev) => !prev)}
+        />
 
 
         {/* 맨위로 이동 버튼 */}
