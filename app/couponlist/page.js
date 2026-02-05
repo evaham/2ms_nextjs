@@ -344,11 +344,15 @@ export default function CouponList() {
 				</div>
 				{/* 리스트종료 */}
 
-				<div className="wrap_stickyfooter overflow-x-hidden fixed right-0 bottom-23 z-50">
-					<a className="scroll_top btn_movetop flex flex-col items-center justify-center w-15 h-15 ml-auto mr-2.5 rounded-full bg-black/70 hover:bg-[#333] ">
-						<svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#fff"><path d="M160-760v-80h640v80H160Zm280 640v-408L336-424l-56-56 200-200 200 200-56 56-104-104v408h-80Z"></path></svg>
-						<span className="text-xs text-white tracking-tight">맨위로</span>
-					</a>
+				<div className="wrap_stickyfooter fixed right-0 bottom-23 w-auto h-auto z-50 flex flex-col gap-2">
+          <a className="scroll_top btn_movetop flex border flex-col items-center justify-center size-16.5 ml-auto mr-2.5 rounded-full bg-black/70 hover:bg-[#333] shadow-md shadow-black/50"
+            onClick={() => {window.scrollTo({ top: 0, behavior: "smooth" });}}
+            role="button"
+            aria-label="맨위로 이동"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" height="28" viewBox="0 -960 960 960" width="28" fill="#fff"><path d="M160-760v-80h640v80H160Zm280 640v-408L336-424l-56-56 200-200 200 200-56 56-104-104v408h-80Z"></path></svg>
+            <span className="text-xs text-white tracking-tight">맨위로</span>
+          </a>
 				</div>
 
 				{/* <!-- 모달 팝업 --> */}

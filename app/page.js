@@ -29,11 +29,6 @@ export default function Home() {
   const dragStartXRef = useRef(0);
   const dragScrollLeftRef = useRef(0);
 
-  // 맨 위로 이동
-  const handleScrollTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   const handleScrollToSection = (sectionId) => {
     const target = document.getElementById(sectionId);
     if (!target) return;
@@ -603,7 +598,7 @@ export default function Home() {
         {/* 플로팅 버튼 */}
         <div className="wrap_stickyfooter fixed right-0 bottom-23 w-auto h-auto z-50 flex flex-col gap-2">
           <a className="scroll_top btn_movetop flex border flex-col items-center justify-center size-16.5 ml-auto mr-2.5 rounded-full bg-black/70 hover:bg-[#333] shadow-md shadow-black/50"
-            onClick={handleScrollTop}
+            onClick={() => {window.scrollTo({ top: 0, behavior: "smooth" });}}
             role="button"
             aria-label="맨위로 이동"
           >
