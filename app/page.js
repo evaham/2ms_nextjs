@@ -4,6 +4,7 @@ import Link from "next/link";
 import SearchLayerPopup from "./component/SearchLayerPopup";
 import ProductPopup from "./component/ProductPopup";
 import FloatingAdBanner from "./component/FloatingAdBanner";
+import AdPopup from "./component/AdPopup";
 
 export default function Home() {
   // 팝업창 여닫기
@@ -12,6 +13,8 @@ export default function Home() {
   const [showPopup3, setShowPopup3] = useState(false);
   const [showPopup4, setShowPopup4] = useState(false);
   const [isFloatingAdOpen, setIsFloatingAdOpen] = useState(true);
+  const [isAdPopupOpen, setIsAdPopupOpen] = useState(false);
+  const [isAdPopupHiddenToday, setIsAdPopupHiddenToday] = useState(false);
 
   // 검색팝업 여닫기
   const [isSearchPopupOpen, setisSearchPopupOpen] = useState(false);
@@ -82,6 +85,16 @@ export default function Home() {
     requestAnimationFrame(refreshEffect);
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const todayKey = new Date().toISOString().slice(0, 10);
+    const stored = window.localStorage.getItem("hideAdPopupDate");
+    if (stored === todayKey) {
+      setIsAdPopupHiddenToday(true);
+    }
+  }, []);
+
   // 스크롤 위치에 따라 활성 코너 업데이트
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -144,15 +157,6 @@ export default function Home() {
     };
   }, []);
 
-  const getTitleFontSize = (length) => {
-    if (length < 11) return "1rem";
-    if (length >= 11 && length < 13) return "1.6em";
-    if (length >= 13 && length < 15) return "1.4em";
-    if (length >= 15 && length < 17) return "1.2em";
-    if (length >= 17 && length < 19) return "1em";
-    return "0.98em";
-  };
-
   // 주문기능 사용여부
   const useOrderSystem = true;
   // 매장명
@@ -175,12 +179,16 @@ export default function Home() {
   const useFloatingAdBanner = true;
   // 플로팅 광고 배너 데이터
   const floatingAdBanner = {
-    // title: "이번 주 특가",
-    // description: "인기 상품 최대 30% 할인",
-    // cta: "자세히 보기",
     link: "https://www.naver.com",
-    image: "/img/sampleAd.png",
+    image: "/img/ad_banner.png",
   };
+  // 팝업 광고 이미지
+  const adPopupImage = {
+    deepLink: "naversearchapp://receipt?orderId=12345",
+    androidStoreLink: "https://play.google.com/store/apps/details?id=com.happytogethers&hl=ko",
+    iosStoreLink: "https://apps.apple.com/us/app/%ED%88%AC%EA%B2%8C%EB%8D%94%EC%98%81%EC%88%98%EC%A6%9D/id6446961156",
+    image: "/img/ad_image.png",
+  }
   // 행사코너 리스트(데이터)
   const eventGroupList = [
     {
@@ -590,47 +598,60 @@ export default function Home() {
           </div>
         ))}
 
-        {/* 플로팅 광고 배너 */}
-        <FloatingAdBanner
-          enabled={useFloatingAdBanner}
-          isOpen={isFloatingAdOpen}
-          banner={floatingAdBanner}
-          onToggle={() => setIsFloatingAdOpen((prev) => !prev)}
-        />
-
-
-        {/* 맨위로 이동 버튼 */}
-        <div className="wrap_stickyfooter fixed right-0 bottom-23 w-auto h-auto z-50">
-          <a className="scroll_top btn_movetop flex border flex-col items-center justify-center w-15 h-15 ml-auto mr-2.5 rounded-full bg-black/70 hover:bg-[#333] shadow-md shadow-black/50"
+        {/* 플로팅 버튼 */}
+        <div className="wrap_stickyfooter fixed right-0 bottom-23 w-auto h-auto z-50 flex flex-col gap-2">
+          <a className="scroll_top btn_movetop flex border flex-col items-center justify-center size-16.5 ml-auto mr-2.5 rounded-full bg-black/70 hover:bg-[#333] shadow-md shadow-black/50"
             onClick={handleScrollTop}
             role="button"
             aria-label="맨위로 이동"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#fff"><path d="M160-760v-80h640v80H160Zm280 640v-408L336-424l-56-56 200-200 200 200-56 56-104-104v408h-80Z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" height="28" viewBox="0 -960 960 960" width="28" fill="#fff"><path d="M160-760v-80h640v80H160Zm280 640v-408L336-424l-56-56 200-200 200 200-56 56-104-104v408h-80Z"></path></svg>
             <span className="text-xs text-white tracking-tight">맨위로</span>
           </a>
+          {!isAdPopupHiddenToday && (
+            <a className="scroll_top btn_movetop flex border flex-col items-center justify-center size-16.5 ml-auto mr-2.5 rounded-full bg-black/70 hover:bg-[#333] shadow-md shadow-black/50"
+              onClick={() => setIsAdPopupOpen(true)}
+              role="button"
+              aria-label="전자영수증"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M18.7168 2.25C18.7351 2.29114 21.9368 9.48676 20.2363 14.6084C19.1627 17.8415 16.3905 19.4765 14.4844 20.2451C12.067 21.5346 8.7468 22.065 3.87013 21.5625C3.49831 21.5241 3.22969 21.1936 3.26954 20.8242C3.30987 20.4545 3.64447 20.1853 4.01661 20.2236C7.01193 20.5323 9.31751 20.4267 11.1358 20.0283C11.1319 20.0255 11.1279 20.0224 11.124 20.0195C12.019 19.8789 12.8362 19.6588 13.5752 19.3691C16.3617 18.2769 18.0104 16.2327 18.5234 14.0742C18.595 13.773 18.4056 13.4708 18.1016 13.4004C17.7977 13.3302 17.4936 13.5174 17.4219 13.8184C16.9995 15.596 15.6254 17.3619 13.1602 18.3281C12.2671 18.6781 11.2261 18.922 10.0322 19.0225C9.00271 17.8526 8.22249 16.0849 9.04298 13.6133C9.76333 11.4438 10.3559 10.4395 14.0693 8.21875C17.7805 5.99905 18.7158 2.25393 18.7168 2.25Z" fill="white"/>
+              </svg>
+              <span className="text-xs text-white tracking-tighter">전자영수증</span>
+            </a>
+          )}
         </div>
-        {/* 레이어 팝업 안내창 */}
-        {isNoticePopupOpen && (
-          <div className="layer__wrap flex justify-center items-center fixed inset-0 p-3 z-50">
-            <div className="layer__bg absolute inset-0 bg-black/40"></div>
-            <div className="layer__panel relative overflow-hidden flex flex-col w-full p-4 bg-slate-50 rounded-2xl z-50">
-              <p className="layer__tit mb-2 text-xl text-center font-bold leading-tight">공지사항</p>
-              <div className="layer__notice overflow-y-auto flex flex-col h-60 p-4 rounded-lg text-base bg-white">
-                오후2시 까지 배달 주문 시 당일 저녁에 배송 드립니다..<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />asdf<br /><br /><br /><br /><br /></div>
-              <button onClick={() => setIsNoticePopupOpen(false)} className="layer__close absolute top-3 right-3 flex justify-center items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#64748b"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
-              </button>
-            </div>
-          </div>
-        )}
-        {/* 검색 레이어 팝업 */}
-        <SearchLayerPopup
-          open={isSearchPopupOpen}
-          onClose={() => setisSearchPopupOpen(false)}
-          list={searchList}
-        />
       </div>
+
+      {/* 플로팅 광고 배너 */}
+      <FloatingAdBanner
+        enabled={useFloatingAdBanner}
+        isOpen={isFloatingAdOpen}
+        banner={floatingAdBanner}
+        onToggle={() => setIsFloatingAdOpen((prev) => !prev)}
+      />
+
+      {/* 안내 레이어 팝업 */}
+      {isNoticePopupOpen && (
+        <div className="layer__wrap flex justify-center items-center fixed inset-0 p-3 z-50">
+          <div className="layer__bg absolute inset-0 bg-black/40"></div>
+          <div className="layer__panel relative overflow-hidden flex flex-col w-full p-4 bg-slate-50 rounded-2xl z-50">
+            <p className="layer__tit mb-2 text-xl text-center font-bold leading-tight">공지사항</p>
+            <div className="layer__notice overflow-y-auto flex flex-col h-60 p-4 rounded-lg text-base bg-white">
+              오후2시 까지 배달 주문 시 당일 저녁에 배송 드립니다..<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />asdf<br /><br /><br /><br /><br /></div>
+            <button onClick={() => setIsNoticePopupOpen(false)} className="layer__close absolute top-3 right-3 flex justify-center items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#64748b"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
+            </button>
+          </div>
+        </div>
+      )}
+      {/* 검색 레이어 팝업 */}
+      <SearchLayerPopup
+        open={isSearchPopupOpen}
+        onClose={() => setisSearchPopupOpen(false)}
+        list={searchList}
+      />
+      {/* 상품 레이어 팝업 */}
       <ProductPopup
         open={isProductPopupOpen}
         orderSystem={useOrderSystem} //주문기능의 유무
@@ -638,6 +659,18 @@ export default function Home() {
         fallbackImage={emptyImg}
         onClose={handleClosePopup}
         onAddToCart={handleAddToCart}
+      />
+      {/* 전자영수증 레이어 팝업 */}
+      <AdPopup
+        open={isAdPopupOpen}
+        adPopData={adPopupImage}
+        onClose={() => setIsAdPopupOpen(false)}
+        onHideToday={() => {
+          const todayKey = new Date().toISOString().slice(0, 10);
+          window.localStorage.setItem("hideAdPopupDate", todayKey);
+          setIsAdPopupHiddenToday(true);
+          setIsAdPopupOpen(false);
+        }}
       />
     </>
   );

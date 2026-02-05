@@ -14,12 +14,23 @@ export default function FloatingAdBanner({
       <div
         className="relative transition-transform duration-300"
         style={{
-          transform: isOpen ? "translateX(0)" : "translateX(calc(100% - -1px))",
+          transform: isOpen ? "translateX(0)" : "translateX(calc(100% - 1.5rem))",
         }}
       >
-        <div className="relative flex items-center py-px pr-px bg-slate-400 shadow-lg">
+        <div className="relative flex items-center border-y border-r-0 border-slate-500 rounded-l-2xl bg-slate-500 shadow-lg z-10">
+          <button
+            type="button"
+            onClick={onToggle}
+            className="flex items-center justify-center w-7 h-20 rounded-tl-lg rounded-bl-lg text-sm font-bold text-white"
+            aria-label="플로팅 광고 토글"
+          >
+            {isOpen ? 
+              <svg xmlns="http://www.w3.org/2000/svg" className="size-5 fill-white" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M320-200v-560l440 280-440 280Z"/></svg> 
+              : <svg xmlns="http://www.w3.org/2000/svg" className="size-5 fill-white" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M640-200 200-480l440-280v560Z"/></svg>
+            }
+          </button>
           <a href={banner.link} className="flex items-center ">
-            <div className="flex w-75 h-auto items-center justify-center overflow-hidden bg-white">
+            <div className="flex w-60 h-20 items-center justify-center overflow-hidden bg-white">
               <img
                 src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${banner.image}`}
                 alt="광고 배너"
@@ -27,19 +38,6 @@ export default function FloatingAdBanner({
               />
             </div>
           </a>
-          <button
-            type="button"
-            onClick={onToggle}
-            className="absolute -left-7 flex items-center justify-center w-7 h-full rounded-tl-lg rounded-bl-lg bg-slate-400 text-sm font-bold text-white shadow"
-            aria-label="플로팅 광고 토글"
-          >
-            {isOpen ? 
-              <svg xmlns="http://www.w3.org/2000/svg" className="size-4.5 fill-neutral-700" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M320-200v-560l440 280-440 280Z"/></svg> 
-              : <svg xmlns="http://www.w3.org/2000/svg" className="size-4.5 fill-neutral-700" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M640-200 200-480l440-280v560Z"/></svg>
-            }
-          </button>
-
-
         </div>
       </div>
     </div>
