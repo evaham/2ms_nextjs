@@ -29,7 +29,7 @@ export default function AdPopup({ open, adPopData, onClose, onHideToday }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-      <div className="relative w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-xl">
+      <div className="relative w-85 max-w-md overflow-hidden rounded-2xl bg-white shadow-xl">
         <div className="w-full">
           <a href={adPopData.deepLink} onClick={handleDeepLink}>
           <img
