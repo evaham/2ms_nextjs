@@ -183,8 +183,10 @@ export default function Home() {
     image: "/img/ad_banner.png",
   };
   // 팝업 광고 이미지
+
   const adPopupImage = {
-    deepLink: "https://play.google.com/store/apps/details?id=com.happytogethers",
+    androidDeepLink: "market://details?id=com.happytogethers",
+    iosDeepLink: "itms-apps://itunes.apple.com/app/id6446961156",
     androidStoreLink: "https://play.google.com/store/apps/details?id=com.happytogethers&hl=ko",
     iosStoreLink: "https://apps.apple.com/kr/app/%ED%88%AC%EA%B2%8C%EB%8D%94%EC%98%81%EC%88%98%EC%A6%9D/id6446961156",
     image: "/img/ad_image.png",

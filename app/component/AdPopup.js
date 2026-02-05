@@ -11,6 +11,11 @@ export default function AdPopup({ open, adPopData, onClose, onHideToday }) {
     const userAgent = navigator.userAgent || "";
     const isAndroid = /Android/i.test(userAgent);
     const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
+    const deepLink = isAndroid
+      ? adPopData.androidDeepLink
+      : isIOS
+      ? adPopData.iosDeepLink
+      : adPopData.androidDeepLink;
     const fallbackUrl = isAndroid
       ? adPopData.androidStoreLink
       : isIOS
@@ -18,7 +23,7 @@ export default function AdPopup({ open, adPopData, onClose, onHideToday }) {
       : adPopData.androidStoreLink;
 
     const start = Date.now();
-    window.location.href = adPopData.deepLink;
+    window.location.href = deepLink;
 
     setTimeout(() => {
       if (Date.now() - start < 1500) {
@@ -31,7 +36,7 @@ export default function AdPopup({ open, adPopData, onClose, onHideToday }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
       <div className="relative w-85 max-w-md overflow-hidden rounded-2xl bg-white shadow-xl">
         <div className="w-full">
-          <a href={adPopData.deepLink} onClick={handleDeepLink}>
+          <a href={adPopData.androidDeepLink} onClick={handleDeepLink}>
           <img
             src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${adPopData.image}`}
             alt="광고 이미지"
