@@ -14,7 +14,7 @@ export default function FloatingAdBanner({
       <div
         className="relative transition-transform duration-300"
         style={{
-          transform: isOpen ? "translateX(0)" : "translateX(calc(100% - 1.5rem))",
+          transform: isOpen ? "translateX(0)" : "translateX(calc(100% - 2rem))",
         }}
       >
         <div className="relative overflow-hidden w-85 h-30 rounded-l-3xl shadow-lg">
@@ -28,7 +28,7 @@ export default function FloatingAdBanner({
           <button
             type="button"
             onClick={onToggle}
-            className="absolute left-0 top-0 flex items-center w-11 h-full pl-2 text-sm font-bold text-white bg-black/5"
+            className="absolute left-0 top-0 flex items-center w-11 h-full pl-2 text-sm font-bold text-white"
             aria-label="플로팅 광고 토글"
           >
             {isOpen ? 
