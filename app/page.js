@@ -175,10 +175,9 @@ export default function Home() {
   // 플로팅 광고 배너 데이터
   const floatingAdBanner = {
     link: "https://www.naver.com",
-    image: "/img/ad_banner.png",
+    image: "/img/ad_banner01.png?t=20260206",
   };
   // 팝업 광고 이미지
-
   const adPopupImage = {
     // androidDeepLink: "market://details?id=com.happytogethers",
     // iosDeepLink: "itms-apps://itunes.apple.com/app/id6446961156",

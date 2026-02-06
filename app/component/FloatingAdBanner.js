@@ -17,27 +17,25 @@ export default function FloatingAdBanner({
           transform: isOpen ? "translateX(0)" : "translateX(calc(100% - 1.5rem))",
         }}
       >
-        <div className="relative flex items-center border-y border-r-0 border-slate-500 rounded-l-2xl bg-slate-500 shadow-lg z-10">
-          <button
-            type="button"
-            onClick={onToggle}
-            className="flex items-center justify-center w-7 h-20 rounded-tl-lg rounded-bl-lg text-sm font-bold text-white"
-            aria-label="플로팅 광고 토글"
-          >
-            {isOpen ? 
-              <svg xmlns="http://www.w3.org/2000/svg" className="size-5 fill-white" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M320-200v-560l440 280-440 280Z"/></svg> 
-              : <svg xmlns="http://www.w3.org/2000/svg" className="size-5 fill-white" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M640-200 200-480l440-280v560Z"/></svg>
-            }
-          </button>
-          <a href={banner.link} className="flex items-center ">
-            <div className="flex w-60 h-20 items-center justify-center overflow-hidden bg-white">
+        <div className="relative overflow-hidden w-60 h-20 rounded-l-2xl shadow-lg">
+          <a href={banner.link} className="flex items-center">
               <img
                 src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${banner.image}`}
                 alt="광고 배너"
-                className="h-full w-full object-cover"
+                className="size-full object-cover"
               />
-            </div>
           </a>
+          <button
+            type="button"
+            onClick={onToggle}
+            className="absolute left-0 top-0 flex items-center w-8 h-20 pr-2 text-sm font-bold text-white"
+            aria-label="플로팅 광고 토글"
+          >
+            {isOpen ? 
+              <svg xmlns="http://www.w3.org/2000/svg" className="size-4.5 fill-black/50" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M320-200v-560l440 280-440 280Z"/></svg> 
+              : <svg xmlns="http://www.w3.org/2000/svg" className="size-4.5 fill-black/50" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M640-200 200-480l440-280v560Z"/></svg>
+            }
+          </button>
         </div>
       </div>
     </div>
