@@ -17,7 +17,7 @@ export default function FloatingAdBanner({
           transform: isOpen ? "translateX(0)" : "translateX(calc(100% - 1.5rem))",
         }}
       >
-        <div className="relative overflow-hidden w-75 h-25 rounded-l-3xl shadow-lg">
+        <div className="relative overflow-hidden w-85 h-30 rounded-l-3xl shadow-lg">
           <a href={banner.link} className="flex items-center">
               <img
                 src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${banner.image}`}
@@ -28,7 +28,7 @@ export default function FloatingAdBanner({
           <button
             type="button"
             onClick={onToggle}
-            className="absolute left-0 top-0 flex items-center w-11 h-full pl-2 text-sm font-bold text-white"
+            className="absolute left-0 top-0 flex items-center w-11 h-full pl-2 text-sm font-bold text-white bg-black/5"
             aria-label="플로팅 광고 토글"
           >
             {isOpen ? 
