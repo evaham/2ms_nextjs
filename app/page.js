@@ -10,6 +10,10 @@ import rehypeRaw from "rehype-raw";
 import martData from "./data/martData.js";
 
 export default function Home() {
+  const resolveImageSrc = (src) =>
+    src && src.startsWith("/")
+      ? `${process.env.NEXT_PUBLIC_BASE_PATH || ""}${src}`
+      : src;
   // 팝업창 여닫기
   const [isNoticePopupOpen, setIsNoticePopupOpen] = useState(false);
   const [isProductPopupOpen, setIsProductPopupOpen] = useState(false);
@@ -250,7 +254,7 @@ export default function Home() {
         {/* 배너이미지 */}
         { titleBannerImg ?(
           <div className="sample__banner flex text-center bg-slate-400">
-            <img className="size-full" src={titleBannerImg} alt="배너이미지" />
+            <img className="size-full" src={resolveImageSrc(titleBannerImg)} alt="배너이미지" />
           </div>
         ) : null }
 
@@ -310,7 +314,7 @@ export default function Home() {
             {/* <!-- <span>행사코너1 배너</span> --> */}
             {corner.eventImg ? (
               <div className="sample__banner sample__banner--type2 flex items-center justify-center min-h-20 bg-slate-300">
-                <img className="size-full" src={corner.eventImg} alt="행사코너 배너" />
+                <img className="size-full" src={resolveImageSrc(corner.eventImg)} alt="행사코너 배너" />
               </div>
             ) : null}
 
@@ -328,7 +332,7 @@ export default function Home() {
                             group-[.grid-cols-2]:size-12 group-[.grid-cols-3]:size-8 group-[.grid-cols-4]:size-6">
                             <img className="max-w-full max-h-full size-auto" src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${item.badgeImg}`} alt="뱃지 이미지" />
                           </div>
-                          <img className="lazyload max-w-full max-h-full size-auto" src={item.image} alt="상품 이미지" />
+                          <img className="lazyload max-w-full max-h-full size-auto" src={resolveImageSrc(item.image)} alt="상품 이미지" />
                           {useOrderSystem ? (
                             <div className={`icon__cartbox ${item.cart ? "active" : ""} flex items-center justify-center absolute right-1/20 bottom-1/20 bg-white border border-black/15 rounded-full shadow-[0_0_3px_rgba(0,0,0,0.2)] 
                               group-[.grid-cols-1]:size-11 group-[.grid-cols-2]:size-11 group-[.grid-cols-3]:size-8 group-[.grid-cols-4]:size-7 [&.active]:border-blue-300 [&.active_svg]:fill-blue-500
@@ -384,7 +388,7 @@ export default function Home() {
                           <div className="goods__badge absolute flex top-0 left-0 size-11">
                             <img className="max-w-full max-h-full size-auto" src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${item.badgeImg}`} alt="뱃지 이미지" />
                           </div>
-                          <img className="lazyload max-w-full max-h-full size-auto" src={item.image} alt="상품 이미지" />
+                          <img className="lazyload max-w-full max-h-full size-auto" src={resolveImageSrc(item.image)} alt="상품 이미지" />
                           
                           {useOrderSystem ? (
                             <div className={`icon__cartbox ${item.cart ? "active" : ""} flex items-center justify-center absolute right-1/20 bottom-1/20 size-9 bg-white border border-black/15 rounded-full shadow-[0_0_3px_rgba(0,0,0,0.2)]
@@ -427,7 +431,7 @@ export default function Home() {
                           <div className="goods__badge absolute flex top-0 left-0 size-11">
                             <img className="max-w-full max-h-full size-auto" src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${item.badgeImg}`} alt="뱃지 이미지" />
                           </div>
-                          <img data-src="" className="lazyload max-w-full max-h-full size-auto" src={item.image} />
+                          <img data-src="" className="lazyload max-w-full max-h-full size-auto" src={resolveImageSrc(item.image)} />
                         </div>
 
                         {useOrderSystem ? (
@@ -493,7 +497,7 @@ export default function Home() {
                     {corner.imageContent.map((item, index) => (
 
                       <div key={index} className="goods__imgbox goods__imgbox--only flex felx-col w-full h-auto mx-auto bg-white">
-                        <img src={item.image} alt="이미지" className="lazyload w-full max-h-full ${fn:contains(f, 'thumb_') ? 'thumb cursor-pointer' : ''}" />
+                        <img src={resolveImageSrc(item.image)} alt="이미지" className="lazyload w-full max-h-full ${fn:contains(f, 'thumb_') ? 'thumb cursor-pointer' : ''}" />
                       </div>
                     ))}
                   </div>
