@@ -175,7 +175,7 @@ export default function Home() {
   // 플로팅 광고 배너 데이터
   const floatingAdBanner = {
     link: "https://www.naver.com",
-    image: "/img/ad_banner02.png?t=20260206",
+    image: "/img/ad_banner02.png?t=20260206_1",
   };
   // 팝업 광고 이미지
   const adPopupImage = {
