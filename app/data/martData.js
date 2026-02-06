@@ -1,0 +1,318 @@
+const martData = {
+  // 홈 화면 기능 활성화 여부
+  useOrderSystem: true,
+
+  // 매장 헤더 정보
+  martName: "투게더마트 모바일 전단",
+  eventTitle: "~투게더마트 장보러가요~",
+  eventPeriod: "01.01(목) ~ 03.30(목),세달간",
+
+  // 상단 히어로/배너 이미지
+  titleBannerImg:
+    "/img/9cad723f-c55d-48e6-a2dc-7dced997758d.png",
+
+  // 행사코너 사용 여부
+  useEventCorner: true,
+
+  // 공동구매 배너
+  useGroupPurchaseBanner: true,
+  groupPurchaseBannerLink: "/group-purchase",
+  groupPurchaseBannerImg: "/img/group_purchase.png",
+
+  // 플로팅 광고 배너 (우측/하단)
+  useFloatingAdBanner: true,
+  floatingAdBanner: {
+    link: "https://www.naver.com",
+    image: "/img/ad_banner03.png?t=20260206_1",
+  },
+
+  // 앱 설치 유도 팝업
+  adPopupImage: {
+    androidStoreLink:
+      "https://play.google.com/store/apps/details?id=com.happytogethers&hl=ko",
+    iosStoreLink: "https://apps.apple.com/kr/app/투게더영수증/id6446961156",
+    image: "/img/ad_image.png",
+  },
+
+  // 상품 이미지 실패 시 대체 이미지
+  fallbackImage: "https://image6.coupangcdn.com/image/mypromotion/CPI90_banner.png",
+
+  // 행사코너 섹션 (메뉴 + 콘텐츠 블록)
+  eventGroupList: [
+    {
+      id: "event-corner-1",
+      title: "행사코너1",
+      bgColor: "#e9f9ca",
+      eventImg:
+        "/img/dd546078-972b-4634-bce8-ec164c37ac91.png",
+      templateType: "typeA",
+      layoutType: "type2",
+      // 해당 코너 상품 목록
+      products: [
+        {
+          id: 1,
+          name: "햇대추 1팩",
+          cart: true,
+          badgeImg: "/img/20250325_164334_998.png",
+          price: 5000,
+          normalPrice: 6980,
+          discountCondition: "500g",
+          barcode: "",
+          image:
+            "/img/ee220adc-1d7f-471d-822b-77a04579c69c.jpg",
+        },
+        {
+          id: 2,
+          name: "공주알밤",
+          cart: false,
+          badgeImg: "/img/20250325_164334_998.png",
+          price: 2580,
+          normalPrice: 2980,
+          discountCondition: "카드300원",
+          barcode: "8801110000002",
+          image:
+            "/img/9b881710-ed51-4847-9e65-709013f9965f.jpg",
+        },
+        {
+          id: 3,
+          name: "호박고구마",
+          cart: false,
+          badgeImg: "/img/20250325_164334_998.png",
+          price: 8000,
+          normalPrice: 2980,
+          discountCondition: "1.5kg",
+          barcode: "8801110000003",
+          image:
+            "/img/652e2a79-b7d3-468d-bc3f-0fb70ff594a5.jpg",
+        },
+        {
+          id: 4,
+          name: "스테비아 대추방울토마토",
+          cart: false,
+          badgeImg: "/img/20250325_164334_998.png",
+          price: 5900,
+          normalPrice: 1580,
+          discountCondition: "800g",
+          barcode: "",
+          image:
+            "/img/4c789e2e-1325-4b3c-95d8-37641c141201.jpg",
+        },
+
+      ],
+    },
+    {
+      id: "event-corner-2",
+      title: "행사코너2",
+      bgColor: "#1187CF",
+      eventImg:
+        "/img/95308c73-275f-425d-b52e-26082fa50916.png",
+      templateType: "typeA",
+      layoutType: "type4",
+      // 해당 코너 상품 목록
+      products: [
+        {
+          id: 1,
+          name: "간고등어1손",
+          cart: true,
+          badgeImg: "/img/123.jpg",
+          price: 4900,
+          normalPrice: 4580,
+          discountCondition: "맛있는간고등어",
+          barcode: "8802220000001",
+          image:
+            "/img/94f17e69-1bcc-4c7d-a633-4727cf12aa67.jpg",
+        },
+        {
+          id: 2,
+          name: "국내산갈치 2마리",
+          cart: false,
+          badgeImg: "/img/123.jpg",
+          price: 9900,
+          normalPrice: 4580,
+          discountCondition: "제주에서왔어요",
+          barcode: "8802220000002",
+          image:
+            "/img/d10362a7-7eef-422f-98f6-5e0be9ac56d4.jpg",
+        },
+        {
+          id: 3,
+          name: "오징어 대 2마리",
+          cart: false,
+          badgeImg: "/img/123.jpg",
+          price: 22000,
+          normalPrice: null ,
+          discountCondition: "",
+          barcode: "8802220000003",
+          image:
+            "/img/a2d6f785-aefe-4c43-a69e-81901382b073.jpg",
+        },
+        {
+          id: 4,
+          name: "활전복4마리",
+          cart: false,
+          badgeImg: "/img/123.jpg",
+          price: 9900,
+          normalPrice: 1380,
+          discountCondition: "버터구이오케이",
+          barcode: "8802220000004",
+          image:
+            "/img/b182967d-95b8-4110-96f0-7f86b2987f9a.jpg",
+        },
+        {
+          id: 5,
+          name: "피바지락1팩",
+          cart: false,
+          badgeImg: "/img/123.jpg",
+          price: 5900,
+          normalPrice: null,
+          discountCondition: "",
+          barcode: "8802220000005",
+          image:
+            "/img/0_피바지락-1.2kg_8809238949219_1.jpg",
+        },
+        {
+          id: 6,
+          name: "백생합1kg",
+          cart: false,
+          badgeImg: "/img/123.jpg",
+          price: 6900,
+          normalPrice: null,
+          discountCondition: "",
+          barcode: "8802220000006",
+          image:
+            "/img/aba872fd-992d-475f-8df1-7ebd9fc871b4.jpg",
+        },
+        {
+          id: 7,
+          name: "멍개 1kg",
+          cart: false,
+          badgeImg: "/img/123.jpg",
+          price: 7900,
+          normalPrice: null,
+          discountCondition: "",
+          barcode: "8802220000007",
+          image:
+            "/img/7f26500e-43ca-425a-819c-9d4af3093259.jpg",
+        },
+        {
+          id: 8,
+          name: "고등어대 2마리",
+          cart: false,
+          badgeImg: "/img/123.jpg",
+          price: 9900,
+          normalPrice: null,
+          discountCondition: "",
+          barcode: "8802220000008",
+          image:
+            "/img/65335d90-5c61-4c32-81da-b629ffdd097f.jpg",
+        },
+
+      ],
+    },
+    {
+      id: "event-corner-3",
+      title: "쟁여두면 좋은상품",
+      bgColor: "#7263f4",
+      eventImg:
+        "/img/ec8479c8-b684-4cf4-8736-b188a46e8090.png",
+      templateType: "typeB",
+      layoutType: "none",
+      // 해당 코너 상품 목록
+      products: [
+        {
+          id: 1,
+          name: "농심)마라짜파게티",
+          cart: true,
+          badgeImg: "/img/20241028_114241_775.png",
+          price: 1990,
+          normalPrice: 2980,
+          discountCondition: "초신상 마라맛!",
+          barcode: "8803330000001",
+          image:
+            "/img/640ada9d-cbc7-44ff-b6a9-2f0315ee6c03.jpg",
+        },
+        {
+          id: 2,
+          name: "신라면툼바 4개입",
+          cart: false,
+          badgeImg: "/img/20241028_114241_775.png",
+          price: 5500,
+          normalPrice: 5900,
+          discountCondition: "신상품 품절템!",
+          barcode: "8803330000002",
+          image:
+            "/img/01fe2259-120a-4990-8603-c4e92c53ea49.jpg",
+        },
+        {
+          id: 3,
+          name: "동원)개성왕교자",
+          cart: false,
+          badgeImg: "/img/20231222_152752_578.png",
+          price: 6900,
+          normalPrice: 6980,
+          discountCondition: "1+1 특가진행",
+          barcode: "8803330000003",
+          image:
+            "/img/c515b1fa-0814-48db-af1f-b6587f10e1f8.jpg",
+        },
+        {
+          id: 4,
+          name: "아워홈)꼬치어묵세트",
+          cart: false,
+          badgeImg: "/img/20231222_152752_578.png",
+          price: 4980,
+          normalPrice: 5980,
+          discountCondition: "포차 인기템!",
+          barcode: "8803330000004",
+          image:
+            "/img/55dbea9b-3d91-4f43-95d6-35a2d487282a.jpg",
+        },
+        {
+          id: 5,
+          name: "풀무원)가락김치우동",
+          cart: false,
+          badgeImg: "/img/20241028_114313_776.png",
+          price: 8000,
+          normalPrice: 8980,
+          discountCondition: "칼칼한 국물!",
+          barcode: "8803330000005",
+          image:
+            "/img/4124b1d1-13ed-4ba7-ba4c-9906646972df.jpg",
+        },
+        {
+          id: 6,
+          name: "CJ)사천마라탕면",
+          cart: false,
+          badgeImg: "/img/20240801_171506_665.png",
+          price: 9600,
+          normalPrice: null,
+          discountCondition: "",
+          barcode: "8803330000006",
+          image:
+            "/img/ebca8e57-4e17-41ce-81e1-28e4286b22af.jpg",
+        },
+ 
+      ],
+    },
+    {
+      id: "event-corner-4",
+      title: "배달안내",
+      bgColor: "#0152a1",
+      eventImg:
+        "/img/325d3359-c2f2-405c-81d0-6152f38652be.png",
+      templateType: "typeD",
+      layoutType: "none",
+      // 텍스트형 코너 내용
+      textContent: `
+######
+###### <span style="color: #057cb5">투게더마트 배달 주문하세요!</span>
+###### <span style="color: #6dc5f0">------------------------------------</span>
+###### 📌 무료배달 : <span style="color: #fc0000">3만원 이상 구매시</span>
+###### ⏰ 배달시간 : 10:00 ~ 18:00
+###### 📞 문의전화 : 032-123-1234
+      `,
+    },
+  ],
+};
+
+export default martData;

@@ -5,6 +5,9 @@ import SearchLayerPopup from "./component/SearchLayerPopup";
 import ProductPopup from "./component/ProductPopup";
 import FloatingAdBanner from "./component/FloatingAdBanner";
 import AdPopup from "./component/AdPopup";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import martData from "./data/martData.js";
 
 export default function Home() {
   // 팝업창 여닫기
@@ -22,6 +25,7 @@ export default function Home() {
   // 행사코너 높이 조정
   const [stickyHeight, setStickyHeight] = useState(0);
   const stickyRef = useRef(null);
+  const eventMenuRef = useRef(null);
   const [currentCornerId, setCurrentCornerId] = useState(null);
   // 행사코너 메뉴 가로 스크롤(드래그) 상태
   const eventScrollRef = useRef(null);
@@ -29,13 +33,31 @@ export default function Home() {
   const dragStartXRef = useRef(0);
   const dragScrollLeftRef = useRef(0);
 
+  const {
+    useOrderSystem,
+    martName,
+    eventTitle,
+    eventPeriod,
+    titleBannerImg,
+    useEventCorner,
+    useGroupPurchaseBanner,
+    groupPurchaseBannerLink,
+    groupPurchaseBannerImg,
+    useFloatingAdBanner,
+    floatingAdBanner,
+    adPopupImage,
+    fallbackImage,
+    eventGroupList,
+  } = martData;
+
   const handleScrollToSection = (sectionId) => {
     const target = document.getElementById(sectionId);
     if (!target) return;
 
     setCurrentCornerId(sectionId);
 
-    const headerOffset = stickyHeight;
+    const menuHeight = eventMenuRef.current?.offsetHeight || 0;
+    const headerOffset = stickyHeight + menuHeight;
     const elementPosition = target.getBoundingClientRect().top + window.scrollY;
     const offsetPosition = elementPosition - headerOffset;
 
@@ -95,7 +117,8 @@ export default function Home() {
     if (typeof window === "undefined") return;
 
     const updateActiveCorner = () => {
-      const offset = stickyHeight + 1;
+      const menuHeight = eventMenuRef.current?.offsetHeight || 0;
+      const offset = stickyHeight + menuHeight + 1;
       let currentId = null;
       let currentTop = -Infinity;
 
@@ -126,7 +149,7 @@ export default function Home() {
       window.removeEventListener("scroll", updateActiveCorner);
       window.removeEventListener("resize", updateActiveCorner);
     };
-  }, [stickyHeight]);
+  }, [stickyHeight, eventGroupList]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -152,147 +175,10 @@ export default function Home() {
     };
   }, []);
 
-  // 주문기능 사용여부
-  const useOrderSystem = true;
-  // 매장명
-  const martName = "투게더DEV 마트(인천점)";
-  // 행사제목
-  const eventTitle = "투게더 DEV 마트 인천점 오픈기념 행사";
-  // 기간
-  const eventPeriod = "06.01(월) ~ 06.30(목),한달간";
-  // 타이틀 배너이미지
-  const titleBannerImg = "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/image_audit/prod/26a4f3e8-5f26-4f9d-9404-18aa4680fa79_fixing_v2.png";
-  // 행사코너 이동 사용여부
-  const useEventCorner = true;
-  // 공동구매 배너 사용여부
-  const useGroupPurchaseBanner = true;
-  // 공동구매 배너 링크
-  const groupPurchaseBannerLink = "/group-purchase";
-  // 공동구매 배너 이미지
-  const groupPurchaseBannerImg = "/img/group_purchase.png";
-  // 플로팅 광고 배너 사용여부
-  const useFloatingAdBanner = true;
-  // 플로팅 광고 배너 데이터
-  const floatingAdBanner = {
-    link: "https://www.naver.com",
-    image: "/img/ad_banner02.png?t=20260206_1",
-  };
-  // 팝업 광고 이미지
-  const adPopupImage = {
-    // androidDeepLink: "market://details?id=com.happytogethers",
-    // iosDeepLink: "itms-apps://itunes.apple.com/app/id6446961156",
-    androidStoreLink: "https://play.google.com/store/apps/details?id=com.happytogethers&hl=ko",
-    iosStoreLink: "https://apps.apple.com/kr/app/투게더영수증/id6446961156",
-    image: "/img/ad_image.png",
-  }
-  // 행사코너 리스트(데이터)
-  const eventGroupList = [
-    {
-      "id": "event-corner-1",
-      "title": "행사코너1",
-      "bgColor": "#ff6f61",
-      "eventImg": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/image_audit/prod/26a4f3e8-5f26-4f9d-9404-18aa4680fa79_fixing_v2.png",
-      // 템플릿 타입 "typeA" : 가로형, "typeB" :세로형, "typeC" : 텍스트형, "typeD" : 장문편집형, "typeE" : 이미지형
-      "templateType": "typeA",
-      // 레이아웃 타입 "type1" : 1단레이아웃, "type2" : 2단레이아웃, "type3" : 3단레이아웃, "type4" : 4단레이아웃, "none" : 레이아웃
-      "layoutType": "type4",
-      "products": [
-        { "id": 1, "name": "p자연그린 김밥단무지1", "cart": true, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { "id": 2, "name": "p자연그린 김밥단무지2", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { "id": 3, "name": "p자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "https://nng-phinf.pstatic.net/MjAyNjAxMjBfMjc3/MDAxNzY4ODkzNzkzMTA2.9FWLw-05xDx5QgZPw4sbTGC-j-MmFlyxewyXHsxqCoog.I-SPCydKgS_UYn9YhAckfPiF255iHdbEuB7fBtUvXgUg.JPEG/main.jpg" },
-        { "id": 4, "name": "p자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 5, "name": "p자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 6, "name": "p자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 7, "name": "p자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 8, "name": "p자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNTEwMjFfMjkz%2FMDAxNzYxMDE2MTEyMzAx.CkjID8Nc3fHBStIqQvLBok5-5QZWjUcgILDM852Sx2kg.swrY1ik00q-fnn6-JbUMsOOAEXUYYBKMS1i3EJET2qwg.JPEG%2FKakaoTalk_20251021_115627207_06.jpg" },
-        { "id": 9, "name": "p자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 10, "name": "p자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 11, "name": "p자연그린 김밥단무지4", "cart": true, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { "id": 12, "name": "p자연그린 김밥단무지4단무지4단무지4", "cart": true, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" }
-      ]
-    },
-    {
-      "id": "event-corner-2",
-      "title": "행사코너2",
-      "bgColor": "#ddd",
-      "eventImg": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/image_audit/prod/26a4f3e8-5f26-4f9d-9404-18aa4680fa79_fixing_v2.png",
-
-      // 템플릿 타입 "typeA" : 가로형, "typeB" :세로형, "typeC" : 텍스트형, "typeD" : 장문편집형, "typeE" : 이미지형
-      "templateType": "typeB",
-      // 레이아웃 타입 "type1" : 1단레이아웃, "type2" : 2단레이아웃, "type3" : 3단레이아웃, "type4" : 4단레이아웃, "none" : 레이아웃
-      "layoutType": "none",
-      "products": [
-        { "id": 1, "name": "자연그린 김밥단무지1", "cart": true, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { "id": 2, "name": "자연그린 김밥단무지2", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { "id": 3, "name": "자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "https://nng-phinf.pstatic.net/MjAyNjAxMjBfMjc3/MDAxNzY4ODkzNzkzMTA2.9FWLw-05xDx5QgZPw4sbTGC-j-MmFlyxewyXHsxqCoog.I-SPCydKgS_UYn9YhAckfPiF255iHdbEuB7fBtUvXgUg.JPEG/main.jpg" },
-        { "id": 4, "name": "자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 5, "name": "자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 6, "name": "자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 7, "name": "자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 8, "name": "자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNTEwMjFfMjkz%2FMDAxNzYxMDE2MTEyMzAx.CkjID8Nc3fHBStIqQvLBok5-5QZWjUcgILDM852Sx2kg.swrY1ik00q-fnn6-JbUMsOOAEXUYYBKMS1i3EJET2qwg.JPEG%2FKakaoTalk_20251021_115627207_06.jpg" },
-        { "id": 9, "name": "자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 10, "name": "자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 11, "name": "자연그린 김밥단무지4", "cart": true, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { "id": 12, "name": "자연그린 김밥단무지4단무지4단무지4", "cart": true, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" }
-      ]
-    },
-    {
-      "id": "event-corner-3",
-      "title": "행사코너3",
-      "bgColor": "#333",
-      "eventImg": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/image_audit/prod/26a4f3e8-5f26-4f9d-9404-18aa4680fa79_fixing_v2.png",
-      // 템플릿 타입 "typeA" : 가로형, "typeB" :세로형, "typeC" : 텍스트형, "typeD" : 장문편집형, "typeE" : 이미지형
-      "templateType": "typeC",
-      // 레이아웃 타입 "type1" : 1단레이아웃, "type2" : 2단레이아웃, "type3" : 3단레이아웃, "type4" : 4단레이아웃, "none" : 레이아웃
-      "layoutType": "none",
-      "products": [
-        { "id": 1, "name": "자연그린 김밥단무지1", "cart": true, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { "id": 2, "name": "자연그린 김밥단무지2", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { "id": 3, "name": "자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "https://nng-phinf.pstatic.net/MjAyNjAxMjBfMjc3/MDAxNzY4ODkzNzkzMTA2.9FWLw-05xDx5QgZPw4sbTGC-j-MmFlyxewyXHsxqCoog.I-SPCydKgS_UYn9YhAckfPiF255iHdbEuB7fBtUvXgUg.JPEG/main.jpg" },
-        { "id": 4, "name": "자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 5, "name": "자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 6, "name": "자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 7, "name": "자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 8, "name": "자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNTEwMjFfMjkz%2FMDAxNzYxMDE2MTEyMzAx.CkjID8Nc3fHBStIqQvLBok5-5QZWjUcgILDM852Sx2kg.swrY1ik00q-fnn6-JbUMsOOAEXUYYBKMS1i3EJET2qwg.JPEG%2FKakaoTalk_20251021_115627207_06.jpg" },
-        { "id": 9, "name": "자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 10, "name": "자연그린 김밥단무지3", "cart": false, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/985469858334630-fdaa7339-3b98-4d84-b358-8d62bbf3c84b.jpg" },
-        { "id": 11, "name": "자연그린 김밥단무지4", "cart": true, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { "id": 12, "name": "자연그린 김밥단무지4단무지4단무지4", "cart": true, "badgeImg": "/img/123.jpg", "price": 2558, "image": "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" }
-      ]
-    },
-    {
-      "id": "event-corner-4",
-      "title": "행사코너4",
-      "bgColor": "#fafafa",
-      "eventImg": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/image_audit/prod/26a4f3e8-5f26-4f9d-9404-18aa4680fa79_fixing_v2.png",
-      // 템플릿 타입 "typeA" : 가로형, "typeB" :세로형, "typeC" : 텍스트형, "typeD" : 장문편집형, "typeE" : 이미지형
-      "templateType": "typeD",
-      // 레이아웃 타입 "type1" : 1단레이아웃, "type2" : 2단레이아웃, "type3" : 3단레이아웃, "type4" : 4단레이아웃, "none" : 레이아웃
-      "layoutType": "none",
-      "textContent": "행사코너3 텍스트형 코너입니다. 텍스트로 내용을 입력할 수 있습니다. 행사코너3 텍스트형 코너입니다. 텍스트로 내용을 입력할 수 있습니다. 행사코너3 텍스트형 코너입니다. 텍스트로 내용을 입력할 수 있습니다.",
-    },
-    {
-      "id": "event-corner-5",
-      "title": "행사코너5",
-      "bgColor": "#f5f5f5",
-      "eventImg": "//thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/image_audit/prod/26a4f3e8-5f26-4f9d-9404-18aa4680fa79_fixing_v2.png",
-      // 템플릿 타입 "typeA" : 가로형, "typeB" :세로형, "typeC" : 텍스트형, "typeD" : 장문편집형, "typeE" : 이미지형
-      "templateType": "typeE",
-      // 레이아웃 타입 "type1" : 1단레이아웃, "type2" : 2단레이아웃, "type3" : 3단레이아웃, "type4" : 4단레이아웃, "none" : 레이아웃
-      "layoutType": "none",
-      "imageContent": [
-        { "id": 1, "image": "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { "id": 2, "image": "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-      ]
-    },
-  ]
   // 행사코너 상태(장바구니/수량 반영용)
   const [eventGroups, setEventGroups] = useState(eventGroupList);
   // 검색용 상품 목록(모든 코너 products 합치기)
   const searchList = eventGroups.flatMap((corner) => corner.products || []);
-  
-  // 샘플이미지 불러오기 실패시 대체이미지
-  const emptyImg= "https://image6.coupangcdn.com/image/mypromotion/CPI90_banner.png";
   
   // 선택 상품 선택 상태
   const [selectedItem, setSelectedItem] = useState(null);
@@ -371,7 +257,7 @@ export default function Home() {
 
         {/* 행사코너 이동 */}
         { useEventCorner ? (
-          <div className="sticky flex w-full h-10 border-b border-slate-300 bg-white z-40" style={{ top: stickyHeight }}>
+          <div ref={eventMenuRef} className="sticky flex w-full h-10 border-b border-slate-300 bg-white z-40" style={{ top: stickyHeight }}>
             <div
               ref={eventScrollRef}
               className="flex items-center gap-2 overflow-x-auto whitespace-nowrap px-2"
@@ -411,7 +297,7 @@ export default function Home() {
         {/* 공동구매 배너 */}
         { useGroupPurchaseBanner ? (
           <div className="group-purchase animate-slide-in-left">
-            <a href="http://naver.com">
+            <a href={groupPurchaseBannerLink}>
               <img className="w-full" src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${groupPurchaseBannerImg}`} alt="공동구매 배너" />
             </a>
           </div>
@@ -457,12 +343,18 @@ export default function Home() {
 
 
                         <div className="goods__info text-center">
-                          <div className="goods__delprice previewEtc1 h-4 text-sm text-[#999] line-through leading-tight
+                          <div className="goods__delprice previewEtc1 h-4 text-sm text-[#999] leading-tight
                             group-[.grid-cols-1]:text-base
                             group-[.grid-cols-2]:text-sm
                             group-[.grid-cols-3]:text-xs
                             group-[.grid-cols-4]:text-xs
-                          ">공유이미지</div>
+                          ">{item.discountCondition ? (
+                            <>
+                              <span className="text-blue-600 font-bold">{item.discountCondition}</span>
+                            </>
+                          ) : (
+                            <span className="text-gray-400 font-normal line-through">{item.normalPrice}</span>
+                          )}</div>
                           <div className="goods__price font-bold text-[#fa5252] tracking-tight leading-tight
                             group-[.grid-cols-1]:text-[300%] 
                             group-[.grid-cols-2]:text-[190%] 
@@ -506,7 +398,15 @@ export default function Home() {
                         
                         </div>
                         <div className="goods__info flex-1 flex flex-col justify-center">
-                          <div className="goods__delprice previewEtc1 h-4 text-sm text-[#999] line-through leading-tight [&.previewEtc1]:text-[#517dfb] [&.previewEtc1]:font-bold [&.previewEtc1]:no-underline">공유이미지</div>
+                          <div className="goods__delprice previewEtc1 h-4 text-sm text-[#999] leading-tight [&.previewEtc1]:text-[#517dfb] [&.previewEtc1]:font-bold [&.previewEtc1]:no-underline">
+                            {item.discountCondition ? (
+                              <>
+                                <span className="text-blue-600 font-bold">{item.discountCondition}</span>
+                              </>
+                            ) : (
+                              <span className="text-gray-400 font-normal line-through">{item.normalPrice}</span>
+                            )}
+                          </div>
                           <div className="goods__price text-[#fa5252] text-[195%] font-bold tracking-tight leading-tight">{item.price.toLocaleString()}</div>
                           <div className="goods__name line-clamp-2 h-11 text-lg font-bold break-all leading-tight">{item.name}</div>
                         </div>
@@ -544,7 +444,15 @@ export default function Home() {
                         <div className="goods__info flex flex-col">
                           <div className="goods__name line-clamp-2 h-9.5 mt-1 font-bold break-all leading-tight">{item.name}</div>
                           <div className="flex items-center justify-end gap-2">
-                            <div className="goods__delprice previewEtc1 mt-3 text-sm leading-tight">공유이미지</div>
+                            <div className="goods__delprice previewEtc1 mt-3 text-sm leading-tight">
+                              {item.discountCondition ? (
+                                <>
+                                  <span className="text-blue-600 font-bold">{item.discountCondition}</span>
+                                </>
+                              ) : (
+                                <span className="text-gray-400 font-normal line-through">{item.normalPrice}</span>
+                              )}
+                            </div>
                             <div className="goods__price text-[#fa5252] text-[195%] font-bold tracking-tight leading-tight">{item.price.toLocaleString()}</div>
                           </div>
                         </div>
@@ -558,7 +466,7 @@ export default function Home() {
                 <ul className="goods__list flex flex-col px-0.5 py-2.5 gap-px">
                   <li>
                     <div className="goods__card relative overflow-hidden flex flex-col w-full p-1 gap-3 border border-[#d1d1d6] rounded-lg bg-white">
-                      <pre className="goods__pre text-sm text-left p-1.5 font-sans
+                      <div className="goods__pre text-sm text-left p-1.5 font-sans
                         [&_h1,&_h2,&_h3,&_h4,&_h5,&_h6]:font-bold
                         [&_h1,&_h2,&_h3]:leading-10
                         [&_h4,&_h5,&_h6]:leading-7.5
@@ -569,8 +477,10 @@ export default function Home() {
                         [&_h5]:text-[18px]
                         [&_h6]:text-[16px]
                       ">
-                        {corner.textContent}
-                      </pre>
+                        <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+                          {corner.textContent?.trim()}
+                        </ReactMarkdown>
+                      </div>
                     </div>
                   </li>
                 </ul>
@@ -652,7 +562,7 @@ export default function Home() {
         open={isProductPopupOpen}
         orderSystem={useOrderSystem} //주문기능의 유무
         item={selectedItem}
-        fallbackImage={emptyImg}
+        fallbackImage={fallbackImage}
         onClose={handleClosePopup}
         onAddToCart={handleAddToCart}
       />
