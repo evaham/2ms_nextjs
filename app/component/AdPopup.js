@@ -21,7 +21,8 @@ export default function AdPopup({ open, adPopData, onClose, onHideToday }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="fixed inset-0 bg-black/60"></div>
       <div className="relative w-85 max-w-md overflow-hidden rounded bg-white shadow-xl">
         <div className="w-full">
           <a href={adPopData.androidStoreLink} onClick={handleStoreLink}>

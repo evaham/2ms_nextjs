@@ -7,7 +7,7 @@ import FloatingAdBanner from "./component/FloatingAdBanner";
 import AdPopup from "./component/AdPopup";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
-import martData from "./data/martData.js";
+import martData from "./data/martData.json";
 
 export default function Home() {
   const resolveImageSrc = (src) =>
@@ -519,7 +519,7 @@ export default function Home() {
             <span className="text-xs text-white tracking-tight">맨위로</span>
           </a>
           {!isAdPopupHiddenToday && (
-            <a className="scroll_top btn_movetop flex border flex-col items-center justify-center size-16.5 ml-auto mr-2.5 rounded-full bg-black/70 hover:bg-[#333] shadow-md shadow-black/50"
+            <a className="btn_receipt flex border flex-col items-center justify-center size-16.5 ml-auto mr-2.5 rounded-full bg-black/70 hover:bg-[#333] shadow-md shadow-black/50"
               onClick={() => setIsAdPopupOpen(true)}
               role="button"
               aria-label="전자영수증"
