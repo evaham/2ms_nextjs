@@ -6,16 +6,11 @@ import ProductPopup from "./component/ProductPopup";
 import FloatingAdBanner from "./component/FloatingAdBanner";
 import AdPopup from "./component/AdPopup";
 import EventCornerList from "./component/EventCornerList";
+import resolveImageSrc from "./lib/resolveImageSrc";
 import martData from "./data/martData.json";
 
 export default function Home() {
-  // 이미지 경로가 절대경로일 경우, basePath를 붙여주는 함수
-  const resolveImageSrc = (src) =>
-    src && src.startsWith("/")
-      ? `${process.env.NEXT_PUBLIC_BASE_PATH || ""}${src}`
-      : src;
-
-
+  const [martState, setMartState] = useState(martData);
   // 팝업창 여닫기
   const [isNoticePopupOpen, setIsNoticePopupOpen] = useState(false);
   const [isProductPopupOpen, setIsProductPopupOpen] = useState(false);
@@ -54,7 +49,111 @@ export default function Home() {
     adPopupImage,
     fallbackImage,
     eventGroupList,
-  } = martData;
+  } = martState;
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const stored = window.localStorage.getItem("martData");
+    if (!stored) {
+      window.localStorage.setItem("martData", JSON.stringify(martData));
+      setMartState(martData);
+      return;
+    }
+
+    try {
+      const parsed = JSON.parse(stored);
+      setMartState(parsed);
+    } catch (error) {
+      window.localStorage.setItem("martData", JSON.stringify(martData));
+      setMartState(martData);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const syncMartState = () => {
+      const stored = window.localStorage.getItem("martData");
+      if (!stored) return;
+      try {
+        const parsed = JSON.parse(stored);
+        setMartState(parsed);
+      } catch (error) {
+        setMartState(martData);
+      }
+    };
+
+    const handleStorage = (event) => {
+      if (event.key === "martData") {
+        syncMartState();
+      }
+    };
+
+    window.addEventListener("storage", handleStorage);
+    window.addEventListener("martDataUpdated", syncMartState);
+    return () => {
+      window.removeEventListener("storage", handleStorage);
+      window.removeEventListener("martDataUpdated", syncMartState);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (eventGroupList && eventGroupList.length > 0) {
+      const stored = typeof window !== "undefined"
+        ? window.localStorage.getItem("cartItems")
+        : null;
+      const parsed = stored ? JSON.parse(stored) : [];
+      const cartMap = new Map(parsed.map((item) => [item.id, item]));
+      const nextGroups = eventGroupList.map((corner) => ({
+        ...corner,
+        products: (corner.products || []).map((item) => {
+          const cartItem = cartMap.get(item.id);
+          if (!cartItem) {
+            return { ...item, cart: false };
+          }
+          return {
+            ...item,
+            cart: true,
+            quantity: cartItem.quantity || item.quantity,
+          };
+        }),
+      }));
+      setEventGroups(nextGroups);
+    }
+  }, [eventGroupList]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const handleCartSync = () => {
+      const stored = window.localStorage.getItem("cartItems");
+      const parsed = stored ? JSON.parse(stored) : [];
+      const cartMap = new Map(parsed.map((item) => [item.id, item]));
+      setEventGroups((prev) =>
+        prev.map((corner) => ({
+          ...corner,
+          products: (corner.products || []).map((item) => {
+            const cartItem = cartMap.get(item.id);
+            if (!cartItem) {
+              return { ...item, cart: false };
+            }
+            return {
+              ...item,
+              cart: true,
+              quantity: cartItem.quantity || item.quantity,
+            };
+          }),
+        }))
+      );
+    };
+
+    handleCartSync();
+    window.addEventListener("cartItemsUpdated", handleCartSync);
+    window.addEventListener("storage", handleCartSync);
+    return () => {
+      window.removeEventListener("cartItemsUpdated", handleCartSync);
+      window.removeEventListener("storage", handleCartSync);
+    };
+  }, []);
 
   const handleScrollToSection = (sectionId) => {
     const target = document.getElementById(sectionId);
@@ -182,7 +281,7 @@ export default function Home() {
   }, []);
 
   // 행사코너 상태(장바구니/수량 반영용)
-  const [eventGroups, setEventGroups] = useState(eventGroupList);
+  const [eventGroups, setEventGroups] = useState(eventGroupList || []);
   // 검색용 상품 목록(모든 코너 products 합치기)
   const searchList = eventGroups.flatMap((corner) => corner.products || []);
   
@@ -199,12 +298,36 @@ export default function Home() {
   };
 
   // 장바구니 담기(선택 상품의 cart/quantity 갱신)
-  const handleAddToCart = (quantity) => {
+  const handleAddToCart = (quantity, itemOverride) => {
     const nextQuantity = Math.max(1, Number(quantity) || 1);
+    const baseItem = itemOverride || selectedItem;
 
-    if (!selectedItem || !selectedListKey) {
+    if (!baseItem || !selectedListKey) {
       handleClosePopup();
       return;
+    }
+
+    if (typeof window !== "undefined") {
+      const stored = window.localStorage.getItem("cartItems");
+      const parsed = stored ? JSON.parse(stored) : [];
+      const existingIndex = parsed.findIndex((entry) => entry.id === baseItem.id);
+      const nextEntry = {
+        ...baseItem,
+        barcode: baseItem.barcode || "",
+        quantity: nextQuantity,
+      };
+
+      if (existingIndex >= 0) {
+        parsed[existingIndex] = {
+          ...parsed[existingIndex],
+          quantity: (parsed[existingIndex].quantity || 0) + nextQuantity,
+        };
+      } else {
+        parsed.push(nextEntry);
+      }
+
+      window.localStorage.setItem("cartItems", JSON.stringify(parsed));
+      window.dispatchEvent(new Event("cartItemsUpdated"));
     }
 
     setEventGroups((prev) => prev.map((corner) => {
@@ -215,13 +338,12 @@ export default function Home() {
       return {
         ...corner,
         products: corner.products.map((item) =>
-          item.id === selectedItem.id
+          item.id === baseItem.id
             ? { ...item, cart: true, quantity: nextQuantity }
             : item
         ),
       };
     }));
-
     handleClosePopup();
   };
 
@@ -319,7 +441,6 @@ export default function Home() {
         <EventCornerList
           eventGroups={eventGroups}
           useOrderSystem={useOrderSystem}
-          resolveImageSrc={resolveImageSrc}
           onSelectItem={handleSelectItem}
         />
         {/* 행사코너 리스트 종료 */}

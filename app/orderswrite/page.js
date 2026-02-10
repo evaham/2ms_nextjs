@@ -2,19 +2,54 @@
 'use client'
 
 import Link from "next/link";
-import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import resolveImageSrc from "../lib/resolveImageSrc";
 
 export default function OrdersWrite() {
     const [activeTab, setActiveTab] = useState(1);
     const [showPopup, setShowPopup] = useState(false);
     const [showbtn, setShowbtn] = useState(false);
 
-    const list = [
-        { id: 1, cp: true, coupon:[{cname:"[쿠폰] 1000할인"}, {cprice:"-1,000 원"}]},
-        { id: 2, cp: true, coupon:[{cname:"[쿠폰] 1000할인"}, {cprice:"-1,000 원"}]},
-        { id: 3, cp: false, coupon:[]},
-    ]
+    const [orderItems, setOrderItems] = useState([]);
+    const [downloadedCoupons, setDownloadedCoupons] = useState([]);
+
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+        const stored = window.localStorage.getItem("orderItems");
+        const parsed = stored ? JSON.parse(stored) : [];
+        setOrderItems(parsed);
+    }, []);
+
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+        const stored = window.localStorage.getItem("downloadedCoupons");
+        const parsed = stored ? JSON.parse(stored) : [];
+        setDownloadedCoupons(parsed);
+    }, []);
+
+    const normalizeBarcode = (value) => (value || "").replace(/\s/g, "");
+    const findCouponForItem = (item) => {
+        const itemBarcode = normalizeBarcode(item.barcode);
+        if (!itemBarcode) return null;
+        return downloadedCoupons.find((coupon) => normalizeBarcode(coupon.barcode) === itemBarcode) || null;
+    };
+
+    const orderSummary = orderItems.reduce(
+        (summary, item) => {
+            const quantity = item.quantity || 1;
+            const itemSubtotal = (item.price || 0) * quantity;
+            const matchedCoupon = findCouponForItem(item);
+            const itemDiscount = matchedCoupon ? matchedCoupon.discount || 0 : 0;
+            return {
+                subtotal: summary.subtotal + itemSubtotal,
+                discount: summary.discount + itemDiscount,
+            };
+        },
+        { subtotal: 0, discount: 0 }
+    );
+
+    const deliveryFee = orderItems.length > 0 ? 3000 : 0;
+    const totalPrice = Math.max(orderSummary.subtotal - orderSummary.discount + deliveryFee, 0);
     return (
         <>
             <div className='sample relative flex flex-col min-h-screen pb-20 bg-slate-50'>
@@ -80,27 +115,63 @@ export default function OrdersWrite() {
                         </div>
                         <div className="write-body flex flex-col gap-0.5 p-2.5">
                             <ul className="write-list flex flex-col">
-                                {list.map((item, index) => (
-                                    <li key={index} className="py-2.5 border-b border-black/10 last:border-0">
-                                        <div className="write-listinfo grid grid-cols-[60px_1fr_60px] gap-x-2">
-                                            <Image className="write__img row-span-2 object-cover w-15 h-15 border rounded-sm border-black/10" src="/img/123.jpg" width={60} height={60} alt="주문상품" />
-                                            <div className="write-name leading-tight">샤인머스캣 18브릭스 이상 2입</div>
-                                            <div className="write-amount text-right">999 개</div>
-                                            <div className="write-price col-span-2 font-bold text-right">900,000 원</div>
-                                        </div>
-                                        {item.cp && (
-                                            <label className="write-coupon relative flex items-center gap-1 mt-2 px-0.5 ml-15 rounded-sm bg-slate-100">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="absolute -left-5" width="16" height="16" viewBox="0 0 33 32" fill="none">
-                                                    <path xmlns="http://www.w3.org/2000/svg" d="M16.75 0V16H32.75" stroke="#666" strokeWidth="1" />
-                                                </svg>
-                                                <input type="checkbox" className="size-4.5" defaultChecked />
-                                                <span className="write__cname">[쿠폰] 1000할인</span>
-                                                <span className="write__cprice ml-auto font-bold text-[#dc2626]">-1,000 원</span>
-                                            </label>
-                                        )}
-                                    </li>
-                                ))}
+                                {orderItems.length === 0 ? (
+                                    <li className="py-2.5 text-center text-sm text-slate-500">주문 상품이 없습니다.</li>
+                                ) : (
+                                    orderItems.map((item, index) => (
+                                        <li key={index} className="py-2.5 border-b border-black/10 last:border-0">
+                                            {(() => {
+                                                const matchedCoupon = findCouponForItem(item);
+                                                return (
+                                                    <>
+                                            <div className="write-listinfo grid grid-cols-[60px_1fr_60px] gap-x-2">
+                                                <img
+                                                    className="write__img row-span-2 object-cover w-15 h-15 border rounded-sm border-black/10"
+                                                    src={resolveImageSrc(item.image)}
+                                                    alt={item.name}
+                                                />
+                                                <div className="write-name leading-tight">{item.name}</div>
+                                                <div className="write-amount text-right">{item.quantity || 1} 개</div>
+                                                <div className="write-price col-span-2 font-bold text-right">
+                                                    {(item.price * (item.quantity || 1)).toLocaleString()} 원
+                                                </div>
+                                            </div>
+                                            {matchedCoupon && (
+                                                <label className="write-coupon relative flex items-center gap-1 mt-2 px-0.5 ml-15 rounded-sm bg-slate-100">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="absolute -left-5" width="16" height="16" viewBox="0 0 33 32" fill="none">
+                                                        <path xmlns="http://www.w3.org/2000/svg" d="M16.75 0V16H32.75" stroke="#666" strokeWidth="1" />
+                                                    </svg>
+                                                    <input type="checkbox" className="size-4.5" defaultChecked />
+                                                    <span className="write__cname">[쿠폰] {matchedCoupon.name}</span>
+                                                    <span className="write__cprice ml-auto font-bold text-[#dc2626]">-{matchedCoupon.discount.toLocaleString()} 원</span>
+                                                </label>
+                                            )}
+                                                    </>
+                                                );
+                                            })()}
+                                        </li>
+                                    ))
+                                )}
                             </ul>
+                            {/* {downloadedCoupons.length > 0 && (
+                                <div className="mt-3 rounded border border-slate-200 bg-slate-50">
+                                    <ul className="flex flex-col">
+                                        {downloadedCoupons.map((coupon, index) => (
+                                            <li key={index} className="flex items-center gap-2 px-2.5 py-2 border-t border-slate-200">
+                                                <img
+                                                    className="size-10 rounded border border-slate-200 object-cover"
+                                                    src={resolveImageSrc(coupon.image)}
+                                                    alt={coupon.name}
+                                                />
+                                                <div className="flex flex-col">
+                                                    <span className="text-sm font-bold">{coupon.name}</span>
+                                                    <span className="text-xs text-slate-500">{coupon.discount.toLocaleString()}원 할인</span>
+                                                </div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )} */}
                         </div>
                     </div>
                     <div className="write flex flex-col border border-black/10 rounded-sm bg-white">
@@ -111,19 +182,19 @@ export default function OrdersWrite() {
                             <ul className="write__moneylist flex flex-col [&_li]:flex [&_li]:items-center [&_li]:p-1.5">
                                 <li>
                                     <div className="write__moneyitem">상품합계</div>
-                                    <div className="write__moneyvalue ml-auto font-bold">32,000 원</div>
+                                    <div className="write__moneyvalue ml-auto font-bold">{orderSummary.subtotal.toLocaleString()} 원</div>
                                 </li>
                                 <li>
                                     <div className="write__moneyitem">쿠폰할인</div>
-                                    <div className="write__moneyvalue ml-auto font-bold">-1,000 원</div>
+                                    <div className="write__moneyvalue ml-auto font-bold">-{orderSummary.discount.toLocaleString()} 원</div>
                                 </li>
                                 <li>
                                     <div className="write__moneyitem">배달비</div>
-                                    <div className="write__moneyvalue ml-auto font-bold">3,000 원</div>
+                                    <div className="write__moneyvalue ml-auto font-bold">{deliveryFee.toLocaleString()} 원</div>
                                 </li>
                                 <li className="write__moneytotal rounded bg-slate-100 font-bold">
                                     <div className="write__moneyitem">총 주문금액</div>
-                                    <div className="write__moneyvalue ml-auto text-xl">34,000 원</div>
+                                    <div className="write__moneyvalue ml-auto text-xl">{totalPrice.toLocaleString()} 원</div>
                                 </li>
                             </ul>
                             <span className="text-sm leading-tight">※ 추가 주문상품 및 매장의 별도 할인 여부에 따라 실 결제 금액이 변경될 수 있습니다.</span>

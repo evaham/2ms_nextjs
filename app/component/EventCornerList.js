@@ -2,11 +2,11 @@
 
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import resolveImageSrc from "../lib/resolveImageSrc";
 
 export default function EventCornerList({
   eventGroups,
   useOrderSystem,
-  resolveImageSrc,
   onSelectItem,
 }) {
   return (

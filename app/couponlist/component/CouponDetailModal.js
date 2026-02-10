@@ -38,7 +38,6 @@ export default function CouponDetailModal({ isOpen, onClose, coupon }) {
             </dd>
           </dl>
           <div className="modalbox__group">
-
           </div>
         </div>
       </div>

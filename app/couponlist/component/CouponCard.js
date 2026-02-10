@@ -1,4 +1,7 @@
+import resolveImageSrc from "@/app/lib/resolveImageSrc";
+
 export default function CouponCard({ 
+	
 	coupon, 
 	isReceived = false, 
 	isUpcoming = false,
@@ -6,6 +9,7 @@ export default function CouponCard({
 	onReceive,
 	onDetailClick,
 	showQuantity = false 
+	
 }) {
 	return (
 		<li className="ec w-full" data-code="166">
@@ -55,9 +59,9 @@ export default function CouponCard({
 					<div className="coupons__imgbox relative overflow-hidden flex justify-center items-center w-[36%] h-32 bg-[#f8f9fa]">
 						<img 
 							className="lazyload max-w-full w-auto max-h-full h-auto" 
-							data-src="https://s3.ap-northeast-2.amazonaws.com/products.key/main/농심_신라면-4입_8801043012225_1.png" 
+							data-src={resolveImageSrc(coupon.image)} 
 							data-code="166" 
-							src="https://s3.ap-northeast-2.amazonaws.com/products.key/main/농심_신라면-4입_8801043012225_1.png" 
+							src={resolveImageSrc(coupon.image)} 
 						/>
 						<input type="hidden" className="igfCode" value="0" />
 					</div>
@@ -68,9 +72,6 @@ export default function CouponCard({
 						<span className="coupons__name line-clamp-2 leading-tight font-bold break-words">{coupon.name}</span>
 						<span className="coupons__barcode text-sm" style={{ display: "none" }}>{coupon.barcode.replace(/\s/g, "")}</span>
 						<span className="coupons__barcode__88 text-sm">{coupon.barcode}</span>
-						{showQuantity && coupon.quantity && (
-							<span className="coupons__quantity text-sm text-slate-500">수량 {coupon.quantity}개</span>
-						)}
 						<span className="coupons__date mt-auto text-sm">
 							<input className="coupons__expire" type="hidden" value="2025-12-31T00:00" />
 							{coupon.Date}

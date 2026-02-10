@@ -1,3 +1,5 @@
+import resolveImageSrc from "@/app/lib/resolveImageSrc";
+
 export default function OneCouponCard({ coupon, isReceived = false, onReceive, onDetailClick }) {
 	return (
 		<li className="oc w-full" data-code="275">
@@ -46,11 +48,11 @@ export default function OneCouponCard({ coupon, isReceived = false, onReceive, o
 					<div className="coupons__imgbox overflow-hidden flex justify-center items-center w-[90%] min-h-48 h-auto bg-[#f8f9fa] mb-2.5">
 						<picture>
 							<img 
-								data-src="http://tdc-api-dev-4.togethers.kr:8083/onecoupon/8809824051289.jpg" 
+								data-src={resolveImageSrc(coupon.image)} 
 								alt="바코드쿠폰이미지" 
 								className="max-w-full w-auto max-h-full h-auto" 
 								width="100%" 
-								src="http://tdc-api-dev-4.togethers.kr:8083/onecoupon/8809824051289.jpg" 
+								src={resolveImageSrc(coupon.image)}
 							/>
 						</picture>
 					</div>

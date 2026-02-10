@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import UserInfoWrite from './userInfoWrite';
 
@@ -11,6 +11,32 @@ const FooterMenu = () => {
 
     const [showUserInfo, setShowUserInfo] = useState(false);
     const [pendingPath, setPendingPath] = useState(null);
+    const [cartCount, setCartCount] = useState(0);
+
+    const updateCartCount = () => {
+        if (typeof window === "undefined") return;
+        const stored = window.localStorage.getItem("cartItems");
+        const parsed = stored ? JSON.parse(stored) : [];
+        const nextCount = parsed.length;
+        setCartCount(nextCount);
+    };
+
+    useEffect(() => {
+        updateCartCount();
+    }, [pathname]);
+
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+        const handleStorage = (event) => {
+            if (event.key === "cartItems") {
+                updateCartCount();
+            }
+        };
+        const handleCartUpdate = () => updateCartCount();
+        window.addEventListener("storage", handleStorage);
+        window.addEventListener("cartItemsUpdated", handleCartUpdate);
+        return () => window.removeEventListener("storage", handleStorage);
+    }, []);
 
     // const openUserInfoForPath = (path) => {
     //     setPendingPath(path);
@@ -59,7 +85,11 @@ const FooterMenu = () => {
                         ${pathname === "/cartlist" ? "active font-bold text-blue-500 [&_svg]:fill-blue-500" : "[&_svg]:fill-slate-400"}`}
                     href={"/cartlist"}
                 >
-                    <span className='footermenu__num absolute top-1/2 left-1/2 flex justify-center items-center min-w-4.5 h-4.5 -mt-7.5 ml-1.5 px-1 rounded-full text-xs text-white font-bold bg-[#f43f5e]'>99</span>
+                    {cartCount > 0 && (
+                        <span className='footermenu__num absolute top-1/2 left-1/2 flex justify-center items-center min-w-4.5 h-4.5 -mt-7.5 ml-1.5 px-1 rounded-full text-xs text-white font-bold bg-[#f43f5e]'>
+                            {cartCount}
+                        </span>
+                    )}
                     
                     {pathname === "/cartlist" ? (
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM208-800h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Z" /></svg>

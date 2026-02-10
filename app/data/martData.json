@@ -31,7 +31,7 @@
         {
           "id": 1,
           "name": "햇대추 1팩",
-          "cart": true,
+          "cart": false,
           "badgeImg": "/img/20250325_164334_998.png",
           "price": 5000,
           "normalPrice": 6980,
@@ -85,7 +85,7 @@
         {
           "id": 1,
           "name": "간고등어1손",
-          "cart": true,
+          "cart": false,
           "badgeImg": "/img/123.jpg",
           "price": 4900,
           "normalPrice": 4580,
@@ -183,7 +183,7 @@
         {
           "id": 1,
           "name": "농심)마라짜파게티",
-          "cart": true,
+          "cart": false,
           "badgeImg": "/img/20241028_114241_775.png",
           "price": 1990,
           "normalPrice": 2980,

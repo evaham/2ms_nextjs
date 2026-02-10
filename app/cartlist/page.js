@@ -1,27 +1,99 @@
 'use client';
 
 import Link from "next/link";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
+import resolveImageSrc from "../lib/resolveImageSrc";
 
 export default function CartList(){
     const [showbtn, setShowbtn] = useState(false);
-
-
-    const list = [
-        { id: 1, name: "자연그린 김밥단무김밥단무김밥단무김aawefawefawef밥단무김밥단무김밥단무지1", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { id: 2, name: "자연그린 김밥단무지2", cart: false, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { id: 3, name: "자연그린 김밥단무지3", cart: false, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { id: 4, name: "자연그린 김밥단무지4", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { id: 5, name: "자연그린 김밥단무지4", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { id: 6, name: "자연그린 김밥단무지4", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { id: 7, name: "자연그린 김밥단무지4", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { id: 8, name: "자연그린 김밥단무지4", cart: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" }
-    ];
-
     const router = useRouter();
-    const [showData, setShowData] = useState();
+    const [list, setList] = useState([]);
     const [allChecked, setAllChecked] = useState(true);
+    const [selectedIds, setSelectedIds] = useState(new Set());
+
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+        const stored = window.localStorage.getItem("cartItems");
+        const parsed = stored ? JSON.parse(stored) : [];
+        setList(parsed);
+        setSelectedIds(new Set(parsed.map((item) => item.id)));
+        setAllChecked(parsed.length > 0);
+    }, []);
+
+    useEffect(() => {
+        setAllChecked(list.length > 0 && selectedIds.size === list.length);
+    }, [list, selectedIds]);
+
+    const persistCart = (nextList) => {
+        if (typeof window === "undefined") return;
+        window.localStorage.setItem("cartItems", JSON.stringify(nextList));
+        window.dispatchEvent(new Event("cartItemsUpdated"));
+    };
+
+    const handleToggleAll = (event) => {
+        const checked = event.target.checked;
+        setAllChecked(checked);
+        setSelectedIds(checked ? new Set(list.map((item) => item.id)) : new Set());
+    };
+
+    const handleToggleItem = (id) => (event) => {
+        const checked = event.target.checked;
+        setSelectedIds((prev) => {
+            const next = new Set(prev);
+            if (checked) {
+                next.add(id);
+            } else {
+                next.delete(id);
+            }
+            return next;
+        });
+    };
+
+    const handleDeleteSelected = () => {
+        if (selectedIds.size === 0) return;
+        const nextList = list.filter((item) => !selectedIds.has(item.id));
+        setList(nextList);
+        persistCart(nextList);
+        setSelectedIds(new Set());
+        setAllChecked(false);
+    };
+
+    const handleDeleteOne = (id) => {
+        const nextList = list.filter((item) => item.id !== id);
+        setList(nextList);
+        persistCart(nextList);
+        setSelectedIds((prev) => {
+            const next = new Set(prev);
+            next.delete(id);
+            return next;
+        });
+    };
+
+    const handleQuantityChange = (id) => (event) => {
+        const rawValue = Number(event.target.value);
+        if (Number.isNaN(rawValue)) return;
+        const nextQuantity = Math.min(999, Math.max(1, rawValue));
+        const nextList = list.map((item) =>
+            item.id === id ? { ...item, quantity: nextQuantity } : item
+        );
+        setList(nextList);
+        persistCart(nextList);
+    };
+
+    const selectedItems = list.filter((item) => selectedIds.has(item.id));
+    const selectedCount = selectedItems.length;
+    const selectedTotal = selectedItems.reduce(
+        (total, item) => total + (item.price || 0) * (item.quantity || 1),
+        0
+    );
+    const minOrderAmount = 20000;
+    const remainingAmount = Math.max(minOrderAmount - selectedTotal, 0);
+
+    const handleProceedOrder = () => {
+        if (typeof window === "undefined") return;
+        window.localStorage.setItem("orderItems", JSON.stringify(selectedItems));
+    };
 
     return (
         <>
@@ -40,32 +112,45 @@ export default function CartList(){
                     ⓘ 행사를 종료한 상품은 장바구니에서 자동 삭제합니다.
                 </div>
 
-                {!showData ? (
+                {list.length === 0 ? (
                     <div className="empty-div flex flex-col justify-center items-center min-h-60">
                         <div className='flex flex-col items-center my-20 text-xl text-center font-bold text-slate-400'>
                             장바구니가 비어 있습니다.
                         </div>
-                        <button className='border' onClick={()=>setShowData(true)}>테스트용 화면전환</button>
                     </div>
                 ) : (
                     <>
                     <div className="control-div flex items-center min-h-10 px-2.5 bg-white">
                         <label className="flex gap-1 text-sm">
-                            <input id="checkboxall" type="checkbox" className="chkAll size-5" defaultChecked />
+                            <input
+                                id="checkboxall"
+                                type="checkbox"
+                                className="chkAll size-5"
+                                checked={allChecked}
+                                onChange={handleToggleAll}
+                            />
                             전체 선택
                         </label>
-                        <button className="delete-all flex ml-auto px-1 border rounded text-sm items-center">
+                        <button
+                            className="delete-all flex ml-auto px-1 border rounded text-sm items-center"
+                            onClick={handleDeleteSelected}
+                        >
                             <svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 -960 960 960" width="25px"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z"></path></svg>
                             선택 삭제
                         </button>
                     </div>
-                    <div className="cart-list flex flex-col mt-1.5 px-1 pb-2.5 gap-0.5">
+                    <div className="cart-list flex-1 flex flex-col mt-1.5 px-1 pb-2.5 gap-0.5">
                         {list.map((item, index) => (
                             <div key={index} className="cart-div relative flex gap-2 px-2.5 py-5 rounded  border border-slate-200 bg-white">
                                 <div className="flex items-center">
-                                    <input type="checkbox" className="chkChoose size-5" />
+                                    <input
+                                        type="checkbox"
+                                        className="chkChoose size-5"
+                                        checked={selectedIds.has(item.id)}
+                                        onChange={handleToggleItem(item.id)}
+                                    />
                                 </div>
-                                <img src={item.image} alt={item.name} className="cartitem__img size-20 object-cover aspect-square" />
+                                <img src={resolveImageSrc(item.image)} alt={item.name} className="cartitem__img size-20 object-cover aspect-square" />
                                 <div className="product-info flex-1 flex flex-col">
                                     <div className="product-name line-clamp-2 pr-8 leading-tight">{item.name}</div>
                                     <div className="product-price-div flex mt-auto">
@@ -73,18 +158,26 @@ export default function CartList(){
                                             <span className="mr-1 text-lg font-bold text-slate-700">{item.price.toLocaleString()}</span>원
                                         </div>
                                         <div className="product-quantity relative flex justify-center w-18 h-8 px-1 border border-slate-500 rounded-lg ml-auto">
-                                            <select className="quantity-num w-full h-full border-0 text-lg text-center">
-                                                <option value="1" defaultValue="">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
+                                            <select
+                                                className="quantity-num w-full h-full border-0 text-lg text-center"
+                                                value={item.quantity || 1}
+                                                onChange={handleQuantityChange(item.id)}
+                                            >
+                                                {Array.from({ length: 999 }, (_, index) => {
+                                                    const value = index + 1;
+                                                    return (
+                                                        <option key={value} value={value}>
+                                                            {value}
+                                                        </option>
+                                                    );
+                                                })}
                                             </select>
                                         </div>
                                     </div>
-                                    <button className="cart-delete-btn absolute top-1.5 right-1.5">
+                                    <button
+                                        className="cart-delete-btn absolute top-1.5 right-1.5"
+                                        onClick={() => handleDeleteOne(item.id)}
+                                    >
                                         <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z" /></svg>
                                     </button>
                                 </div>
@@ -92,17 +185,35 @@ export default function CartList(){
                         ))}
                     </div>
                     <div className="cart-btn-div sticky bottom-20 flex flex-col p-2.5 border-t bg-[#f7f7f7] border-black/10">
-                        {!showbtn ? (
-                            <button className="cart-btn disabled flex justify-center items-center h-13 rounded-lg text-lg text-white font-bold bg-rose-500
-                                [&.disabled]:text-slate-400 [&.disabled]:bg-slate-200
-                            " onClick={() => setShowbtn(true)}>
+                        {selectedTotal === 0 ? (
+                            <button
+                                className="cart-btn disabled flex justify-center items-center h-13 rounded-lg text-lg text-white font-bold bg-rose-500
+                                    [&.disabled]:text-slate-400 [&.disabled]:bg-slate-200
+                                "
+                                type="button"
+                                disabled
+                            >
                                 주문할 상품이 없음
                             </button>
+                        ) : selectedTotal < minOrderAmount ? (
+                            <button
+                                className="cart-btn disabled flex justify-center items-center h-13 rounded-lg text-lg text-white font-bold bg-rose-500
+                                    [&.disabled]:text-slate-400 [&.disabled]:bg-slate-200
+                                "
+                                type="button"
+                                disabled
+                            >
+                                {remainingAmount.toLocaleString()}원 이상 추가시 주문가능
+                            </button>
                         ) : (
-                            <Link className="cart-btn flex justify-center items-center h-13 rounded-lg text-lg text-white font-bold bg-rose-500
-                                [&.disabled]:text-slate-400 [&.disabled]:bg-slate-200
-                            " href={"/orderswrite"}>
-                                총 <span>3</span>건 <span>37,000</span>원 주문하기
+                            <Link
+                                className="cart-btn flex justify-center items-center h-13 rounded-lg text-lg text-white font-bold bg-rose-500
+                                    [&.disabled]:text-slate-400 [&.disabled]:bg-slate-200
+                                "
+                                href={"/orderswrite"}
+                                onClick={handleProceedOrder}
+                            >
+                                총 <span>{selectedCount}</span>건 <span>{selectedTotal.toLocaleString()}</span>원 주문하기
                             </Link>
                         )}
                     </div>

@@ -1,7 +1,8 @@
 'use client';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import resolveImageSrc from '../lib/resolveImageSrc';
 
 export default function OrdersList() {
     const list = [
@@ -16,6 +17,14 @@ export default function OrdersList() {
     ];
     const router = useRouter();
     const [showData, setShowData] = useState();
+    const [downloadedCoupons, setDownloadedCoupons] = useState([]);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const stored = window.localStorage.getItem('downloadedCoupons');
+        const parsed = stored ? JSON.parse(stored) : [];
+        setDownloadedCoupons(parsed);
+    }, []);
 
     return (
         <>
@@ -34,6 +43,27 @@ export default function OrdersList() {
                     ※주문내역은 6개월 간 보관합니다.
                 </div>
 
+
+                {downloadedCoupons.length > 0 && (
+                    <div className="mx-0.5 mt-0.5 mb-2 rounded-sm border border-slate-200 bg-white">
+                        <div className="px-3 py-2.5 border-b border-slate-200 font-bold">다운받은 쿠폰</div>
+                        <ul className="flex flex-col">
+                            {downloadedCoupons.map((coupon, index) => (
+                                <li key={index} className="flex items-center gap-2 px-3 py-2.5 border-b border-slate-200 last:border-0">
+                                    <img
+                                        className="size-12 rounded border border-slate-200 object-cover"
+                                        src={resolveImageSrc(coupon.image)}
+                                        alt={coupon.name}
+                                    />
+                                    <div className="flex flex-col">
+                                        <span className="font-bold">{coupon.name}</span>
+                                        <span className="text-sm text-slate-500">{coupon.discount}원 할인</span>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
 
                 {!showData ? (
                     <div className="empty-div flex flex-col justify-center items-center h-60 gap-4">

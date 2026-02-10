@@ -1,13 +1,15 @@
 
 "use client";
 import Link from "next/link";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CouponCard from './component/CouponCard';
 import OneCouponCard from './component/OneCouponCard';
 import CouponDetailModal from './component/CouponDetailModal';
 import OneCouponDetailModal from './component/OneCouponDetailModal';
+import couponData from '../data/couponData.json';
 
 export default function CouponList() {
+	const [couponState, setCouponState] = useState(couponData);
 	const [showPopup4, setShowPopup4] = useState(true);
 	const [showPopup5, setShowPopup5] = useState(false);
 	const [showPopup6, setShowPopup6] = useState(false);
@@ -22,6 +24,31 @@ export default function CouponList() {
 		{ id: 1, },
 	];
 
+	const persistDownloadedCoupons = (nextReceivedCoupons, nextReceivedOneCoupons) => {
+		if (typeof window === "undefined") return;
+		const downloaded = [
+			...availableCoupons
+				.filter((coupon) => nextReceivedCoupons.has(coupon.id))
+				.map((coupon) => ({ ...coupon, type: "coupon" })),
+			...oneCoupons
+				.filter((coupon) => nextReceivedOneCoupons.has(coupon.id))
+				.map((coupon) => ({ ...coupon, type: "oneCoupon" })),
+		];
+		window.localStorage.setItem("downloadedCoupons", JSON.stringify(downloaded));
+	};
+
+	const persistReceivedIds = (nextReceivedCoupons, nextReceivedOneCoupons) => {
+		if (typeof window === "undefined") return;
+		window.localStorage.setItem(
+			"receivedCouponIds",
+			JSON.stringify(Array.from(nextReceivedCoupons))
+		);
+		window.localStorage.setItem(
+			"receivedOneCouponIds",
+			JSON.stringify(Array.from(nextReceivedOneCoupons))
+		);
+	};
+
 	// 쿠폰 받기 클릭 핸들러 (토글)
 	const handleReceiveCoupon = (couponId) => {
 		const newReceivedCoupons = new Set(receivedCoupons);
@@ -31,6 +58,8 @@ export default function CouponList() {
 			newReceivedCoupons.add(couponId);
 		}
 		setReceivedCoupons(newReceivedCoupons);
+		persistDownloadedCoupons(newReceivedCoupons, receivedOneCoupons);
+		persistReceivedIds(newReceivedCoupons, receivedOneCoupons);
 	};
 
 	// 원쿠폰 받기 클릭 핸들러 (토글)
@@ -42,6 +71,8 @@ export default function CouponList() {
 			newReceivedOneCoupons.add(couponId);
 		}
 		setReceivedOneCoupons(newReceivedOneCoupons);
+		persistDownloadedCoupons(receivedCoupons, newReceivedOneCoupons);
+		persistReceivedIds(receivedCoupons, newReceivedOneCoupons);
 	};
 
 	// 상세보기 클릭 핸들러
@@ -66,37 +97,71 @@ export default function CouponList() {
 		setSelectedOneCoupon(null);
 	};
 
-	// 쿠폰 노출 여부
-	// true: 노출, false: 미노출
-	const couponActive = true;
-	// 원쿠폰 노출여부
-	const oneCouponActive = true;
-	// 발급예정쿠폰 노출여부
-	const upcomingCouponActive = true;
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		const stored = window.localStorage.getItem("couponData");
+		if (!stored) {
+			window.localStorage.setItem("couponData", JSON.stringify(couponData));
+			setCouponState(couponData);
+			return;
+		}
 
+		try {
+			const parsed = JSON.parse(stored);
+			setCouponState(parsed);
+		} catch (error) {
+			window.localStorage.setItem("couponData", JSON.stringify(couponData));
+			setCouponState(couponData);
+		}
+	}, []);
 
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		const storedCoupons = window.localStorage.getItem("receivedCouponIds");
+		const storedOneCoupons = window.localStorage.getItem("receivedOneCouponIds");
+		const parsedCoupons = storedCoupons ? JSON.parse(storedCoupons) : [];
+		const parsedOneCoupons = storedOneCoupons ? JSON.parse(storedOneCoupons) : [];
+		setReceivedCoupons(new Set(parsedCoupons));
+		setReceivedOneCoupons(new Set(parsedOneCoupons));
+	}, []);
 
+	useEffect(() => {
+		if (typeof window === "undefined") return;
 
-	// 사용가능 쿠폰 리스트
-	const availableCoupons = [
-		{ id: 1, name: '쿠폰1', barcode: '8801062 632978', discount: 100, quantity: 2, Date: '2026.01.12 ~ 02.28 (25일 남음)' },
-		{ id: 2, name: '쿠폰2', barcode: '8801062 250691', discount: 200, quantity: 1, Date: '2026.02.01 ~ 03.15 (40일 남음)' },
-		{ id: 3, name: '쿠폰3', barcode: '8801062 789456', discount: 150, quantity: 5, Date: '2026.03.01 ~ 04.10 (55일 남음)' },
-	]
+		const syncCouponState = () => {
+			const stored = window.localStorage.getItem("couponData");
+			if (!stored) return;
+			try {
+				const parsed = JSON.parse(stored);
+				setCouponState(parsed);
+			} catch (error) {
+				setCouponState(couponData);
+			}
+		};
 
+		const handleStorage = (event) => {
+			if (event.key === "couponData") {
+				syncCouponState();
+			}
+		};
 
+		window.addEventListener("storage", handleStorage);
+		window.addEventListener("couponDataUpdated", syncCouponState);
+		return () => {
+			window.removeEventListener("storage", handleStorage);
+			window.removeEventListener("couponDataUpdated", syncCouponState);
+		};
+	}, []);
 
-	// 원쿠폰 리스트
-	const oneCoupons = [
-		{ id: 1, name: '원쿠폰1', barcode: '8809824 051289', discount: 500, Date: '2025.12.01 ~ 12.31 (10일 남음)' },
-	]
-	// 발급예정 쿠폰 일자
-	const upcomingDate = '2026.01.15';
-
-	// 발급예정 쿠폰 리스트
-	const upcomingCoupons = [
-		{ id: 1, name: '발급예정쿠폰1', barcode: '8801062 123456', discount: 800, Date: '2026.01.15 ~ 02.15' },
-	]
+	const {
+		couponActive,
+		oneCouponActive,
+		upcomingCouponActive,
+		upcomingDate,
+		availableCoupons = [],
+		oneCoupons = [],
+		upcomingCoupons = [],
+	} = couponState;
 
 	const availableCouponList = availableCoupons.filter(
 		(coupon) => !receivedCoupons.has(coupon.id)

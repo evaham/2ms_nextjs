@@ -1,0 +1,55 @@
+{
+  "couponActive": true,
+  "oneCouponActive": true,
+  "upcomingCouponActive": true,
+  "upcomingDate": "2026.01.15",
+  "availableCoupons": [
+    {
+      "id": 1,
+      "name": "버터구이오케이 할인쿠폰",
+      "barcode": "8802220000004",
+      "discount": 100,
+      "quantity": 2,
+      "Date": "2026.01.12 ~ 02.28 (25일 남음)",
+      "image": "/img/123.jpg"
+    },
+    {
+      "id": 2,
+      "name": "농심)마라짜파게티 할인쿠폰",
+      "barcode": "8803330000001",
+      "discount": 200,
+      "quantity": 1,
+      "Date": "2026.02.01 ~ 03.15 (40일 남음)",
+      "image": "/img/123.jpg"
+    },
+    {
+      "id": 3,
+      "name": "꼬치어묵 할인!",
+      "barcode": "8803330000004",
+      "discount": 150,
+      "quantity": 5,
+      "Date": "2026.03.01 ~ 04.10 (55일 남음)",
+      "image": "/img/123.jpg"
+    }
+  ],
+  "oneCoupons": [
+    {
+      "id": 1,
+      "name": "원쿠폰1",
+      "barcode": "8809824 051289",
+      "discount": 500,
+      "Date": "2025.12.01 ~ 12.31 (10일 남음)",
+      "image": "/img/123.jpg"
+    }
+  ],
+  "upcomingCoupons": [
+    {
+      "id": 1,
+      "name": "발급예정쿠폰1",
+      "barcode": "8801062 123456",
+      "discount": 800,
+      "Date": "2026.01.15 ~ 02.15",
+      "image": "/img/123.jpg"
+    }
+  ]
+}

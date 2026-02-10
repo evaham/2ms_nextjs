@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import resolveImageSrc from "../lib/resolveImageSrc";
 
 export default function ProductPopup({
   open,
@@ -12,13 +13,6 @@ export default function ProductPopup({
 }) {
   const [quantity, setQuantity] = useState(1);
 
-  // 이미지 경로가 절대경로일 경우, basePath를 붙여주는 함수
-  const resolveImageSrc = (src) =>
-    src && src.startsWith("/")
-      ? `${process.env.NEXT_PUBLIC_BASE_PATH || ""}${src}`
-      : src;
-
-  
   useEffect(() => {
     if (!open) return;
     setQuantity(item?.quantity ?? 1);
@@ -85,7 +79,7 @@ export default function ProductPopup({
               <div className="layer__goodsname mx-auto text-lg font-bold">{name}</div>
               <button
                 className="layer__goodsbtn flex justify-center items-center w-50 h-11 mx-auto my-4 rounded-lg text-lg text-white font-bold bg-rose-500"
-                onClick={() => onAddToCart?.(quantity)}
+                onClick={() => onAddToCart?.(quantity, item)}
               >
                 장바구니 담기
               </button>
