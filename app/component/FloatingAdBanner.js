@@ -10,11 +10,11 @@ export default function FloatingAdBanner({
   if (!enabled || !banner) return null;
 
   return (
-    <div className="fixed right-0 top-48 z-50">
+    <div className="fixed left-85 top-48 z-50 w-auto">
       <div
         className="relative transition-transform duration-300"
         style={{
-          transform: isOpen ? "translateX(0)" : "translateX(calc(100% - 2rem))",
+          transform: isOpen ? "translateX(calc(-100% + 2.2rem))" : "translateX(0)",
         }}
       >
         <div className="relative">

@@ -2,33 +2,108 @@
 "use client";
 import Link from "next/link";
 import { useState } from 'react';
+import CouponCard from './component/CouponCard';
+import OneCouponCard from './component/OneCouponCard';
+import CouponDetailModal from './component/CouponDetailModal';
+import OneCouponDetailModal from './component/OneCouponDetailModal';
 
 export default function CouponList() {
 	const [showPopup4, setShowPopup4] = useState(true);
 	const [showPopup5, setShowPopup5] = useState(false);
 	const [showPopup6, setShowPopup6] = useState(false);
+	const [receivedCoupons, setReceivedCoupons] = useState(new Set());
+	const [receivedOneCoupons, setReceivedOneCoupons] = useState(new Set());
+	const [selectedCoupon, setSelectedCoupon] = useState(null);
+	const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+	const [selectedOneCoupon, setSelectedOneCoupon] = useState(null);
+	const [isOneCouponDetailOpen, setIsOneCouponDetailOpen] = useState(false);
 
 	const list = [
 		{ id: 1, },
 	];
 
+	// 쿠폰 받기 클릭 핸들러 (토글)
+	const handleReceiveCoupon = (couponId) => {
+		const newReceivedCoupons = new Set(receivedCoupons);
+		if (newReceivedCoupons.has(couponId)) {
+			newReceivedCoupons.delete(couponId);
+		} else {
+			newReceivedCoupons.add(couponId);
+		}
+		setReceivedCoupons(newReceivedCoupons);
+	};
+
+	// 원쿠폰 받기 클릭 핸들러 (토글)
+	const handleReceiveOneCoupon = (couponId) => {
+		const newReceivedOneCoupons = new Set(receivedOneCoupons);
+		if (newReceivedOneCoupons.has(couponId)) {
+			newReceivedOneCoupons.delete(couponId);
+		} else {
+			newReceivedOneCoupons.add(couponId);
+		}
+		setReceivedOneCoupons(newReceivedOneCoupons);
+	};
+
+	// 상세보기 클릭 핸들러
+	const handleOpenDetailModal = (coupon) => {
+		setSelectedCoupon(coupon);
+		setIsDetailModalOpen(true);
+	};
+
+	// 상세보기 모달 닫기
+	const handleCloseDetailModal = () => {
+		setIsDetailModalOpen(false);
+		setSelectedCoupon(null);
+	};
+
+	const handleOpenOneCouponDetail = (coupon) => {
+		setSelectedOneCoupon(coupon);
+		setIsOneCouponDetailOpen(true);
+	};
+
+	const handleCloseOneCouponDetail = () => {
+		setIsOneCouponDetailOpen(false);
+		setSelectedOneCoupon(null);
+	};
+
 	// 쿠폰 노출 여부
+	// true: 노출, false: 미노출
 	const couponActive = true;
-	
+	// 원쿠폰 노출여부
+	const oneCouponActive = true;
+	// 발급예정쿠폰 노출여부
+	const upcomingCouponActive = true;
+
+
+
+
 	// 사용가능 쿠폰 리스트
 	const availableCoupons = [
-		{ id: 1, name: '쿠폰1', barcode: '8801062 632978', discount: 1000, quantity: 2, Date: '2026.01.12 ~ 02.28 (25일 남음)' },
-		{ id: 2, name: '쿠폰2', barcode: '8801062 250691', discount: 2000, quantity: 1, Date: '2026.02.01 ~ 03.15 (40일 남음)' },
-		{ id: 3, name: '쿠폰3', barcode: '8801062 789456', discount: 1500, quantity: 5, Date: '2026.03.01 ~ 04.10 (55일 남음)' },
+		{ id: 1, name: '쿠폰1', barcode: '8801062 632978', discount: 100, quantity: 2, Date: '2026.01.12 ~ 02.28 (25일 남음)' },
+		{ id: 2, name: '쿠폰2', barcode: '8801062 250691', discount: 200, quantity: 1, Date: '2026.02.01 ~ 03.15 (40일 남음)' },
+		{ id: 3, name: '쿠폰3', barcode: '8801062 789456', discount: 150, quantity: 5, Date: '2026.03.01 ~ 04.10 (55일 남음)' },
 	]
+
+
+
 	// 원쿠폰 리스트
 	const oneCoupons = [
-		
+		{ id: 1, name: '원쿠폰1', barcode: '8809824 051289', discount: 500, Date: '2025.12.01 ~ 12.31 (10일 남음)' },
+	]
+	// 발급예정 쿠폰 일자
+	const upcomingDate = '2026.01.15';
+
+	// 발급예정 쿠폰 리스트
+	const upcomingCoupons = [
+		{ id: 1, name: '발급예정쿠폰1', barcode: '8801062 123456', discount: 800, Date: '2026.01.15 ~ 02.15' },
 	]
 
-
-
-
+	const availableCouponList = availableCoupons.filter(
+		(coupon) => !receivedCoupons.has(coupon.id)
+	);
+	const oneCouponList = oneCoupons.filter(
+		(coupon) => !receivedOneCoupons.has(coupon.id)
+	);
 
 	return (
 		<>
@@ -42,306 +117,124 @@ export default function CouponList() {
 					</div>
 				</div>
 
-				{/* 사용가능쿠폰아 없음 - 쿠폰 데이터 없음 */}
-				<div className="empty-div flex flex-col justify-center items-center min-h-60">
-					<div className="flex flex-col items-center my-20 text-xl text-center font-bold text-slate-400">
-						<svg xmlns="http://www.w3.org/2000/svg" className="w-25 h-25 mb-5" height="24px" viewBox="0 -960 960 960" width="24px" fill="#cbd5e1"><path d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm0-160q17 0 28.5-11.5T520-480q0-17-11.5-28.5T480-520q-17 0-28.5 11.5T440-480q0 17 11.5 28.5T480-440Zm0-160q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm320 440H160q-33 0-56.5-23.5T80-240v-160q33 0 56.5-23.5T160-480q0-33-23.5-56.5T80-560v-160q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v160q-33 0-56.5 23.5T800-480q0 33 23.5 56.5T880-400v160q0 33-23.5 56.5T800-160Zm0-80v-102q-37-22-58.5-58.5T720-480q0-43 21.5-79.5T800-618v-102H160v102q37 22 58.5 58.5T240-480q0 43-21.5 79.5T160-342v102h640ZM480-480Z"></path></svg>
-						사용 가능한 쿠폰이 없어요.
+				{/* 쿠폰서비스 false 일때 보여짐 */}
+				{!couponActive && (
+					<div className="empty-div flex flex-col justify-center items-center min-h-60">
+						<div className="flex flex-col items-center my-20 text-xl text-center font-bold text-slate-400">
+							<svg xmlns="http://www.w3.org/2000/svg" className="w-25 h-25 mb-5" height="24px" viewBox="0 -960 960 960" width="24px" fill="#cbd5e1"><path d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm0-160q17 0 28.5-11.5T520-480q0-17-11.5-28.5T480-520q-17 0-28.5 11.5T440-480q0 17 11.5 28.5T480-440Zm0-160q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm320 440H160q-33 0-56.5-23.5T80-240v-160q33 0 56.5-23.5T160-480q0-33-23.5-56.5T80-560v-160q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v160q-33 0-56.5 23.5T800-480q0 33 23.5 56.5T880-400v160q0 33-23.5 56.5T800-160Zm0-80v-102q-37-22-58.5-58.5T720-480q0-43 21.5-79.5T800-618v-102H160v102q37 22 58.5 58.5T240-480q0 43-21.5 79.5T160-342v102h640ZM480-480Z"></path></svg>
+							사용 가능한 쿠폰이 없어요.
+						</div>
 					</div>
-				</div>
+				)}
 
-				{/* 받은쿠폰 */}
-				<div className="downloaded-coupon">
-					<div className="flex mt-2 mb-1 px-2.5">
-						<span className="panel__tit text-red-500 font-bold">받은 쿠폰</span>
-						<span className="downloaded-count ml-auto text-sm text-slate-500">받은 쿠폰: <span className="text-red-500 font-bold">01</span> 개</span>
-					</div>
-					<div className="downloaded-none m-1 p-7.5 border border-slate-300 rounded-lg text-center bg-white">
-						<p>받은 쿠폰이 없습니다.</p>
+				{/* 쿠폰서비스 true 일때 보여짐 */}
+				{couponActive && (
+					<div>
+						{/* 받은쿠폰 */}
+						<div className="downloaded-coupon">
+							{(() => {
+								const totalReceived = receivedCoupons.size + receivedOneCoupons.size;
+								return (
+							<div className="flex mt-2 mb-1 px-2.5">
+								<span className="panel__tit text-red-500 font-bold">받은 쿠폰</span>
+								<span className="downloaded-count ml-auto text-sm text-slate-500">받은 쿠폰: <span className="text-red-500 font-bold">{String(totalReceived).padStart(2, '0')}</span> 개</span>
+							</div>
+							);
+							})()}
+							{receivedCoupons.size === 0 && receivedOneCoupons.size === 0 && (
+								<div className="downloaded-none m-1 p-7.5 border border-slate-300 rounded-lg text-center bg-white">
+									<p>받은 쿠폰이 없습니다.</p>
+								</div>
+							)}
+							{/* 쿠폰받기를 했을때 여기에 표시 */}
+							{(receivedCoupons.size > 0 || receivedOneCoupons.size > 0) && (
+								<ul className="downloaded-list coupons__list flex flex-col mt-1.5 px-1 pb-2.5 gap-0.5">
+									{availableCoupons.filter(coupon => receivedCoupons.has(coupon.id)).map((item) => (
+										<CouponCard 
+											key={item.id}
+											coupon={item}
+											isReceived={true}
+											onReceive={handleReceiveCoupon}
+										/>
+									))}
+									{oneCoupons.filter(coupon => receivedOneCoupons.has(coupon.id)).map((item) => (
+										<OneCouponCard
+											key={item.id}
+											coupon={item}
+											isReceived={true}
+											onReceive={handleReceiveOneCoupon}
+											onDetailClick={handleOpenOneCouponDetail}
+										/>
+									))}
+								</ul>
+							)}
+						</div>
 
-						<button className="user-registration text-blue-500 text-sm underline">사용자 등록하기</button>
-					</div>
-					<ul className="downloaded-list coupons__list flex flex-col mt-1.5 px-1 pb-2.5 gap-0.5">
-						{/* 받은 ec 마트쿠폰 */}
+						{/* 사용가능쿠폰 */}
+						{availableCouponList.length > 0 && (
+							<div className="coupon-list">
+								<div className="flex mt-2 mb-1 px-2.5">
+									<span className="panel__tit font-bold">사용가능 쿠폰</span>
+								</div>
+								<ul id="js_changeList" className="coupons__list group flex flex-col mt-1.5 px-1 pb-2.5 gap-0.5">
+									{/* 사용가능 ec 마트쿠폰 */}
+									{availableCouponList.map((item) => (
+										<CouponCard 
+											key={item.id}
+											coupon={item}
+											isReceived={false}
+											onReceive={handleReceiveCoupon}
+											showQuantity={true}
+											onDetailClick={handleOpenDetailModal}
+										/>
+									))}
+								</ul>
+							</div>
+						)}
 
-						{list.map((item, index) => (
-							<li key={index} className="ec w-full" data-code="166">
-								<input type="hidden" className="coupons__code" value="2705" />
-								<div className="coupons__card relative overflow-hidden flex flex-col w-full border border-slate-300 rounded-lg bg-white"
-									style={{ display: 'flex', borderWidth: '2px', borderColor: 'rgb(244,63,94)' }}
-								>
-									<div className="coupons__header flex p-2 items-center bg-slate-200/20">
-										<button className="zzimbtn js_zzimbtn flex items-center justify-center px-2.5 py-1 text-sm text-[rgb(244,63,94)] border border-[rgb(244,63,94)] rounded-full
-                      active [&.active]:bg-[rgb(244,63,94)] [&.active]:text-white [&.active_svg]:fill-white [&.active_.empty-heart]:hidden [&.active_.filled-heart]:inline-block
-                    ">
-											<svg className="empty-heart" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="rgb(244,63,94)">
-												<path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"></path>
-											</svg>
-											<svg className="filled-heart hidden" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="rgb(244,63,94)">
-												<path d="M382-320 155-547l57-57 170 170 366-366 57 57-423 423ZM200-160v-80h560v80H200Z"></path>
-											</svg>
-											<span>받기완료</span>
-										</button>
-										<div className="flex items-center ml-auto px-0 py-1 rounded-full text-sm">
-											<span className="text-slate-500 leading-none tracking-tight">상세보기</span>
-											<svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="rgb(100 116 139)">
-												<path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"></path>
-											</svg>
-										</div>
-									</div>
-									<div className="flex p-1.5 gap-1.5">
-										<div className="coupons__imgbox relative overflow-hidden flex justify-center items-center w-[36%] h-32 bg-[#f8f9fa]">
-											<img className="lazyload max-w-full w-auto max-h-full h-auto" data-src="https://s3.ap-northeast-2.amazonaws.com/products.key/main/농심_신라면-4입_8801043012225_1.png" data-code="166" src="https://s3.ap-northeast-2.amazonaws.com/products.key/main/농심_신라면-4입_8801043012225_1.png" />
-											<input type="hidden" className="igfCode" value="0" />
-										</div>
-										<div className="coupons__info relative flex-1 flex flex-col">
-											<div className="coupons__price text-[#fa5252]">
-												<em className="discount__price text-[2.6rem] tracking-tight font-extrabold not-italic">200</em>원 할인
-											</div>
-											<span className="coupons__name line-clamp-2 leading-tight font-bold break-all">신라면블랙</span>
-											<span className="coupons__barcode text-sm" style={{ display: "none" }} >8801043012225</span>
-											<span className="coupons__barcode__88 text-sm">8801043 012225</span>
-											<span className="coupons__date mt-auto text-sm">
-												<input className="coupons__expire" type="hidden" value="2025-12-31T00:00" />
-												2025.10.23
-												~
-												12.31
-												<span>(49일 남음)</span>
-											</span>
-										</div>
-									</div>
+						{/* 발급예정쿠폰 */}
+						{upcomingCouponActive && (
+							<div className="">
+								<div className="flex mt-2 mb-1 px-2.5">
+									<span className="panel__tit font-bold">발급 예정 쿠폰</span>
 								</div>
-							</li>
-						))}
-						{/* 받은 oc 원쿠폰 */}
-						{list.map((item, index) => (
-							<li className="oc w-full" key={index} data-code="275">
-								<input type="hidden" className="coupons__code" value="275" />
-								<div className="coupons__card overflow-hidden flex flex-col w-full border border-slate-300 rounded-lg bg-white"
-									style={{ display: 'flex', borderWidth: '2px', borderColor: 'rgb(244,63,94)' }}
-								>
-									<div className="coupons__header flex p-2 items-center bg-slate-200/20">
-										<button className="zzimbtn js_zzimbtn flex items-center justify-center px-2.5 py-1 text-sm text-[rgb(244,63,94)] border border-[rgb(244,63,94)] rounded-full
-											active [&.active]:bg-[rgb(244,63,94)] [&.active]:text-white [&.active_svg]:fill-white [&.active_.empty-heart]:hidden [&.active_.filled-heart]:inline-block
-										">
-											<svg className="empty-heart" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="rgb(244,63,94)">
-												<path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"></path>
-											</svg>
-											<svg className="filled-heart hidden" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="rgb(244,63,94)">
-												<path d="M382-320 155-547l57-57 170 170 366-366 57 57-423 423ZM200-160v-80h560v80H200Z"></path>
-											</svg>
-											<span>받기완료</span>
-										</button>
-										<div className="flex items-center ml-auto px-0 py-1 rounded-full text-sm">
-											<span className="text-slate-500 leading-none tracking-tight">상세보기</span>
-											<svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="rgb(100 116 139)">
-												<path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"></path>
-											</svg>
-										</div>
-									</div>
-									<div className="flex flex-col items-center p-1.5">
-										<div className="coupons__imgbox overflow-hidden flex justify-center items-center w-[90%] min-h-48 h-auto bg-[#f8f9fa] mb-2.5">
-											<picture>
-												{/* <source type="image/webp" srcset="http://tdc-api-dev-4.togethers.kr:8083/onecoupon/8809824051289.webp" /> */}
-												{/* <source type="image/jpeg" srcset="http://tdc-api-dev-4.togethers.kr:8083/onecoupon/8809824051289.jpg" /> */}
-												<img data-src="http://tdc-api-dev-4.togethers.kr:8083/onecoupon/8809824051289.jpg" alt="바코드쿠폰이미지" className="max-w-full w-auto max-h-full h-auto" width="100%" src="http://tdc-api-dev-4.togethers.kr:8083/onecoupon/8809824051289.jpg" />
-											</picture>
-										</div>
-										<div className="coupons__info relative flex flex-col items-center">
-											<span className="coupons__name line-clamp-2 text-center font-bold leading-tight" title="하나야구 준마이 900ml">
-												하나야구 준마이 900ml 준마이 900ml 준마이 900ml 준마이 900ml 준마이 900ml 준마이 900ml 준마이 900ml 준마이 900ml 준마이 900ml
-											</span>
-											<span className="coupons__date">
-												2025.11.01
-												~
-												11.30
-												<span>(14일 남음)</span>
-											</span>
-										</div>
-									</div>
-								</div>
-							</li>
-						))}
-					</ul>
-				</div>
+								<ul className="coupons__list flex flex-col mt-1.5 px-1 pb-2.5 gap-0.5">
+									{/* 마트쿠폰 dc 마트쿠폰 */}
+									{upcomingCoupons.map((item) => (
+										<CouponCard 
+											key={item.id}
+											coupon={item}
+											isUpcoming={true}
+											upcomingDate={upcomingDate}
+											onDetailClick={handleOpenDetailModal}
+										/>
+									))}
+								</ul>
+							</div>
+						)}
 
-				{/* 사용가능쿠폰 */}
-				<div className="coupon-list">
-					<div className="flex mt-2 mb-1 px-2.5">
-						<span className="panel__tit font-bold">사용가능 쿠폰</span>
-					</div>
-					<ul id="js_changeList" className="coupons__list group flex flex-col mt-1.5 px-1 pb-2.5 gap-0.5">
-						{/* 사용가능 ec 마트쿠폰 */}
-						{availableCoupons.map((item) => (
-							<li className="ec" key={item.id} data-code="166">
-								<input type="hidden" className="coupons__code" value="2705" />
-								<div className="coupons__card overflow-hidden flex flex-col w-full border border-slate-300 rounded-lg bg-white">
-									<div className="coupons__header flex p-2 items-center bg-slate-200/20">
-										<button className="zzimbtn js_zzimbtn flex items-center justify-center px-2.5 py-1 text-sm text-[rgb(244,63,94)] border border-[rgb(244,63,94)] rounded-full
-                      [&.active]:bg-[rgb(244,63,94)] [&.active]:text-white [&.active_svg]:fill-white [&.active_.empty-heart]:hidden [&.active_.filled-heart]:inline-block
-                    ">
-											<svg className="empty-heart" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="rgb(244,63,94)">
-												<path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"></path>
-											</svg>
-											<svg className="filled-heart hidden" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="rgb(244,63,94)">
-												<path d="M382-320 155-547l57-57 170 170 366-366 57 57-423 423ZM200-160v-80h560v80H200Z"></path>
-											</svg>
-											<span>쿠폰받기</span>
-										</button>
-										<div className="flex items-center ml-auto px-0 py-1 rounded-full text-sm">
-											<span className="text-slate-500 leading-none tracking-tight">상세보기</span>
-											<svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="rgb(100 116 139)">
-												<path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"></path>
-											</svg>
-										</div>
-									</div>
-									<div className="flex p-1.5 gap-1.5">
-										<div className="coupons__imgbox relative overflow-hidden flex justify-center items-center w-[36%] h-32 bg-[#f8f9fa]">
-											<img className="max-w-full w-auto max-h-full h-auto" data-src="https://s3.ap-northeast-2.amazonaws.com/products.key/main/농심_신라면-4입_8801043012225_1.png" data-code="166" src="https://s3.ap-northeast-2.amazonaws.com/products.key/main/농심_신라면-4입_8801043012225_1.png" />
-											<input type="hidden" className="igfCode" value="0" />
-										</div>
-										<div className="coupons__info relative flex-1 flex flex-col">
-											<div className="coupons__price text-[#fa5252]">
-												<em className="discount__price text-[2.6rem] tracking-tight font-extrabold not-italic">200</em>원 할인
-											</div>
-											<span className="coupons__name line-clamp-2 leading-tight font-bold break-words">{item.name}</span>
-											<span className="coupons__barcode text-sm" style={{ display: "none" }} >{item.barcode.replace(/\s/g, "")}</span>
-											<span className="coupons__barcode__88 text-sm">{item.barcode}</span>
-											<span className="coupons__quantity text-sm text-slate-500">수량 {item.quantity}개</span>
-											<span className="coupons__date mt-auto text-sm">
-												<input className="coupons__expire" type="hidden" value="2025-12-31T00:00" />
-												{item.Date}
-											</span>
-										</div>
-									</div>
+						{/* 원쿠폰 */}
+						{oneCouponActive && oneCouponList.length > 0 && (
+							<div className="one-coupon">
+								<div className="flex flex-col mt-2 mb-1 px-2.5">
+									<span className="panel__tit font-bold">원쿠폰</span>
+									<span className="text-sm text-red-500">※ 매장에 입점되지 않은 상품이 있을 수 있습니다.</span>
 								</div>
-							</li>
-						))}
-					</ul>
-				</div>
-				{/* 발급예정쿠폰 */}
-				<div className="">
-					<div className="flex mt-2 mb-1 px-2.5">
-						<span className="panel__tit font-bold">발급 예정 쿠폰</span>
+								<ul className="js_changeList coupons__list ocList flex flex-col mt-1.5 px-1 pb-2.5 gap-0.5">
+									{oneCouponList.map((item) => (
+										<OneCouponCard 
+											key={item.id}
+											coupon={item}
+											isReceived={false}
+											onReceive={handleReceiveOneCoupon}
+											onDetailClick={handleOpenOneCouponDetail}
+										/>
+									))}
+								</ul>
+							</div>
+						)}
 					</div>
-					<ul className="coupons__list flex flex-col mt-1.5 px-1 pb-2.5 gap-0.5">
-						{/* 마트쿠폰 dc 마트쿠폰 */}
-						{list.map((item, index) => (
-							<li key={index} className="w-full" data-code="166">
-								<input type="hidden" className="coupons__code" value="2705" />
-								<div className="coupons__card relative overflow-hidden flex flex-col w-full border border-slate-300 rounded-lg bg-white"
-								// style={{ display: 'flex', borderWidth: '2px', borderColor: 'rgb(244,63,94)' }}
-								>
-									<div className="coupons__header flex p-2 items-center bg-slate-200/20">
-										<button className="zzimbtn js_zzimbtn flex items-center justify-center px-2.5 py-1 text-sm text-[rgb(244,63,94)] border border-[rgb(244,63,94)] rounded-full
-                      active [&.active]:bg-[rgb(244,63,94)] [&.active]:text-white [&.active_svg]:fill-white [&.active_.empty-heart]:hidden [&.active_.filled-heart]:inline-block
-                    ">
-											<svg className="empty-heart" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="rgb(244,63,94)">
-												<path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"></path>
-											</svg>
-											<svg className="filled-heart hidden" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="rgb(244,63,94)">
-												<path d="M382-320 155-547l57-57 170 170 366-366 57 57-423 423ZM200-160v-80h560v80H200Z"></path>
-											</svg>
-											<span>받기완료</span>
-										</button>
-										<div className="flex items-center ml-auto px-0 py-1 rounded-full text-sm">
-											<span className="text-slate-500 leading-none tracking-tight">상세보기</span>
-											<svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="rgb(100 116 139)">
-												<path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"></path>
-											</svg>
-										</div>
-									</div>
-									<div className="flex p-1.5 gap-1.5">
-										<div className="coupons__imgbox relative overflow-hidden flex justify-center items-center w-[36%] h-32 bg-[#f8f9fa]">
-											<img className="lazyload max-w-full w-auto max-h-full h-auto" data-src="https://s3.ap-northeast-2.amazonaws.com/products.key/main/농심_신라면-4입_8801043012225_1.png" data-code="166" src="https://s3.ap-northeast-2.amazonaws.com/products.key/main/농심_신라면-4입_8801043012225_1.png" />
-											<input type="hidden" className="igfCode" value="0" />
-										</div>
-										<div className="coupons__info relative flex-1 flex flex-col">
-											<div className="coupons__price text-[#fa5252]">
-												<em className="discount__price text-[2.6rem] tracking-tight font-extrabold not-italic">200</em>원 할인
-											</div>
-											<span className="coupons__name line-clamp-2 leading-tight font-bold break-all">신라면블랙</span>
-											<span className="coupons__barcode text-sm" style={{ display: "none" }} >8801043012225</span>
-											<span className="coupons__barcode__88 text-sm">8801043 012225</span>
-											<span className="coupons__date mt-auto text-sm">
-												<input className="coupons__expire" type="hidden" value="2025-12-31T00:00" />
-												2025.10.23
-												~
-												12.31
-												<span>(49일 남음)</span>
-											</span>
-										</div>
-									</div>
-									{/* <!-- dark background --> */}
-									<div className="coupons__darkbg absolute inset-0 bg-black/50 flex flex-col justify-center items-center text-white text-center p-5">
-										<p className="font-bold">
-											<span>
-												2002.12.01
-											</span>
-											부터 사용가능
-										</p>
-									</div>
-								</div>
-							</li>
-						))}
-					</ul>
-				</div>
-
-				{/* 원쿠폰 */}
-				<div className="one-coupon">
-					<div className="flex flex-col mt-2 mb-1 px-2.5">
-						<span className="panel__tit font-bold">원쿠폰</span>
-						<span className="text-sm text-red-500">※ 매장에 입점되지 않은 상품이 있을 수 있습니다.</span>
-					</div>
-					<ul className="js_changeList coupons__list ocList flex flex-col mt-1.5 px-1 pb-2.5 gap-0.5">
-						{list.map((item, index) => (
-							<li className="oc w-full" key={index} data-code="275">
-								<input type="hidden" className="coupons__code" value="275" />
-								<div className="coupons__card overflow-hidden flex flex-col w-full border border-slate-300 rounded-lg bg-white">
-									<div className="coupons__header flex p-2 items-center bg-slate-200/20">
-										<button className="zzimbtn js_zzimbtn flex items-center justify-center px-2.5 py-1 text-sm text-[rgb(244,63,94)] border border-[rgb(244,63,94)] rounded-full
-											[&.active]:bg-[rgb(244,63,94)] [&.active]:text-white [&.active_svg]:fill-white [&.active_.empty-heart]:hidden [&.active_.filled-heart]:inline-block
-										">
-											<svg className="empty-heart" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="rgb(244,63,94)">
-												<path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"></path>
-											</svg>
-											<svg className="filled-heart hidden" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="rgb(244,63,94)">
-												<path d="M382-320 155-547l57-57 170 170 366-366 57 57-423 423ZM200-160v-80h560v80H200Z"></path>
-											</svg>
-											<span>받기완료</span>
-										</button>
-										<div className="flex items-center ml-auto px-0 py-1 rounded-full text-sm">
-											<span className="text-slate-500 leading-none tracking-tight">상세보기</span>
-											<svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="rgb(100 116 139)">
-												<path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"></path>
-											</svg>
-										</div>
-									</div>
-									<div className="flex flex-col items-center p-1.5">
-										<div className="coupons__imgbox overflow-hidden flex justify-center items-center w-[90%] min-h-48 h-auto bg-[#f8f9fa] mb-2.5">
-											<picture>
-												{/* <source type="image/webp" srcset="http://tdc-api-dev-4.togethers.kr:8083/onecoupon/8809824051289.webp" /> */}
-												{/* <source type="image/jpeg" srcset="http://tdc-api-dev-4.togethers.kr:8083/onecoupon/8809824051289.jpg" /> */}
-												<img data-src="http://tdc-api-dev-4.togethers.kr:8083/onecoupon/8809824051289.jpg" alt="바코드쿠폰이미지" className="max-w-full w-auto max-h-full h-auto" width="100%" src="http://tdc-api-dev-4.togethers.kr:8083/onecoupon/8809824051289.jpg" />
-											</picture>
-										</div>
-										<div className="coupons__info relative flex flex-col items-center">
-											<span className="coupons__name line-clamp-2 text-center font-bold leading-tight" title="하나야구 준마이 900ml">
-												하나야구 준마이 900ml 준마이 900ml 준마이 900ml 준마이 900ml 준마이 900ml 준마이 900ml 준마이 900ml 준마이 900ml 준마이 900ml
-											</span>
-											<span className="coupons__date">
-												2025.11.01
-												~
-												11.30
-												<span>(14일 남음)</span>
-											</span>
-										</div>
-									</div>
-								</div>
-							</li>
-						))}
-					</ul>
-				</div>
+				)}
 				{/* 리스트종료 */}
 
 				<div className="wrap_stickyfooter fixed right-0 bottom-23 w-auto h-auto z-50 flex flex-col gap-2">
@@ -354,8 +247,6 @@ export default function CouponList() {
             <span className="text-xs text-white tracking-tight">맨위로</span>
           </a>
 				</div>
-
-				{/* <!-- 쿠폰 상세보기 --> */}
 				<div className="modalbox flex justify-center items-center fixed inset-0 p-3 z-50" style={{ display: 'none' }}>
 					<div className="modalbox__bg absolute inset-0 bg-black/40"></div>
 					<div className="modalbox__panel detailView relative overflow-hidden flex flex-col w-full p-4 bg-slate-50 rounded-2xl z-50" style={{ display: 'none' }}>
@@ -423,6 +314,18 @@ export default function CouponList() {
 					</div>
 				</div>
 			</div>
+
+			{/* 쿠폰 상세보기 모달 */}
+			<CouponDetailModal
+				isOpen={isDetailModalOpen}
+				onClose={handleCloseDetailModal}
+				coupon={selectedCoupon}
+			/>
+			<OneCouponDetailModal
+				isOpen={isOneCouponDetailOpen}
+				onClose={handleCloseOneCouponDetail}
+				coupon={selectedOneCoupon}
+			/>
 		</>
 	)
 }

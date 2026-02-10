@@ -219,7 +219,7 @@ export default function SearchLayerPopup({ open, onClose, list }) {
                             </p>
                         </div>
                     ) : (
-                        <div className="flex flex-col h-[65svh]">
+                        <div className="flex flex-col h-[65vh]">
                             {/* <div className="flex justify-end px-2 py-2">
                                 <button
                                     type="button"
