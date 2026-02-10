@@ -11,11 +11,8 @@ export default function FloatingAdBanner({
 
   return (
     <div className="fixed left-85 top-48 z-50 w-auto">
-      <div
-        className="relative transition-transform duration-300"
-        style={{
-          transform: isOpen ? "translateX(calc(-100% + 2.2rem))" : "translateX(0)",
-        }}
+      <div className="relative transition-transform duration-300"
+        style={{ transform: isOpen ? "translateX(calc(-100% + 2.2rem))" : "translateX(0)", }}
       >
         <div className="relative">
           <div className="flex overflow-hidden w-85 h-30 rounded-l-3xl shadow-lg">

@@ -9,10 +9,13 @@ import EventCornerList from "./component/EventCornerList";
 import martData from "./data/martData.json";
 
 export default function Home() {
+  // 이미지 경로가 절대경로일 경우, basePath를 붙여주는 함수
   const resolveImageSrc = (src) =>
     src && src.startsWith("/")
       ? `${process.env.NEXT_PUBLIC_BASE_PATH || ""}${src}`
       : src;
+
+
   // 팝업창 여닫기
   const [isNoticePopupOpen, setIsNoticePopupOpen] = useState(false);
   const [isProductPopupOpen, setIsProductPopupOpen] = useState(false);

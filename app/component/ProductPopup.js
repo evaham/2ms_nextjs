@@ -12,6 +12,13 @@ export default function ProductPopup({
 }) {
   const [quantity, setQuantity] = useState(1);
 
+  // 이미지 경로가 절대경로일 경우, basePath를 붙여주는 함수
+  const resolveImageSrc = (src) =>
+    src && src.startsWith("/")
+      ? `${process.env.NEXT_PUBLIC_BASE_PATH || ""}${src}`
+      : src;
+
+  
   useEffect(() => {
     if (!open) return;
     setQuantity(item?.quantity ?? 1);
@@ -46,7 +53,7 @@ export default function ProductPopup({
           <div className="product-panel relative overflow-hidden flex flex-col w-full p-4 bg-white rounded-2xl z-50">
             <p className="product-tit mb-2 text-xl text-center font-bold leading-tight">상품정보</p>
             <div className="product-img overflow-hidden flex justify-center items-center h-55 -mx-4">
-              <img className="w-auto h-6/5" src={imageSrc} alt={name} />
+              <img className="w-auto h-6/5" src={resolveImageSrc(imageSrc)} alt={name} />
             </div>
             <div className="layer__goodsinfo flex flex-col">
               <p className="layer__goodstxt mx-auto my-2 text-sm">※수량을 선택해서 장바구니에 담아주세요</p>
@@ -97,7 +104,7 @@ export default function ProductPopup({
               <li className="p-6">
                 <div className="goods__card overflow-hidden relative flex flex-col px-[2%] py-[6%] rounded-lg bg-white">
                   <div className="goods__imgbox overflow-hidden flex justify-center items-center h-55 mx-auto">
-                    <img className="max-w-[75%] w-auto h-auto" src={imageSrc} alt={name} />
+                    <img className="max-w-[75%] w-auto h-auto" src={resolveImageSrc(imageSrc)} alt={name} />
                   </div>
                   <div className="layer__goodsinfo flex flex-col mt-[8%]">
                     <div className="layer__goodsdelprice previewEtc1 mt-2.5 mx-auto text-lg font-bold line-through" style={{ fontSize: "18px" }}>센터이미지</div>
