@@ -44,3 +44,5 @@ export default function CouponDetailModal({ isOpen, onClose, coupon }) {
     </>
   );
 }
+
+
