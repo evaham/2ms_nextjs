@@ -51,6 +51,79 @@ export default function Home() {
     eventGroupList,
   } = martState;
 
+  const buildProductKey = (cornerId, product) => {
+    const barcode = (product?.barcode || "").trim();
+    return barcode ? barcode : `${cornerId}:${product.id}`;
+  };
+
+  const buildProductLookup = (groups) => {
+    const barcodeMap = new Map();
+    const nameMap = new Map();
+    const imageMap = new Map();
+
+    (groups || []).forEach((corner) => {
+      (corner.products || []).forEach((product) => {
+        const entry = { cornerId: corner.id, product };
+        const barcode = (product.barcode || "").trim();
+
+        if (barcode) {
+          barcodeMap.set(barcode, entry);
+        }
+        if (product.name && !nameMap.has(product.name)) {
+          nameMap.set(product.name, entry);
+        }
+        if (product.image && !imageMap.has(product.image)) {
+          imageMap.set(product.image, entry);
+        }
+      });
+    });
+
+    return { barcodeMap, nameMap, imageMap };
+  };
+
+  const migrateCartItems = (items, groups) => {
+    if (!Array.isArray(items) || !groups?.length) {
+      return { items, changed: false };
+    }
+
+    const { barcodeMap, nameMap, imageMap } = buildProductLookup(groups);
+    let changed = false;
+
+    const nextItems = items.map((item, index) => {
+      if (item.cartKey) return item;
+
+      const barcodeKey = (item.barcode || "").trim();
+      let matched = null;
+
+      if (barcodeKey && barcodeMap.has(barcodeKey)) {
+        matched = { cartKey: barcodeKey };
+      } else if (item.image && imageMap.has(item.image)) {
+        matched = imageMap.get(item.image);
+      } else if (item.name && nameMap.has(item.name)) {
+        matched = nameMap.get(item.name);
+      }
+
+      if (matched) {
+        const cartKey = matched.cartKey || buildProductKey(matched.cornerId, matched.product);
+        if (cartKey !== item.cartKey) {
+          changed = true;
+          return { ...item, cartKey };
+        }
+        return item;
+      }
+
+      if (barcodeKey) {
+        changed = true;
+        return { ...item, cartKey: barcodeKey };
+      }
+
+      changed = true;
+      return { ...item, cartKey: `legacy:${item.id ?? "unknown"}:${index}` };
+    });
+
+    return { items: nextItems, changed };
+  };
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     const stored = window.localStorage.getItem("martData");
@@ -103,11 +176,18 @@ export default function Home() {
         ? window.localStorage.getItem("cartItems")
         : null;
       const parsed = stored ? JSON.parse(stored) : [];
-      const cartMap = new Map(parsed.map((item) => [item.id, item]));
+      const { items: migratedItems, changed } = migrateCartItems(parsed, eventGroupList);
+      if (changed && typeof window !== "undefined") {
+        window.localStorage.setItem("cartItems", JSON.stringify(migratedItems));
+      }
+      const cartMap = new Map(
+        migratedItems.map((item) => [item.cartKey || item.barcode || item.id, item])
+      );
       const nextGroups = eventGroupList.map((corner) => ({
         ...corner,
         products: (corner.products || []).map((item) => {
-          const cartItem = cartMap.get(item.id);
+          const productKey = buildProductKey(corner.id, item);
+          const cartItem = cartMap.get(productKey);
           if (!cartItem) {
             return { ...item, cart: false };
           }
@@ -127,12 +207,15 @@ export default function Home() {
     const handleCartSync = () => {
       const stored = window.localStorage.getItem("cartItems");
       const parsed = stored ? JSON.parse(stored) : [];
-      const cartMap = new Map(parsed.map((item) => [item.id, item]));
+      const cartMap = new Map(
+        parsed.map((item) => [item.cartKey || item.barcode || item.id, item])
+      );
       setEventGroups((prev) =>
         prev.map((corner) => ({
           ...corner,
           products: (corner.products || []).map((item) => {
-            const cartItem = cartMap.get(item.id);
+            const productKey = buildProductKey(corner.id, item);
+            const cartItem = cartMap.get(productKey);
             if (!cartItem) {
               return { ...item, cart: false };
             }
@@ -310,10 +393,14 @@ export default function Home() {
     if (typeof window !== "undefined") {
       const stored = window.localStorage.getItem("cartItems");
       const parsed = stored ? JSON.parse(stored) : [];
-      const existingIndex = parsed.findIndex((entry) => entry.id === baseItem.id);
+      const cartKey = (baseItem.barcode && baseItem.barcode.trim())
+        ? baseItem.barcode
+        : `${selectedListKey}:${baseItem.id}`;
+      const existingIndex = parsed.findIndex((entry) => (entry.cartKey || entry.barcode || entry.id) === cartKey);
       const nextEntry = {
         ...baseItem,
         barcode: baseItem.barcode || "",
+        cartKey,
         quantity: nextQuantity,
       };
 

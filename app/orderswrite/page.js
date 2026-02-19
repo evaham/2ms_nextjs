@@ -2,22 +2,32 @@
 'use client'
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import resolveImageSrc from "../lib/resolveImageSrc";
 
 export default function OrdersWrite() {
     const [activeTab, setActiveTab] = useState(1);
     const [showPopup, setShowPopup] = useState(false);
-    const [showbtn, setShowbtn] = useState(false);
+    const [isAgreementChecked, setIsAgreementChecked] = useState(false);
+    const [ordererName, setOrdererName] = useState("");
+    const [ordererPhone, setOrdererPhone] = useState("");
+    const [addressLine1, setAddressLine1] = useState("");
+    const [addressLine2, setAddressLine2] = useState("");
+    const [requestNote, setRequestNote] = useState("");
 
     const [orderItems, setOrderItems] = useState([]);
     const [downloadedCoupons, setDownloadedCoupons] = useState([]);
+    const [appliedCouponKeys, setAppliedCouponKeys] = useState(new Set());
+    const [orderItemsLoaded, setOrderItemsLoaded] = useState(false);
+    const [couponsLoaded, setCouponsLoaded] = useState(false);
+    const didInitCouponsRef = useRef(false);
 
     useEffect(() => {
         if (typeof window === "undefined") return;
         const stored = window.localStorage.getItem("orderItems");
         const parsed = stored ? JSON.parse(stored) : [];
         setOrderItems(parsed);
+        setOrderItemsLoaded(true);
     }, []);
 
     useEffect(() => {
@@ -25,21 +35,38 @@ export default function OrdersWrite() {
         const stored = window.localStorage.getItem("downloadedCoupons");
         const parsed = stored ? JSON.parse(stored) : [];
         setDownloadedCoupons(parsed);
+        setCouponsLoaded(true);
     }, []);
 
     const normalizeBarcode = (value) => (value || "").replace(/\s/g, "");
+    const getItemKey = (item) => item.cartKey || item.barcode || item.id;
     const findCouponForItem = (item) => {
         const itemBarcode = normalizeBarcode(item.barcode);
         if (!itemBarcode) return null;
         return downloadedCoupons.find((coupon) => normalizeBarcode(coupon.barcode) === itemBarcode) || null;
     };
 
+    useEffect(() => {
+        if (!orderItemsLoaded || !couponsLoaded || didInitCouponsRef.current) return;
+        const nextApplied = new Set();
+        orderItems.forEach((item) => {
+            const matchedCoupon = findCouponForItem(item);
+            if (matchedCoupon) {
+                nextApplied.add(getItemKey(item));
+            }
+        });
+        setAppliedCouponKeys(nextApplied);
+        didInitCouponsRef.current = true;
+    }, [orderItemsLoaded, couponsLoaded, orderItems, downloadedCoupons]);
+
     const orderSummary = orderItems.reduce(
         (summary, item) => {
             const quantity = item.quantity || 1;
             const itemSubtotal = (item.price || 0) * quantity;
             const matchedCoupon = findCouponForItem(item);
-            const itemDiscount = matchedCoupon ? matchedCoupon.discount || 0 : 0;
+            const itemDiscount = matchedCoupon && appliedCouponKeys.has(getItemKey(item))
+                ? matchedCoupon.discount || 0
+                : 0;
             return {
                 subtotal: summary.subtotal + itemSubtotal,
                 discount: summary.discount + itemDiscount,
@@ -50,6 +77,65 @@ export default function OrdersWrite() {
 
     const deliveryFee = orderItems.length > 0 ? 3000 : 0;
     const totalPrice = Math.max(orderSummary.subtotal - orderSummary.discount + deliveryFee, 0);
+    const orderNumber = new Date().toISOString().slice(2, 10).replace(/-/g, "") + "-" + String(orderItems.length).padStart(2, "0");
+    const paymentLabel = activeTab === 1
+        ? "만나서 현금 결제"
+        : activeTab === 2
+            ? "만나서 카드 결제"
+            : "계좌이체";
+
+    const buildOrderPayload = () => {
+        const createdAt = new Date().toISOString();
+        const items = orderItems.map((item) => {
+            const matchedCoupon = findCouponForItem(item);
+            const applied = matchedCoupon && appliedCouponKeys.has(getItemKey(item));
+            return {
+                ...item,
+                appliedCoupon: applied
+                    ? {
+                        name: matchedCoupon.name,
+                        discount: matchedCoupon.discount || 0,
+                        barcode: matchedCoupon.barcode || "",
+                    }
+                    : null,
+            };
+        });
+
+        return {
+            orderNumber,
+            createdAt,
+            orderer: {
+                name: ordererName,
+                phone: ordererPhone,
+            },
+            address: {
+                line1: addressLine1,
+                line2: addressLine2,
+            },
+            requestNote,
+            payment: {
+                method: activeTab,
+                label: paymentLabel,
+            },
+            summary: {
+                subtotal: orderSummary.subtotal,
+                discount: orderSummary.discount,
+                deliveryFee,
+                total: totalPrice,
+            },
+            items,
+        };
+    };
+
+    const handleCompleteOrder = () => {
+        if (typeof window === "undefined") return;
+        const nextOrder = buildOrderPayload();
+        const stored = window.localStorage.getItem("orderHistory");
+        const parsed = stored ? JSON.parse(stored) : [];
+        const nextHistory = Array.isArray(parsed) ? [nextOrder, ...parsed] : [nextOrder];
+        window.localStorage.setItem("orderHistory", JSON.stringify(nextHistory));
+        setShowPopup(true);
+    };
     return (
         <>
             <div className='sample relative flex flex-col min-h-screen pb-20 bg-slate-50'>
@@ -77,30 +163,71 @@ export default function OrdersWrite() {
                                     <tr>
                                         <th className="w-23">주문자명<br /><span>(6/20)</span></th>
                                         <td colSpan={2}>
-                                            <input type="text" className="write-input user-name input-require flex items-center w-full h-9 px-2.5 bg-slate-50 border rounded border-slate-300" placeholder="주문자명을 입력하세요" />
+                                            <input
+                                                type="text"
+                                                className="write-input user-name input-require flex items-center w-full h-9 px-2.5 bg-slate-50 border rounded border-slate-300"
+                                                placeholder="주문자명을 입력하세요"
+                                                value={ordererName}
+                                                onChange={(event) => setOrdererName(event.target.value)}
+                                            />
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>휴대폰<br /><span>(변경불가)</span></th>
                                         <td colSpan={2}>
-                                            <input type="text" className="write-input user-phone flex items-center w-full h-9 px-2.5 bg-slate-50 border rounded border-slate-300" placeholder="000-0000-0000" />
+                                            <input
+                                                type="text"
+                                                className="write-input user-phone flex items-center w-full h-9 px-2.5 bg-slate-50 border rounded border-slate-300"
+                                                placeholder="000-0000-0000"
+                                                value={ordererPhone}
+                                                onChange={(event) => setOrdererPhone(event.target.value)}
+                                            />
                                         </td>
                                     </tr>
                                     <tr>
                                         <th rowSpan="3">주소*</th>
-                                        <td><input type="text" className="write-input input-require flex items-center w-full h-9 px-2.5 bg-slate-50 border rounded border-slate-300" readOnly /></td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                className="write-input input-require flex items-center w-full h-9 px-2.5 bg-slate-50 border rounded border-slate-300"
+                                                readOnly
+                                                value={addressLine1}
+                                            />
+                                        </td>
                                         <td><button className="write__btn flex justify-center items-center w-26 h-9 border border-slate-500 text-sm font-bold">우편번호검색</button></td>
                                     </tr>
                                     <tr>
-                                        <td colSpan={3}><input type="text" id="address" className="write-input input-require flex items-center w-full h-9 px-2.5 bg-slate-50 border rounded border-slate-300" readOnly /></td>
+                                        <td colSpan={3}>
+                                            <input
+                                                type="text"
+                                                id="address"
+                                                className="write-input input-require flex items-center w-full h-9 px-2.5 bg-slate-50 border rounded border-slate-300"
+                                                readOnly
+                                                value={addressLine1}
+                                            />
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td colSpan={3}><input type="text" id="extraAddress" className="write-input input-require flex items-center w-full h-9 px-2.5 bg-slate-50 border rounded border-slate-300" placeholder="상세주소를 입력하세요" /></td>
+                                        <td colSpan={3}>
+                                            <input
+                                                type="text"
+                                                id="extraAddress"
+                                                className="write-input input-require flex items-center w-full h-9 px-2.5 bg-slate-50 border rounded border-slate-300"
+                                                placeholder="상세주소를 입력하세요"
+                                                value={addressLine2}
+                                                onChange={(event) => setAddressLine2(event.target.value)}
+                                            />
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>요청사항<br />(<span>13</span>/200)</th>
                                         <td colSpan={2}>
-                                            <textarea id="11" className="write-textarea flex w-full h-25 px-2.5 py-2 bg-slate-50 border rounded border-slate-300 leading-tight"></textarea>
+                                            <textarea
+                                                id="11"
+                                                className="write-textarea flex w-full h-25 px-2.5 py-2 bg-slate-50 border rounded border-slate-300 leading-tight"
+                                                value={requestNote}
+                                                onChange={(event) => setRequestNote(event.target.value)}
+                                            />
                                         </td>
                                     </tr>
                                 </tbody>
@@ -141,7 +268,24 @@ export default function OrdersWrite() {
                                                     <svg xmlns="http://www.w3.org/2000/svg" className="absolute -left-5" width="16" height="16" viewBox="0 0 33 32" fill="none">
                                                         <path xmlns="http://www.w3.org/2000/svg" d="M16.75 0V16H32.75" stroke="#666" strokeWidth="1" />
                                                     </svg>
-                                                    <input type="checkbox" className="size-4.5" defaultChecked />
+                                                    <input
+                                                        type="checkbox"
+                                                        className="size-4.5"
+                                                        checked={appliedCouponKeys.has(getItemKey(item))}
+                                                        onChange={(event) => {
+                                                            const checked = event.target.checked;
+                                                            setAppliedCouponKeys((prev) => {
+                                                                const next = new Set(prev);
+                                                                const itemKey = getItemKey(item);
+                                                                if (checked) {
+                                                                    next.add(itemKey);
+                                                                } else {
+                                                                    next.delete(itemKey);
+                                                                }
+                                                                return next;
+                                                            });
+                                                        }}
+                                                    />
                                                     <span className="write__cname">[쿠폰] {matchedCoupon.name}</span>
                                                     <span className="write__cprice ml-auto font-bold text-[#dc2626]">-{matchedCoupon.discount.toLocaleString()} 원</span>
                                                 </label>
@@ -153,25 +297,6 @@ export default function OrdersWrite() {
                                     ))
                                 )}
                             </ul>
-                            {/* {downloadedCoupons.length > 0 && (
-                                <div className="mt-3 rounded border border-slate-200 bg-slate-50">
-                                    <ul className="flex flex-col">
-                                        {downloadedCoupons.map((coupon, index) => (
-                                            <li key={index} className="flex items-center gap-2 px-2.5 py-2 border-t border-slate-200">
-                                                <img
-                                                    className="size-10 rounded border border-slate-200 object-cover"
-                                                    src={resolveImageSrc(coupon.image)}
-                                                    alt={coupon.name}
-                                                />
-                                                <div className="flex flex-col">
-                                                    <span className="text-sm font-bold">{coupon.name}</span>
-                                                    <span className="text-xs text-slate-500">{coupon.discount.toLocaleString()}원 할인</span>
-                                                </div>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )} */}
                         </div>
                     </div>
                     <div className="write flex flex-col border border-black/10 rounded-sm bg-white">
@@ -257,21 +382,24 @@ export default function OrdersWrite() {
                     </div>
                     <div className="write-foot flex flex-col gap-2 p-2.5 border-t border-black/10 bg-slate-50 ">
                         <label className="flex items-center text-sm">
-                            <input type="checkbox" className="oreder-check size-4.5 mr-2" /> 필수 주문정보를 확인했으며, 주문 진행에 동의합니다.
+                            <input
+                                type="checkbox"
+                                className="oreder-check size-4.5 mr-2"
+                                checked={isAgreementChecked}
+                                onChange={(event) => setIsAgreementChecked(event.target.checked)}
+                            />
+                            필수 주문정보를 확인했으며, 주문 진행에 동의합니다.
                         </label>
-                        {!showbtn ? (
-                            <button className="complete-btn disabled flex justify-center items-center h-12.5 rounded text-lg text-white font-bold bg-rose-500
+
+                        <button
+                            className={`complete-btn flex justify-center items-center h-12.5 rounded text-lg text-white font-bold bg-rose-500
                                 [&.disabled]:text-slate-400 [&.disabled]:bg-slate-200
-                            " onClick={() => setShowbtn(true)}>
-                                주문완료
-                            </button>
-                        ) : (
-                            <button className="complete-btn disabled flex justify-center items-center h-12.5 rounded text-lg text-white font-bold bg-rose-500
-                                [&.disabled]:text-slate-400 [&.disabled]:bg-slate-200
-                            " onClick={() => setShowPopup(true)}>
-                                주문완료
-                            </button>
-                        )}
+                                ${isAgreementChecked ? "" : "disabled"}`}
+                            disabled={!isAgreementChecked}
+                            onClick={handleCompleteOrder}
+                        >
+                            주문완료
+                        </button>
 
                         {/* <Link href={'/orderslist'} className="write__orederbtn">주문완료</Link> */}
                     </div>
@@ -291,32 +419,29 @@ export default function OrdersWrite() {
                                     <tbody>
                                         <tr>
                                             <th className="w-22">주문번호</th>
-                                            <td>250419-22</td>
+                                            <td>{orderNumber}</td>
                                         </tr>
                                         <tr>
                                             <th>주문자명</th>
-                                            <td>고길동</td>
+                                            <td>{ordererName || "-"}</td>
                                         </tr>
                                         <tr>
                                             <th>배송지</th>
-                                            <td>인천시 부평구 부평대로 301 901호 투게더스</td>
-                                        </tr>
-                                        <tr>
-                                            <th>요청사항</th>
-                                            <td>벨을눌러주세요요</td>
+                                            <td>{(addressLine1 || "") + (addressLine2 ? ` ${addressLine2}` : "") || "-"}</td>
                                         </tr>
                                         <tr>
                                             <th>총 주문금액</th>
-                                            <td>43,000 원</td>
+                                            <td>{totalPrice.toLocaleString()} 원</td>
                                         </tr>
                                         <tr>
                                             <th>결제방식</th>
-                                            <td>계좌이체<br />기업은행 123-12345-67890<br />(예금주 : 투게더마트)</td>
+                                            <td>{paymentLabel}</td>
                                         </tr>
                                         <tr>
                                             <th>요청사항</th>
-                                            <td>텍스트가 길어집니다길어집니다길어집니다길어집니다길어집니다길어집니다길어집니다길어집니다길어집니다</td>
+                                            <td>{requestNote || "-"}</td>
                                         </tr>
+
                                     </tbody>
                                 </table>
 

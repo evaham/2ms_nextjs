@@ -5,26 +5,33 @@ import { useEffect, useState } from 'react';
 import resolveImageSrc from '../lib/resolveImageSrc';
 
 export default function OrdersList() {
-    const list = [
-        { id: 1, name: "자연그린 김밥단무김밥", orders: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { id: 2, name: "자연그린 김밥단무지2", orders: false, price: 2551238, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { id: 3, name: "자연그린 김밥단무지3", orders: false, price: 2512358, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { id: 4, name: "자연그린 김밥단무지..외4", orders: true, price: 252258, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { id: 5, name: "자연그린 김밥단무지4", orders: true, price: 253358, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { id: 6, name: "자연그린 김밥단무지4", orders: true, price: 244558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { id: 7, name: "자연그린 김밥단무지4", orders: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" },
-        { id: 8, name: "자연그린 김밥단무지4", orders: true, price: 2558, image: "//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b48d/07cc4310581273a3c0f58b24d6df366900b5699ab17a5e615a8065b53c17.jpg" }
-    ];
     const router = useRouter();
-    const [showData, setShowData] = useState();
-    const [downloadedCoupons, setDownloadedCoupons] = useState([]);
+    const [orderHistory, setOrderHistory] = useState([]);
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
-        const stored = window.localStorage.getItem('downloadedCoupons');
+        const stored = window.localStorage.getItem('orderHistory');
         const parsed = stored ? JSON.parse(stored) : [];
-        setDownloadedCoupons(parsed);
+        setOrderHistory(Array.isArray(parsed) ? parsed : []);
     }, []);
+
+    const formatOrderName = (items) => {
+        if (!Array.isArray(items) || items.length === 0) return "주문 상품";
+        if (items.length === 1) return items[0].name;
+        return `${items[0].name} 외 ${items.length - 1}`;
+    };
+
+    const formatOrderTime = (isoString) => {
+        if (!isoString) return "";
+        const date = new Date(isoString);
+        if (Number.isNaN(date.getTime())) return "";
+        const yy = String(date.getFullYear()).slice(2);
+        const mm = String(date.getMonth() + 1).padStart(2, "0");
+        const dd = String(date.getDate()).padStart(2, "0");
+        const hh = String(date.getHours()).padStart(2, "0");
+        const min = String(date.getMinutes()).padStart(2, "0");
+        return `${yy}.${mm}.${dd} ${hh}:${min} 주문`;
+    };
 
     return (
         <>
@@ -43,47 +50,24 @@ export default function OrdersList() {
                     ※주문내역은 6개월 간 보관합니다.
                 </div>
 
-
-                {downloadedCoupons.length > 0 && (
-                    <div className="mx-0.5 mt-0.5 mb-2 rounded-sm border border-slate-200 bg-white">
-                        <div className="px-3 py-2.5 border-b border-slate-200 font-bold">다운받은 쿠폰</div>
-                        <ul className="flex flex-col">
-                            {downloadedCoupons.map((coupon, index) => (
-                                <li key={index} className="flex items-center gap-2 px-3 py-2.5 border-b border-slate-200 last:border-0">
-                                    <img
-                                        className="size-12 rounded border border-slate-200 object-cover"
-                                        src={resolveImageSrc(coupon.image)}
-                                        alt={coupon.name}
-                                    />
-                                    <div className="flex flex-col">
-                                        <span className="font-bold">{coupon.name}</span>
-                                        <span className="text-sm text-slate-500">{coupon.discount}원 할인</span>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
-
-                {!showData ? (
+                {orderHistory.length === 0 ? (
                     <div className="empty-div flex flex-col justify-center items-center h-60 gap-4">
                         <div className='flex flex-col my-20 text-xl text-gray-500 font-bold'>
                             주문내역이 없습니다.
                         </div>
-                        <button className='border' onClick={()=>setShowData(true)}>테스트용 화면전환</button>
                     </div>
                 ) : (
                     <ul className="mt-0.5 px-0.5 pb-2.5 flex flex-col gap-0.5">
-                        {list.map((item, index) => (
-                            <li key={index}>
+                        {orderHistory.map((order, index) => (
+                            <li key={`${order.orderNumber ?? 'order'}-${order.createdAt ?? 'time'}-${index}`}>
                                 <div onClick={() => router.push('/ordersdetail')} 
                                     className="order-Div relative flex h-21 px-3 rounded-sm  border border-slate-200 bg-white items-center"
                                 >
                                     <div className='ordersitem__group'>
-                                        <div className="ordersitem__time text-sm">25.4.19 11:30 주문</div>
-                                        <div className="ordersitem__name">{item.name}</div>
+                                        <div className="ordersitem__time text-sm">{formatOrderTime(order.createdAt)}</div>
+                                        <div className="ordersitem__name">{formatOrderName(order.items)}</div>
                                     </div>
-                                    <div className="ordersitem__price ml-auto font-bold">{item.price.toLocaleString()} 원</div>
+                                    <div className="ordersitem__price ml-auto font-bold">{(order.summary?.total || 0).toLocaleString()} 원</div>
                                     <div className='ordersitem__icon ml-1'><svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#6f6f6f"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" /></svg></div>
                                 </div>
                             </li>

@@ -11,13 +11,14 @@ export default function CartList(){
     const [list, setList] = useState([]);
     const [allChecked, setAllChecked] = useState(true);
     const [selectedIds, setSelectedIds] = useState(new Set());
+    const getItemKey = (item) => item.cartKey || item.barcode || item.id;
 
     useEffect(() => {
         if (typeof window === "undefined") return;
         const stored = window.localStorage.getItem("cartItems");
         const parsed = stored ? JSON.parse(stored) : [];
         setList(parsed);
-        setSelectedIds(new Set(parsed.map((item) => item.id)));
+        setSelectedIds(new Set(parsed.map((item) => getItemKey(item))));
         setAllChecked(parsed.length > 0);
     }, []);
 
@@ -34,17 +35,17 @@ export default function CartList(){
     const handleToggleAll = (event) => {
         const checked = event.target.checked;
         setAllChecked(checked);
-        setSelectedIds(checked ? new Set(list.map((item) => item.id)) : new Set());
+        setSelectedIds(checked ? new Set(list.map((item) => getItemKey(item))) : new Set());
     };
 
-    const handleToggleItem = (id) => (event) => {
+    const handleToggleItem = (itemKey) => (event) => {
         const checked = event.target.checked;
         setSelectedIds((prev) => {
             const next = new Set(prev);
             if (checked) {
-                next.add(id);
+                next.add(itemKey);
             } else {
-                next.delete(id);
+                next.delete(itemKey);
             }
             return next;
         });
@@ -52,36 +53,36 @@ export default function CartList(){
 
     const handleDeleteSelected = () => {
         if (selectedIds.size === 0) return;
-        const nextList = list.filter((item) => !selectedIds.has(item.id));
+        const nextList = list.filter((item) => !selectedIds.has(getItemKey(item)));
         setList(nextList);
         persistCart(nextList);
         setSelectedIds(new Set());
         setAllChecked(false);
     };
 
-    const handleDeleteOne = (id) => {
-        const nextList = list.filter((item) => item.id !== id);
+    const handleDeleteOne = (itemKey) => {
+        const nextList = list.filter((item) => getItemKey(item) !== itemKey);
         setList(nextList);
         persistCart(nextList);
         setSelectedIds((prev) => {
             const next = new Set(prev);
-            next.delete(id);
+            next.delete(itemKey);
             return next;
         });
     };
 
-    const handleQuantityChange = (id) => (event) => {
+    const handleQuantityChange = (itemKey) => (event) => {
         const rawValue = Number(event.target.value);
         if (Number.isNaN(rawValue)) return;
         const nextQuantity = Math.min(999, Math.max(1, rawValue));
         const nextList = list.map((item) =>
-            item.id === id ? { ...item, quantity: nextQuantity } : item
+            getItemKey(item) === itemKey ? { ...item, quantity: nextQuantity } : item
         );
         setList(nextList);
         persistCart(nextList);
     };
 
-    const selectedItems = list.filter((item) => selectedIds.has(item.id));
+    const selectedItems = list.filter((item) => selectedIds.has(getItemKey(item)));
     const selectedCount = selectedItems.length;
     const selectedTotal = selectedItems.reduce(
         (total, item) => total + (item.price || 0) * (item.quantity || 1),
@@ -140,14 +141,14 @@ export default function CartList(){
                         </button>
                     </div>
                     <div className="cart-list flex-1 flex flex-col mt-1.5 px-1 pb-2.5 gap-0.5">
-                        {list.map((item, index) => (
-                            <div key={index} className="cart-div relative flex gap-2 px-2.5 py-5 rounded  border border-slate-200 bg-white">
+                        {list.map((item) => (
+                            <div key={getItemKey(item)} className="cart-div relative flex gap-2 px-2.5 py-5 rounded  border border-slate-200 bg-white">
                                 <div className="flex items-center">
                                     <input
                                         type="checkbox"
                                         className="chkChoose size-5"
-                                        checked={selectedIds.has(item.id)}
-                                        onChange={handleToggleItem(item.id)}
+                                        checked={selectedIds.has(getItemKey(item))}
+                                        onChange={handleToggleItem(getItemKey(item))}
                                     />
                                 </div>
                                 <img src={resolveImageSrc(item.image)} alt={item.name} className="cartitem__img size-20 object-cover aspect-square" />
@@ -161,7 +162,7 @@ export default function CartList(){
                                             <select
                                                 className="quantity-num w-full h-full border-0 text-lg text-center"
                                                 value={item.quantity || 1}
-                                                onChange={handleQuantityChange(item.id)}
+                                                onChange={handleQuantityChange(getItemKey(item))}
                                             >
                                                 {Array.from({ length: 999 }, (_, index) => {
                                                     const value = index + 1;
@@ -176,7 +177,7 @@ export default function CartList(){
                                     </div>
                                     <button
                                         className="cart-delete-btn absolute top-1.5 right-1.5"
-                                        onClick={() => handleDeleteOne(item.id)}
+                                        onClick={() => handleDeleteOne(getItemKey(item))}
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px"><path d="m256-236-20-20 224-224-224-224 20-20 224 224 224-224 20 20-224 224 224 224-20 20-224-224-224 224Z" /></svg>
                                     </button>
