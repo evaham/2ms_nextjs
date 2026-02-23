@@ -20,6 +20,10 @@ export default function Home() {
   const [isAdPopupOpen, setIsAdPopupOpen] = useState(false);
   const [isAdPopupHiddenToday, setIsAdPopupHiddenToday] = useState(false);
 
+  // 플로팅 배너 닫기 상태를 일정 시간 저장
+  const floatingAdStorageKey = "floatingAdHiddenUntil";
+  const floatingAdHideHours = 0;
+
   // 검색팝업 여닫기
   const [isSearchPopupOpen, setisSearchPopupOpen] = useState(false);
 
@@ -124,6 +128,7 @@ export default function Home() {
     return { items: nextItems, changed };
   };
 
+  // 로컬 스토리지의 기본 마트 데이터 초기화/복원
   useEffect(() => {
     if (typeof window === "undefined") return;
     const stored = window.localStorage.getItem("martData");
@@ -141,6 +146,38 @@ export default function Home() {
       setMartState(martData);
     }
   }, []);
+
+  // 플로팅 배너 닫기 상태가 남아 있으면 자동으로 숨김 처리
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const stored = window.localStorage.getItem(floatingAdStorageKey);
+    if (!stored) return;
+
+    const hiddenUntil = Number.parseInt(stored, 10);
+    if (Number.isNaN(hiddenUntil)) return;
+
+    if (Date.now() < hiddenUntil) {
+      setIsFloatingAdOpen(false);
+    } else {
+      window.localStorage.removeItem(floatingAdStorageKey);
+    }
+  }, []);
+
+  // 플로팅 배너 토글 시 숨김 만료 시간을 저장/해제
+  const handleFloatingAdToggle = () => {
+    setIsFloatingAdOpen((prev) => {
+      const next = !prev;
+      if (typeof window !== "undefined") {
+        if (next) {
+          window.localStorage.removeItem(floatingAdStorageKey);
+        } else {
+          const hiddenUntil = Date.now() + floatingAdHideHours * 60 * 60 * 1000;
+          window.localStorage.setItem(floatingAdStorageKey, String(hiddenUntil));
+        }
+      }
+      return next;
+    });
+  };
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -562,7 +599,7 @@ export default function Home() {
         enabled={useFloatingAdBanner}
         isOpen={isFloatingAdOpen}
         banner={floatingAdBanner}
-        onToggle={() => setIsFloatingAdOpen((prev) => !prev)}
+        onToggle={handleFloatingAdToggle}
       />
 
       {/* 안내 레이어 팝업 */}
