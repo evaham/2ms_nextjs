@@ -27,6 +27,12 @@ export default function Home() {
   // 검색팝업 여닫기
   const [isSearchPopupOpen, setisSearchPopupOpen] = useState(false);
 
+  const isAnyLayerOpen =
+    isNoticePopupOpen ||
+    isSearchPopupOpen ||
+    isProductPopupOpen ||
+    isAdPopupOpen;
+
   // 행사코너 높이 조정
   const [stickyHeight, setStickyHeight] = useState(0);
   const stickyRef = useRef(null);
@@ -146,6 +152,31 @@ export default function Home() {
       setMartState(martData);
     }
   }, []);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    if (!isAnyLayerOpen) return;
+
+    const { body } = document;
+    const scrollY = window.scrollY;
+    const previousOverflow = body.style.overflow;
+    const previousPosition = body.style.position;
+    // const previousTop = body.style.top;
+    const previousWidth = body.style.width;
+
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    // body.style.top = `-${scrollY}px`;
+    body.style.width = "100%";
+
+    return () => {
+      body.style.overflow = previousOverflow;
+      body.style.position = previousPosition;
+      // body.style.top = previousTop;
+      body.style.width = previousWidth;
+      window.scrollTo(0, scrollY);
+    };
+  }, [isAnyLayerOpen]);
 
   // 플로팅 배너 닫기 상태가 남아 있으면 자동으로 숨김 처리
   useEffect(() => {

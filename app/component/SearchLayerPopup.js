@@ -110,10 +110,10 @@ export default function SearchLayerPopup({ open, onClose, list }) {
             <div className="layer__bg absolute inset-0 bg-black/40" onClick={onClose}></div>
             <div className="layer__panel relative overflow-hidden flex flex-col w-full p-4 bg-slate-50 rounded-2xl z-50">
                 <p className="layer__tit mb-3 text-xl text-center font-bold leading-tight">상품 검색</p>
-                <div className="relative mb-3 w-full h-10 pl-4 pr-10 border border-slate-400 rounded-full text-base bg-white focus-within:border-slate-700">
+                <div className="relative flex items-center mb-3 w-full h-10 pl-4 pr-4 border border-slate-400 rounded-full text-base bg-white focus-within:border-slate-700">
                     <input
                         ref={searchInputRef}
-                        className="w-full h-full pr-10 text-base outline-none"
+                        className="flex-1 w-full h-full text-base outline-none"
                         placeholder="상품명을 입력하세요"
                         value={searchInput}
                         onChange={(e) => setSearchInput(e.target.value)}
@@ -130,7 +130,7 @@ export default function SearchLayerPopup({ open, onClose, list }) {
                         <button
                             type="button"
                             aria-label="검색어 지우기"
-                            className="absolute right-11 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600"
+                            className="p-1 text-slate-400 hover:text-slate-600"
                             onClick={() => {
                                 setSearchInput("");
                                 requestAnimationFrame(() => {
@@ -144,7 +144,7 @@ export default function SearchLayerPopup({ open, onClose, list }) {
                     <button
                         type="button"
                         aria-label="검색"
-                        className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600"
+                        className="p-1 text-slate-400 hover:text-slate-600"
                         onClick={() => {
                             if (document.activeElement instanceof HTMLElement) {
                                 document.activeElement.blur();
