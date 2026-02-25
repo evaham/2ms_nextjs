@@ -220,16 +220,8 @@ export default function SearchLayerPopup({ open, onClose, list }) {
                         </div>
                     ) : (
                         <div className="flex flex-col h-[65vh]">
-                            {/* <div className="flex justify-end px-2 py-2">
-                                <button
-                                    type="button"
-                                    className="text-sm text-slate-500 hover:text-slate-700"
-                                    onClick={() => setIsLargeSearchImage((prev) => !prev)}
-                                >
-                                    이미지크기 변경
-                                </button>
-                            </div> */}
-                            <ul className="flex-1 divide-y divide-slate-200 overflow-y-auto">
+                            
+                            <ul className="divide-y divide-slate-200 overflow-y-auto">
                                 {filteredList.map((item, index) => {
                                     const cartKey = `${item.id}-${index}`;
                                     const isActive = activeCartKeys.has(cartKey);
